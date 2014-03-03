@@ -4,6 +4,7 @@
 
 Entry 0x01
 Mon Mar  3 02:53:02 AKST 2014
+For project meeting on 2014/02/28
 
 	The project started off by meeting during class time to come up with
 	user stories in the spirit of Agile and Scrum software development for
