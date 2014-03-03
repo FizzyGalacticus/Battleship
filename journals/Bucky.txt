@@ -42,3 +42,33 @@ Mon Mar  3 02:53:02 AKST 2014
 	communicate over email to setup a meeting over the weekend to break
 	down the stories into smaller stories and assign the ratings then.
 
+
+Entry 0x02
+Mon Mar  3 04:41:02 AKST 2014
+For project meeting on 2014/03/01
+
+	Over email, Dustin and I decided to meet in the CS lab at 1600 for
+	flushing out the user stories. We organized them based on a progress
+	of the usual use case of the Battleship game. Having decided that the
+	game will be text based, the menus of the game should be created
+	first. From there, an automatically generated board and layout should
+	be presented for two human players to engage at the same computer can
+	dual each other. We now had a progression of user stories that we
+	wanted to implement first. 
+
+	We decided to have the first user story, making menus, would be used
+	as a means to judge the rest of the user stories in complexity as it
+	was the first story to implement. We also used the first story as a
+	means to provide a sense of how much time should be attributed to each
+	story.
+
+	Thus, our first sprint was to make the menu, add some music tracks to
+	it, get the underlining system implemented, give the player controls, 
+	and then allow them the play a game. At	this point we agreed that the
+	index cards containing the user stories should be transfered to a
+	Google doc for us both to have access to. Since I've already started
+	on a slide deck for this I agreed to type up the cards. By this time
+	the meeting had ran approximately an hour. We decided to call it a day
+	as we had other assignments to get to. Before leaving we agreed to 
+	meet regularly at the CS lab on Monday and Wednesday at 1900 to pair
+	program the game.
