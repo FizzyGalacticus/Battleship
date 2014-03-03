@@ -1,0 +1,44 @@
+# File: Bucky.txt
+# Author: Bucky Frost
+# Purpose: CS 372 Project 1 Diary
+
+Entry 0x01
+Mon Mar  3 02:53:02 AKST 2014
+
+	The project started off by meeting during class time to come up with
+	user stories in the spirit of Agile and Scrum software development for
+	designing a Battleship program.	Dustin Dodson, my project teammate, and
+	I spent the hour amongst our fellow classmates brainstorming and 
+	committing desired stories to index cards.
+
+	This was quite the exciting time! Ideas were flying between the
+	project groups a breakneck pace. One group would consider one feature
+	only to decide against it, while another group would take that idea
+	and incorporate it into their own project in some manner. All the
+	while, professor Hartman would move between the groups and provide
+	insight into the process, or emphasize on points from lectures. It 
+	was quite the social experience that most of the CS classes did not
+	share. One of the best lecture periods during my college career.
+
+	Dustin and I work in the manner of trying to involve a client in the
+	feature design. This mostly took the form of one of us providing a leading
+	prompt and have the other pick out the desired features from the
+	question. For example, I would ask "What kinda interface do you want
+	the game to be?" Dustin would then reply that he thought a text based
+	game would be good for a start.
+
+	In hind sight, this is not quite the way to pose questions to a
+	client. As this type of questioning would lead them into the thoughts
+	of how the implementor sees the problem. A more appropriate means for
+	flushing out the expectations of a client would be more in tune to
+	questions posed as "What do you want to see when you open your game?"
+	Know what they say, haven't tried anything new if you don't make
+	mistakes.
+
+	At the end of the hour, we had wrote about 15 user stores between the
+	both of us. We both noticed that most of the cards contained high
+	level ideas about the game. It would make assigning timings and
+	complexity rating to the stories difficult. We there for decided to
+	communicate over email to setup a meeting over the weekend to break
+	down the stories into smaller stories and assign the ratings then.
+
