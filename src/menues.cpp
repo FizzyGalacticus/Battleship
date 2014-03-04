@@ -12,6 +12,8 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+#include <stdio.h>
+
 #include "osFunctions.cpp"
 #include "Sound.h"
 
@@ -57,7 +59,7 @@ void pauseMenu()
 	cout << "GAME PAUSED" << endl;
 	cout << "Press 'p' to unpause" << endl;
 	
-	while(getch() != 'p');
+	while(getchar() != 'p');
 	Sound::unpauseAudio();
 	clearScreen();
 }

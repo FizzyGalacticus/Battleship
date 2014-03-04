@@ -5,7 +5,7 @@
 #ifndef __BATTLESHIP__SOUNDS__H
 #define __BATTLESHIP__SOUNDS__H
 
-#include "irrKlang\include\irrKlang.h"
+#include "irrKlang/include/irrKlang.h"
 using namespace irrklang;
 
 // link with irrKlang.dll
