@@ -1,3 +1,7 @@
+//Dustin Dodson & Bucky Frost
+//Source file for Operating System specific functions
+//CS372 Project 1
+
 #include <stdlib.h>
 
 //***********IF ON WINDOWS**************

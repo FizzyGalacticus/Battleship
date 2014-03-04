@@ -13,6 +13,7 @@ using std::endl;
 using std::cin;
 
 #include "osFunctions.cpp"
+#include "Sound.h"
 
 void mainMenu()
 {
@@ -52,10 +53,12 @@ void mainMenu()
 //Menu for when the game is paused.
 void pauseMenu()
 {
+	Sound::pauseAudio();
 	cout << "GAME PAUSED" << endl;
 	cout << "Press 'p' to unpause" << endl;
 	
 	while(getch() != 'p');
+	Sound::unpauseAudio();
 	clearScreen();
 }
 
