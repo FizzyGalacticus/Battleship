@@ -49,4 +49,14 @@ void mainMenu()
 	}
 }
 
+//Menu for when the game is paused.
+void pauseMenu()
+{
+	cout << "GAME PAUSED" << endl;
+	cout << "Press 'p' to unpause" << endl;
+	
+	while(getch() != 'p');
+	clearScreen();
+}
+
 #endif

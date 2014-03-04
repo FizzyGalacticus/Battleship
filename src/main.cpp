@@ -7,5 +7,6 @@
 int main(const int argc, const char* argv[])
 {
 	mainMenu();
+	pauseMenu();
 	return 0;
 }
