@@ -6,6 +6,9 @@
 #define __BATTLESHIP__BOARD__CPP
 
 #include "Board.h"
+#include <iostream>
+using std::endl;
+
 
 Board::Board() : _gridSize(9)
 {
@@ -29,6 +32,33 @@ void Board::initBoard()
 const bool Board::isOccupied(const int x, const int y)
 {
 	return _board[x][y];
+}
+
+void Board::printBoard(ostream & out)
+{	
+	out << getEndString() << endl;
+	
+	for(int i = 0; i < _gridSize; i++)
+	{
+		for(int j = 0; j < _gridSize; j++)
+		{
+			out << "|." << (isOccupied(i,j)?'T':'F') << '.';
+		}
+		out << '|' << endl;
+	}
+	
+	out << getEndString() << endl;
+}
+
+const string Board::getEndString()
+{
+	string temp;
+	
+	temp += '+';
+	for(int i = 0; i < (_gridSize*4-1); i++) temp += '-';
+	temp += '+';
+	
+	return temp;
 }
 
 #endif

@@ -6,13 +6,19 @@
 #include "Sound.h"
 #include <stdio.h>
 #include "Board.h"
+#include <iostream>
+using std::cout;
 
 int main(const int argc, const char* argv[])
 {
 	/*Sound backgroundMusic("Media/emergency007.mp3");
 	mainMenu();
 	pauseMenu();
-	while(getchar() != 'q');*/	
+	while(getchar() != 'q');*/
+
+	Board myBoard;
+	
+	myBoard.printBoard(cout);
 	
 	return 0;
 }

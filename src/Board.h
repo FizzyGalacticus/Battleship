@@ -8,14 +8,22 @@
 #include <vector>
 using std::vector;
 
+#include <iostream>
+using std::ostream;
+
+#include <string>
+using std::string;
+
 class Board
 {
 	public:
 		Board();
 		Board(const int);
 		const bool isOccupied(const int, const int);
+		void printBoard(ostream &);
 	private:
 		void initBoard();
+		const string getEndString();
 		vector<vector<bool> > _board;
 		const int _gridSize;
 };
