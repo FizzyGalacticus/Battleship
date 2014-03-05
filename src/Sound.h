@@ -21,14 +21,32 @@ using std::string;
 class Sound
 {
 	public:
-		Sound(const string audioFilename);
 		~Sound();
 		static void pauseAudio();
 		static void unpauseAudio();
-	private:
-		Sound();
+	protected:
+		ISoundSource* initSound(const string audioFilename);
+		Sound() {}
 		static vector<ISoundSource*> _audioStreams;
 		static ISoundEngine * _engine;
+};
+
+class BackgroundAudio : public Sound
+{
+	public:
+		BackgroundAudio(const string audioFilename);
+		~BackgroundAudio();
+	private:
+		ISoundSource* _stream;
+};
+
+class SoundFXAudio : public Sound
+{
+	public:
+		SoundFXAudio(const string audioFilename);
+		~SoundFXAudio();
+	private:
+		ISoundSource* _stream;
 };
 
 #endif

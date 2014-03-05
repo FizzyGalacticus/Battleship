@@ -8,17 +8,20 @@
 #include "Board.h"
 #include <iostream>
 using std::cout;
+using std::endl;
 
 int main(const int argc, const char* argv[])
 {
-	/*Sound backgroundMusic("Media/emergency007.mp3");
+	BackgroundAudio backgroundMusic("Media/emergency007.mp3");
 	mainMenu();
 	pauseMenu();
-	while(getchar() != 'q');*/
 
 	Board myBoard;
 	
 	myBoard.printBoard(cout);
+	
+	cout << "Press 'q' to quit" << endl;
+	while(getchar() != 'q');
 	
 	return 0;
 }
