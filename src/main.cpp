@@ -5,7 +5,6 @@
 #include "menues.cpp"
 #include "Sound.h"
 #include <stdio.h>
-#include "catch.hpp"
 #include "Board.h"
 
 int main(const int argc, const char* argv[])
@@ -13,9 +12,7 @@ int main(const int argc, const char* argv[])
 	/*Sound backgroundMusic("Media/emergency007.mp3");
 	mainMenu();
 	pauseMenu();
-	while(getchar() != 'q');*/
-	
-	Board myBoard;
+	while(getchar() != 'q');*/	
 	
 	return 0;
 }

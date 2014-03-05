@@ -26,4 +26,9 @@ void Board::initBoard()
 	}
 }
 
+const bool Board::isOccupied(const int x, const int y)
+{
+	return _board[x][y];
+}
+
 #endif

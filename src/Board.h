@@ -13,6 +13,7 @@ class Board
 	public:
 		Board();
 		Board(const int);
+		const bool isOccupied(const int, const int);
 	private:
 		void initBoard();
 		vector<vector<bool> > _board;
