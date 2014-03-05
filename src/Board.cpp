@@ -37,14 +37,16 @@ const bool Board::isOccupied(const int x, const int y)
 void Board::printBoard(ostream & out)
 {	
 	out << getEndString() << endl;
+	out << getMidString() << endl;
 	
 	for(int i = 0; i < _gridSize; i++)
 	{
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "|." << (isOccupied(i,j)?'T':'F') << '.';
+			out << "| " << (isOccupied(i,j)?'T':'F') << ' ';
 		}
 		out << '|' << endl;
+		out << getMidString() << endl;
 	}
 	
 	out << getEndString() << endl;
@@ -57,6 +59,16 @@ const string Board::getEndString()
 	temp += '+';
 	for(int i = 0; i < (_gridSize*4-1); i++) temp += '-';
 	temp += '+';
+	
+	return temp;
+}
+
+const string Board::getMidString()
+{
+	string temp;
+	
+	for(int i = 0; i < _gridSize; i++) temp += "| - ";
+	temp += '|';
 	
 	return temp;
 }

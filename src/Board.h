@@ -24,6 +24,7 @@ class Board
 	private:
 		void initBoard();
 		const string getEndString();
+		const string getMidString();
 		vector<vector<bool> > _board;
 		const int _gridSize;
 };
