@@ -38,6 +38,7 @@ class BackgroundAudio : public Sound
 	public:
 		BackgroundAudio(const vector<string> audioFilenames);
 		~BackgroundAudio();
+		void startBackgroundMusic();
 	private:
 		BackgroundAudio();
 		vector<ISoundSource*> _streams;
@@ -48,6 +49,7 @@ class SoundFXAudio : public Sound
 	public:
 		SoundFXAudio(const string audioFilename);
 		~SoundFXAudio();
+		void playAudio();
 	private:
 		SoundFXAudio();
 		ISoundSource* _stream;

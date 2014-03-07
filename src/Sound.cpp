@@ -41,24 +41,14 @@ ISoundSource* Sound::initSound(const string audioFilename)
 	//Add new stream to vector of audio streams
 	_audioStreams.push_back(stream);
 	
-	_engine->play2D(stream, true);
-	
 	return stream;
 }
 
 BackgroundAudio::BackgroundAudio(const vector<string> audioFilenames)
 {
-	//Initialize sound stream
-	//_stream = initSound(audioFilename);
-	
+	//Initialize _streams
 	for(int i = 0; i < audioFilenames.size(); i++)
 		_streams.push_back(initSound(audioFilenames[i]));
-}
-
-SoundFXAudio::SoundFXAudio(const string audioFilename)
-{
-	//Initialize sound stream
-	_stream = initSound(audioFilename);
 }
 
 BackgroundAudio::~BackgroundAudio()
@@ -69,11 +59,28 @@ BackgroundAudio::~BackgroundAudio()
 			if(*itr == _streams[i]) _audioStreams.erase(itr);
 }
 
+void BackgroundAudio::startBackgroundMusic()
+{
+	//Start playing first audio track
+	if(_streams.size() > 0) _engine->play2D(_streams[0], false);
+}
+
+SoundFXAudio::SoundFXAudio(const string audioFilename)
+{
+	//Initialize sound stream
+	_stream = initSound(audioFilename);
+}
+
 SoundFXAudio::~SoundFXAudio()
 {
 	//Remove stream pointer from base class vector (e.g. we're done with that sound)
 	for(vector<ISoundSource*>::iterator itr = _audioStreams.begin(); itr != _audioStreams.end(); itr++)
 		if(*itr == _stream) _audioStreams.erase(itr);
+}
+
+void SoundFXAudio::playAudio()
+{
+	_engine->play2D(_stream, false);
 }
 
 #endif

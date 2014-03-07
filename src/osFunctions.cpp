@@ -2,6 +2,9 @@
 //Source file for Operating System specific functions
 //CS372 Project 1
 
+#ifndef __OS__FUNCTIONS__
+#define __OS__FUNCTIONS__
+
 #include <stdlib.h>
 
 //***********IF ON WINDOWS**************
@@ -18,5 +21,7 @@
 #elif defined(macintosh) || defined(Macintosh) || defined(__APPLE__) && defined(__MACH__)
 
 	void clearScreen() {system("clear");}
+
+#endif
 
 #endif
