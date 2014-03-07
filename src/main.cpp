@@ -21,7 +21,7 @@ int main(const int argc, const char* argv[])
 	vector<string> backgroundMusicFileNames;
 	backgroundMusicFileNames.push_back("../Media/Constance.mp3");
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
-	backgroundMusic.startBackgroundMusic();
+	backgroundMusic.startBackgroundAudio(0);
 	
 	//TESTING MENU SYSTEM
 	mainMenu();

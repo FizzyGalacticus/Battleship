@@ -18,12 +18,6 @@ using std::vector;
 #include <string>
 using std::string;
 
-class MySoundEndReceiver : public irrklang::ISoundStopEventReceiver
-{
-	public:
-		virtual void OnSoundStopped(irrklang::ISound*, irrklang::E_STOP_EVENT_CAUSE, void*);
-};
-
 //Base sound class used for initializing main sound engine and keeping track of all sound sources. Cannot be created explicitly, only child classes can be created.
 class Sound
 {
@@ -44,9 +38,18 @@ class BackgroundAudio : public Sound
 	public:
 		BackgroundAudio(const vector<string> audioFilenames);
 		~BackgroundAudio();
-		void startBackgroundMusic();
+		void startBackgroundAudio(const int index);
+	protected:
+		class MySoundEndReceiver : public irrklang::ISoundStopEventReceiver
+		{
+			public:
+				virtual void OnSoundStopped(irrklang::ISound*, irrklang::E_STOP_EVENT_CAUSE, void*);
+		};
 	private:	
-		static const MySoundEndReceiver* _whenSoundIsFinishedReceiver;
+		static MySoundEndReceiver* _whenSoundIsFinishedReceiver;
+		static ISound* _currentPlayingAudioStream;
+		static int _currentPlayingAudioIndex;
+		static int _numberOfTracks;
 		BackgroundAudio();
 		vector<ISoundSource*> _streams;
 };

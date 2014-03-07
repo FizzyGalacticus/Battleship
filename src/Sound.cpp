@@ -15,7 +15,10 @@ using std::endl;
 
 ISoundEngine * Sound::_engine = createIrrKlangDevice();
 vector<ISoundSource*> Sound::_audioStreams;
-const MySoundEndReceiver* BackgroundAudio::_whenSoundIsFinishedReceiver = new MySoundEndReceiver();
+BackgroundAudio::MySoundEndReceiver* BackgroundAudio::_whenSoundIsFinishedReceiver(new MySoundEndReceiver);
+ISound* BackgroundAudio::_currentPlayingAudioStream;
+int BackgroundAudio::_currentPlayingAudioIndex(0);
+int BackgroundAudio::_numberOfTracks(0);
 
 Sound::~Sound()
 {
@@ -47,6 +50,7 @@ ISoundSource* Sound::initSound(const string audioFilename)
 
 BackgroundAudio::BackgroundAudio(const vector<string> audioFilenames)
 {
+	_numberOfTracks = audioFilenames.size();
 	//Initialize _streams
 	for(int i = 0; i < audioFilenames.size(); i++)
 		_streams.push_back(initSound(audioFilenames[i]));
@@ -60,18 +64,27 @@ BackgroundAudio::~BackgroundAudio()
 			if(*itr == _streams[i]) _audioStreams.erase(itr);
 }
 
-void BackgroundAudio::startBackgroundMusic()
+void BackgroundAudio::startBackgroundAudio(const int index)
 {
 	//Start playing first audio track
-	if(_streams.size() > 0) _engine->play2D(_streams[0], false);
+	if(_numberOfTracks > 0) _currentPlayingAudioStream = _engine->play2D(_streams[index], false);
+	
+	if(_currentPlayingAudioStream)
+		_currentPlayingAudioStream->setSoundStopEventReceiver(_whenSoundIsFinishedReceiver);
 }
 
 
 //This function is called any time the current background song has finished playing.
-void MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
+void BackgroundAudio::MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
 {
-	// called when the sound has ended playing
-	//printf("sound has ended");
+	if(_currentPlayingAudioIndex == _numberOfTracks) _currentPlayingAudioIndex = 0;
+	else _currentPlayingAudioIndex++;
+	
+/*******************************************************************/
+	
+	//startBackgroundAudio(_currentPlayingAudioIndex);
+	
+/*******************************************************************/
 }
 
 SoundFXAudio::SoundFXAudio(const string audioFilename)
