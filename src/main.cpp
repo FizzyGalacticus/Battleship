@@ -9,10 +9,16 @@
 #include <iostream>
 using std::cout;
 using std::endl;
+#include<vector>
+using std::vector;
 
 int main(const int argc, const char* argv[])
 {
-	BackgroundAudio backgroundMusic("Media/emergency007.mp3");
+	vector<string> backgroundMusicFileNames;
+	backgroundMusicFileNames.push_back("../Media/emergency007.mp3");
+	
+	
+	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
 	mainMenu();
 	pauseMenu();
 

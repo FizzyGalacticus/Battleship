@@ -18,6 +18,7 @@ using std::vector;
 #include <string>
 using std::string;
 
+//Base sound class used for initializing main sound engine and keeping track of all sound sources. Cannot be created explicitly, only child classes can be created.
 class Sound
 {
 	public:
@@ -31,13 +32,15 @@ class Sound
 		static ISoundEngine * _engine;
 };
 
+//Child of Sound class, this class' job is to strictly control background music.
 class BackgroundAudio : public Sound
 {
 	public:
-		BackgroundAudio(const string audioFilename);
+		BackgroundAudio(const vector<string> audioFilenames);
 		~BackgroundAudio();
 	private:
-		ISoundSource* _stream;
+		BackgroundAudio();
+		vector<ISoundSource*> _streams;
 };
 
 class SoundFXAudio : public Sound
@@ -46,6 +49,7 @@ class SoundFXAudio : public Sound
 		SoundFXAudio(const string audioFilename);
 		~SoundFXAudio();
 	private:
+		SoundFXAudio();
 		ISoundSource* _stream;
 };
 

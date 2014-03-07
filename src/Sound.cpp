@@ -46,10 +46,13 @@ ISoundSource* Sound::initSound(const string audioFilename)
 	return stream;
 }
 
-BackgroundAudio::BackgroundAudio(const string audioFilename)
+BackgroundAudio::BackgroundAudio(const vector<string> audioFilenames)
 {
 	//Initialize sound stream
-	_stream = initSound(audioFilename);
+	//_stream = initSound(audioFilename);
+	
+	for(int i = 0; i < audioFilenames.size(); i++)
+		_streams.push_back(initSound(audioFilenames[i]));
 }
 
 SoundFXAudio::SoundFXAudio(const string audioFilename)
@@ -61,8 +64,9 @@ SoundFXAudio::SoundFXAudio(const string audioFilename)
 BackgroundAudio::~BackgroundAudio()
 {
 	//Remove stream pointer from base class vector (e.g. we're done with that sound)
-	for(vector<ISoundSource*>::iterator itr = _audioStreams.begin(); itr <= _audioStreams.end(); itr++)
-		if(*itr == _stream) _audioStreams.erase(itr);
+	for(int i = 0; i < _streams.size(); i++)
+		for(vector<ISoundSource*>::iterator itr = _audioStreams.begin(); itr <= _audioStreams.end(); itr++)
+			if(*itr == _streams[i]) _audioStreams.erase(itr);
 }
 
 SoundFXAudio::~SoundFXAudio()
