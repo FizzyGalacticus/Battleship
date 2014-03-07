@@ -15,10 +15,11 @@ using std::endl;
 
 ISoundEngine * Sound::_engine = createIrrKlangDevice();
 vector<ISoundSource*> Sound::_audioStreams;
+const MySoundEndReceiver* BackgroundAudio::_whenSoundIsFinishedReceiver = new MySoundEndReceiver();
 
 Sound::~Sound()
 {
-	_engine->drop();
+	if(_audioStreams.size()==0) _engine->drop();
 }
 
 void Sound::pauseAudio()
@@ -63,6 +64,14 @@ void BackgroundAudio::startBackgroundMusic()
 {
 	//Start playing first audio track
 	if(_streams.size() > 0) _engine->play2D(_streams[0], false);
+}
+
+
+//This function is called any time the current background song has finished playing.
+void MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
+{
+	// called when the sound has ended playing
+	//printf("sound has ended");
 }
 
 SoundFXAudio::SoundFXAudio(const string audioFilename)
