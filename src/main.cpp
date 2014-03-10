@@ -21,7 +21,6 @@ int main(const int argc, const char* argv[])
 	vector<string> backgroundMusicFileNames;
 	
 	backgroundMusicFileNames.push_back("../Media/emergency007.mp3");
-	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/NOFX/Surfer/I Gotta Pee.mp3");
 	
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
 	backgroundMusic.startBackgroundAudio(0);
