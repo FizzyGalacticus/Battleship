@@ -13,12 +13,12 @@ using std::cout;
 using std::endl;
 /*******************************************/
 
+/*************************************
+Static member variables of Sound class
+*************************************/
 ISoundEngine * Sound::_engine = createIrrKlangDevice();
 vector<ISoundSource*> Sound::_audioStreams;
-BackgroundAudio::MySoundEndReceiver* BackgroundAudio::_whenSoundIsFinishedReceiver(new MySoundEndReceiver);
-ISound* BackgroundAudio::_currentPlayingAudioStream;
-int BackgroundAudio::_currentPlayingAudioIndex(0);
-int BackgroundAudio::_numberOfTracks(0);
+ISound* Sound::_currentPlayingAudioStream = 0;
 
 Sound::~Sound()
 {
@@ -48,9 +48,18 @@ ISoundSource* Sound::initSound(const string audioFilename)
 	return stream;
 }
 
+/***********************************************
+Static member variables of BackgroundAudio class
+***********************************************/
+BackgroundAudio::MySoundEndReceiver* BackgroundAudio::_whenSoundIsFinishedReceiver = new MySoundEndReceiver();
+int BackgroundAudio::_currentPlayingAudioIndex(0);
+int BackgroundAudio::_numberOfTracks(0);
+vector<ISoundSource*> BackgroundAudio::_streams;
+
 BackgroundAudio::BackgroundAudio(const vector<string> audioFilenames)
 {
 	_numberOfTracks = audioFilenames.size();
+	
 	//Initialize _streams
 	for(int i = 0; i < audioFilenames.size(); i++)
 		_streams.push_back(initSound(audioFilenames[i]));
@@ -66,9 +75,10 @@ BackgroundAudio::~BackgroundAudio()
 
 void BackgroundAudio::startBackgroundAudio(const int index)
 {
-	//Start playing first audio track
-	if(_numberOfTracks > 0) _currentPlayingAudioStream = _engine->play2D(_streams[index], false);
+	//Start playing first audio track if there is one
+	if(_numberOfTracks > 0) _currentPlayingAudioStream = _engine->play2D(_streams[index], false,false,true);
 	
+	//If we got a valid pointer to ISound object, set stop receiver
 	if(_currentPlayingAudioStream)
 		_currentPlayingAudioStream->setSoundStopEventReceiver(_whenSoundIsFinishedReceiver);
 }
@@ -77,14 +87,12 @@ void BackgroundAudio::startBackgroundAudio(const int index)
 //This function is called any time the current background song has finished playing.
 void BackgroundAudio::MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound, irrklang::E_STOP_EVENT_CAUSE reason, void* userData)
 {
-	if(_currentPlayingAudioIndex == _numberOfTracks) _currentPlayingAudioIndex = 0;
+	//Check to see if we're at the end of the track list
+	if(_currentPlayingAudioIndex == (_numberOfTracks-1)) _currentPlayingAudioIndex = 0;
 	else _currentPlayingAudioIndex++;
 	
-/*******************************************************************/
-	
-	//startBackgroundAudio(_currentPlayingAudioIndex);
-	
-/*******************************************************************/
+	//Start new audio track
+	startBackgroundAudio(_currentPlayingAudioIndex);
 }
 
 SoundFXAudio::SoundFXAudio(const string audioFilename)

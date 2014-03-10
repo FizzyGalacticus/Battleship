@@ -28,6 +28,7 @@ class Sound
 	protected:
 		ISoundSource* initSound(const string audioFilename);
 		Sound() {}
+		static ISound* _currentPlayingAudioStream;
 		static vector<ISoundSource*> _audioStreams;
 		static ISoundEngine * _engine;
 };
@@ -38,7 +39,7 @@ class BackgroundAudio : public Sound
 	public:
 		BackgroundAudio(const vector<string> audioFilenames);
 		~BackgroundAudio();
-		void startBackgroundAudio(const int index);
+		static void startBackgroundAudio(const int index);
 	protected:
 		class MySoundEndReceiver : public irrklang::ISoundStopEventReceiver
 		{
@@ -47,11 +48,10 @@ class BackgroundAudio : public Sound
 		};
 	private:	
 		static MySoundEndReceiver* _whenSoundIsFinishedReceiver;
-		static ISound* _currentPlayingAudioStream;
 		static int _currentPlayingAudioIndex;
 		static int _numberOfTracks;
 		BackgroundAudio();
-		vector<ISoundSource*> _streams;
+		static vector<ISoundSource*> _streams;
 };
 
 class SoundFXAudio : public Sound
