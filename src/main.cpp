@@ -12,6 +12,7 @@ using std::cout;
 using std::endl;
 #include<vector>
 using std::vector;
+#include "Ship.h"
 
 int main(const int argc, const char* argv[])
 {
