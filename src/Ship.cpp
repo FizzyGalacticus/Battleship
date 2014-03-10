@@ -22,10 +22,18 @@ const map<string,int> Ship::createShipTypes()
 	return ourMap;
 }
 
-Ship::Ship(const string shipName)
+Ship::Ship(string shipName)
 {
+	map<string,int>::const_iterator itr = _shipTypes.find(shipName);
 	
+	if(itr != _shipTypes.end())
+	{
+		_nameOfShip = itr->first;
+		_hitPoints = itr->second;
+	}
 }
+
+const int & Ship::getNumberOfHitPoints() {return _hitPoints;}
 
 const vector<pair<int,int> > Ship::getCoordinates() const
 {

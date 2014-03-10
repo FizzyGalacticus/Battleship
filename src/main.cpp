@@ -26,6 +26,10 @@ int main(const int argc, const char* argv[])
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
 	backgroundMusic.startBackgroundAudio(0);
 	
+	Ship battleship("Battleship");
+	cout << "Name of ship: " << battleship.getNameOfShip() << endl;
+	cout << "# of Hitpoints: " << battleship.getNumberOfHitPoints() << endl;
+	
 	cout << endl << "Press 'q' to quit" << endl;
 	while(getchar() != 'q');
 	clearScreen();
