@@ -7,7 +7,11 @@
 
 #include "Board.h"
 #include <iostream>
+using std::cout;
 using std::endl;
+using std::cin;
+
+#include "osFunctions.cpp"
 
 
 Board::Board() : _gridSize(9)
@@ -35,11 +39,42 @@ void Board::initShips()
 		_ships.push_back(Ship(itr->first));
 	
 	bool isNotValidInput = true;
+	string input;
+	pair<int,int> inputCoordinate;
 	
-	while(isNotValidInput)
+	//Go through each ship
+	for(int i = 0; i < _ships.size(); i++)
 	{
+		vector<pair<int,int> > totalInputCoordinates;
 		
+		//Get proper input of coordinates
+		while(isNotValidInput)
+		{
+			printBoard(cout);
+			
+			cout << "Please type desired coordinates (example: 'I4'): ";
+			getline(cin, input);
+			
+			inputCoordinate = parseUserInput(input);
+			clearScreen();
+			
+			//Set proper coordinates to ship
+			if(inputCoordinate.first > 0 && inputCoordinate.second > 0)
+			{
+				isNotValidInput = false;
+				totalInputCoordinates.push_back(inputCoordinate);
+				//Get directional coordinates of ship
+				//Add to totalInputCoordinates
+				//Set _ships[i] coordinates to totalInputCoordinates
+			}
+		}
 	}
+}
+
+//TODO
+pair<int,int> Board::parseUserInput(const string & input)
+{
+	return pair<int,int>(-1,-1);
 }
 
 const bool Board::isOccupied(const int x, const int y)

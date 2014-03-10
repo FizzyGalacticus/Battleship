@@ -14,6 +14,9 @@ using std::ostream;
 #include <string>
 using std::string;
 
+#include <utility>
+using std::pair;
+
 #include "Ship.h"
 
 class Board
@@ -26,6 +29,7 @@ class Board
 	private:
 		void initBoard();
 		void initShips();
+		pair<int,int> parseUserInput(const string &);
 		const string getEndString();
 		const string getMidString();
 		vector<vector<bool> > _board;
