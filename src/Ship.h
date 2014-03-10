@@ -21,6 +21,7 @@ class Ship
 {
 	public:
 		const vector<pair<int,int> > getCoordinates() const;
+		void setCoordinates(vector<pair<int,int> >);
 		const string & getNameOfShip() const;
 		const bool sustainDamage(const pair<int,int>);
 		Ship(const string);
