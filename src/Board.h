@@ -14,6 +14,8 @@ using std::ostream;
 #include <string>
 using std::string;
 
+#include "Ship.h"
+
 class Board
 {
 	public:
@@ -23,10 +25,12 @@ class Board
 		void printBoard(ostream &);
 	private:
 		void initBoard();
+		void initShips();
 		const string getEndString();
 		const string getMidString();
 		vector<vector<bool> > _board;
 		const int _gridSize;
+		vector<Ship> _ships;
 };
 
 #endif

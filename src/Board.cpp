@@ -29,6 +29,19 @@ void Board::initBoard()
 	}
 }
 
+void Board::initShips()
+{
+	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
+		_ships.push_back(Ship(itr->first));
+	
+	bool isNotValidInput = true;
+	
+	while(isNotValidInput)
+	{
+		
+	}
+}
+
 const bool Board::isOccupied(const int x, const int y)
 {
 	return _board[x][y];
@@ -36,11 +49,18 @@ const bool Board::isOccupied(const int x, const int y)
 
 void Board::printBoard(ostream & out)
 {	
-	out << getEndString() << endl;
+	//print row index
+	const char rowHeaders[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+	
+	for(int i = 0; i < _gridSize; i++) out  << "   " << rowHeaders[i];
+	out << endl;
+	
+	out << ' ' << getEndString() << endl;
 	out << getMidString() << endl;
 	
 	for(int i = 0; i < _gridSize; i++)
 	{
+		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
 			out << "| " << (isOccupied(i,j)?'T':'F') << ' ';
@@ -49,7 +69,7 @@ void Board::printBoard(ostream & out)
 		out << getMidString() << endl;
 	}
 	
-	out << getEndString() << endl;
+	out << ' ' << getEndString() << endl;
 }
 
 const string Board::getEndString()
@@ -67,8 +87,8 @@ const string Board::getMidString()
 {
 	string temp;
 	
-	for(int i = 0; i < _gridSize; i++) temp += "| - ";
-	temp += '|';
+	for(int i = 0; i < _gridSize; i++) temp += " | -";
+	temp += " |";
 	
 	return temp;
 }

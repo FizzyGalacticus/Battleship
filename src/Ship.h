@@ -26,13 +26,13 @@ class Ship
 		const bool sustainDamage(const pair<int,int>);
 		Ship(const string);
 		const int & getNumberOfHitPoints();
+		static const map<string,int> _shipTypes;
 	private:
 		Ship();
 		vector<pair<int,int> > _coordinates;
 		vector<int> _activeCoordIndex; //Better name?
 		string _nameOfShip;
 		static const map<string,int> createShipTypes();
-		static const map<string,int> _shipTypes;
 		int _hitPoints;
 };
 
