@@ -7,7 +7,7 @@
 
 #include "Ship.h"
 
-const vector<pair<int,int> > Ship::getCoordinates()
+const vector<pair<int,int> > Ship::getCoordinates() const
 {
 	vector<pair<int,int> > temp;
 	
@@ -17,9 +17,18 @@ const vector<pair<int,int> > Ship::getCoordinates()
 	return temp;
 }
 
-const string & Ship::getNameOfShip()
+const string & Ship::getNameOfShip() const
 {
 	return _nameOfShip;
+}
+
+const bool Ship::sustainDamage(const pair<int,int> damagedCoord)
+{
+	for(int i = 0; i < _activeCoordIndex.size(); i++)
+		if(_coordinates[_activeCoordIndex[i]] == damagedCoord)
+			_activeCoordIndex.erase(_activeCoordIndex.begin()+i);
+	
+	return _activeCoordIndex.size();
 }
 
 #endif

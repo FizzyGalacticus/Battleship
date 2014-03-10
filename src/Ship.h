@@ -17,8 +17,9 @@ using std::string;
 class Ship
 {
 	public:
-		const vector<pair<int,int> > getCoordinates();
-		const string & getNameOfShip();
+		const vector<pair<int,int> > getCoordinates() const;
+		const string & getNameOfShip() const;
+		const bool sustainDamage(const pair<int,int>);
 	private:
 		vector<pair<int,int> > _coordinates;
 		vector<int> _activeCoordIndex; //Better name?
