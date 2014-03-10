@@ -14,16 +14,23 @@ using std::pair;
 #include <string>
 using std::string;
 
+#include <map>
+using std::map;
+
 class Ship
 {
 	public:
 		const vector<pair<int,int> > getCoordinates() const;
 		const string & getNameOfShip() const;
 		const bool sustainDamage(const pair<int,int>);
+		Ship(const string);
 	private:
+		Ship();
 		vector<pair<int,int> > _coordinates;
 		vector<int> _activeCoordIndex; //Better name?
 		const string _nameOfShip;
+		static const map<string,int> createShipTypes();
+		static const map<string,int> _shipTypes;
 };
 
 #endif

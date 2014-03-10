@@ -7,6 +7,26 @@
 
 #include "Ship.h"
 
+const map<string,int> Ship::_shipTypes = createShipTypes();
+
+const map<string,int> Ship::createShipTypes()
+{
+	map<string,int> ourMap;
+	
+	ourMap["Aircraft Carrier"] = 5;
+	ourMap["Battleship"] = 4;
+	ourMap["Submarine"] = 3;
+	ourMap["Cruiser"] = 3;
+	ourMap["Destroyer"] = 2;
+	
+	return ourMap;
+}
+
+Ship::Ship(const string shipName)
+{
+	
+}
+
 const vector<pair<int,int> > Ship::getCoordinates() const
 {
 	vector<pair<int,int> > temp;
