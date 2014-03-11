@@ -40,7 +40,7 @@ void Sound::unpauseAudio()
 ISoundSource* Sound::initSound(const string audioFilename)
 {
 	//Start playing audio file
-	ISoundSource * stream = _engine->addSoundSourceFromFile(audioFilename.c_str());
+	ISoundSource * stream(_engine->addSoundSourceFromFile(audioFilename.c_str()));
 	
 	//Add new stream to vector of audio streams
 	_audioStreams.push_back(stream);

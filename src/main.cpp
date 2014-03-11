@@ -13,20 +13,22 @@ using std::endl;
 #include<vector>
 using std::vector;
 #include "Ship.h"
+#include <exception>
+using std::exception;
 
 int main(const int argc, const char* argv[])
 {
-	clearScreen();
+	//clearScreen();
 	
 	//TESTING BACKGROUND MUSIC
 	vector<string> backgroundMusicFileNames;
 	
-	backgroundMusicFileNames.push_back("../Media/emergency007.mp3");
+	backgroundMusicFileNames.push_back("the-neighbourhood-sweater-weather.mp3");
 	
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
 	backgroundMusic.startBackgroundAudio(0);
 	
-	//TESTING SHIP CLASS
+	/*//TESTING SHIP CLASS
 	Ship battleship("Battleship");
 	cout << "Name of ship: " << battleship.getNameOfShip() << endl;
 	cout << "# of Hitpoints: " << battleship.getNumberOfHitPoints() << endl;
@@ -37,7 +39,7 @@ int main(const int argc, const char* argv[])
 	
 	cout << endl << "Press 'q' to quit" << endl;
 	while(getchar() != 'q');
-	clearScreen();
+	clearScreen();*/
 	
 	return 0;
 }
