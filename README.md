@@ -9,4 +9,8 @@ Compiling on different systems
 Windows - "g++ main.cpp Sound.cpp Board.cpp irrKlang\lib\Win32-gcc\libirrKlang.a"
 
 Linux - "g++ main.cpp -m32 Sound.cpp Board.cpp libIrrKlang.so -pthread"
-**NOTE** For compiling on 64-bit linux, you must use the -m32 switch and have the following libraries installed: { g++-multilib ia32-libs lib32gcc1 libc6-dev-i386 ia32-libs }. You must also set the LD_LIBRARY_PATH to the directory where the libIrrKlang.so file is located.
+**NOTE** For compiling on 64-bit linux, you must use the -m32 switch and have the following libraries installed: { g++-multilib ia32-libs lib32gcc1 libc6-dev-i386 ia32-libs }. You must also move libIrrKlang.so to /usr/lib AND/OR /usr/local/lib.
+
+Command to run from /src/ file of repository: 
+
+sudo apt-get install g++-multilib && sudo apt-get install ia32-libs && sudo apt-get install lib32gcc1 && sudo apt-get install  libc6-dev-i386 && sudo apt-get install ia32-libs && sudo cp libIrrKlang.so /usr/lib && sudo cp libIrrKlang.so /usr/local/lib
