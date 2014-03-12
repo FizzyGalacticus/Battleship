@@ -80,7 +80,42 @@ pair<int,int> Board::parseUserInput(const string & input)
 //TODO
 const string Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
 {
-	return string();
+	string possibleDirections;
+	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
+	
+	//Check right direction
+	if((xCoord + spaceNeeded ) <= (_gridSize - 1))
+		for(int i = xCoord; i < (xCoord + spaceNeeded); i++)
+		{
+			if(_board[i][yCoord]) break;
+			if(i == (xCoord + spaceNeeded) && !(_board[i][yCoord])) possibleDirections += "R";
+		}
+	
+	//Check down direction
+	if((yCoord + spaceNeeded ) <= (_gridSize - 1))
+		for(int i = yCoord; i < (yCoord + spaceNeeded); i++)
+		{
+			if(_board[xCoord][i]) break;
+			if(i == (yCoord + spaceNeeded) && !(_board[xCoord][i])) possibleDirections += "D";
+		}
+	
+	//Check left direction
+	if((xCoord - spaceNeeded ) >= 0)
+		for(int i = xCoord; i >= (xCoord - spaceNeeded); i--)
+		{
+			if(_board[i][yCoord]) break;
+			if(i == (xCoord - spaceNeeded) && !(_board[i][yCoord])) possibleDirections += "L";
+		}
+	
+	//Check up direction
+	if((yCoord - spaceNeeded ) >= 0)
+		for(int i = yCoord; i >= (yCoord - spaceNeeded); i--)
+		{
+			if(_board[xCoord][i]) break;
+			if(i == (yCoord - spaceNeeded) && !(_board[xCoord][i])) possibleDirections += "U";
+		}
+	
+	return possibleDirections;	
 }
 
 const bool Board::isOccupied(const int x, const int y)
