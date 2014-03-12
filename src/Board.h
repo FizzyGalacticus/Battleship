@@ -30,6 +30,7 @@ class Board
 		void initBoard();
 		void initShips();
 		pair<int,int> parseUserInput(const string &);
+		const string getPossibleShipDirection(const pair<int,int> &, const int &);
 		const string getEndString();
 		const string getMidString();
 		vector<vector<bool> > _board;

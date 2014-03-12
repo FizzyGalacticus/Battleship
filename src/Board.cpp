@@ -52,7 +52,7 @@ void Board::initShips()
 		{
 			printBoard(cout);
 			
-			cout << "Please type desired coordinates (example: 'I4'): ";
+			cout << "Please type desired coordinates for front of ship (example: 'I4'): ";
 			getline(cin, input);
 			
 			inputCoordinate = parseUserInput(input);
@@ -75,6 +75,12 @@ void Board::initShips()
 pair<int,int> Board::parseUserInput(const string & input)
 {
 	return pair<int,int>(-1,-1);
+}
+
+//TODO
+const string Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
+{
+	return string();
 }
 
 const bool Board::isOccupied(const int x, const int y)
