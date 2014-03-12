@@ -18,7 +18,7 @@ using std::exception;
 
 int main(const int argc, const char* argv[])
 {
-	//clearScreen();
+	clearScreen();
 	
 	//TESTING BACKGROUND MUSIC
 	vector<string> backgroundMusicFileNames;
@@ -28,10 +28,21 @@ int main(const int argc, const char* argv[])
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
 	backgroundMusic.startBackgroundAudio(0);
 	
+	clearScreen();
+	
 	//TESTING SHIP CLASS
-	Ship battleship("Battleship");
-	cout << "Name of ship: " << battleship.getNameOfShip() << endl;
-	cout << "# of Hitpoints: " << battleship.getNumberOfHitPoints() << endl;
+	vector<Ship> myShips;
+	myShips.push_back(Ship("Battleship"));
+	myShips.push_back(Ship("Aircraft Carrier"));
+	myShips.push_back(Ship("Submarine"));
+	myShips.push_back(Ship("Destroyer"));
+	myShips.push_back(Ship("Cruiser"));
+	
+	for(vector<Ship>::iterator itr = myShips.begin(); itr != myShips.end(); itr++)
+	{
+		cout << "Name of ship: " << itr->getNameOfShip() << endl;
+		cout << "# of Hitpoints: " << itr->getNumberOfHitPoints() << endl;
+	}
 	
 	//TESTING BOARD CLASS
 	//Board myboard;
