@@ -46,13 +46,16 @@ void Board::initShips()
 	for(int i = 0; i < _ships.size(); i++)
 	{
 		vector<pair<int,int> > totalInputCoordinates;
+		const int & shipHitpoints = _ships[i].getNumberOfHitPoints();
+		const string & shipName = _ships[i].getNameOfShip();
 		
 		//Get proper input of coordinates
 		while(isNotValidInput)
 		{
 			printBoard(cout);
 			
-			cout << "Please type desired coordinates for front of ship (example: 'I4'): ";
+			cout << "Please type desired coordinates for front of " << shipName
+				<< endl << '(' << shipHitpoints << " total spaces neeed) " << "(example: 'I4'): ";
 			getline(cin, input);
 			
 			inputCoordinate = parseUserInput(input);
@@ -63,6 +66,82 @@ void Board::initShips()
 			{
 				isNotValidInput = false;
 				totalInputCoordinates.push_back(inputCoordinate);
+				const string possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
+				char directionInput = 0;
+				map<char, bool> availableDirections;
+				availableDirections['U'] = false;
+				availableDirections['D'] = false;
+				availableDirections['L'] = false;
+				availableDirections['R'] = false;
+				
+				while(true)
+				{
+					cout << "Which direction would you like your " << shipName << " to be facing?" << endl;
+					cout << "Your options are: " << endl;
+					
+					for(int j = 0; j < possibleShipDirections.size(); j++)
+					{
+						if(possibleShipDirections[i] == 'U')
+						{
+							cout << "Up" << endl;
+							availableDirections['U'] = true;
+						}
+						if(possibleShipDirections[i] == 'D')
+						{
+							cout << "Down" << endl;
+							availableDirections['D'] = true;
+						}
+						if(possibleShipDirections[i] == 'L')
+						{
+							cout << "Left" << endl;
+							availableDirections['L'] = true;
+						}
+						if(possibleShipDirections[i] == 'R')
+						{
+							cout << "Right" << endl;
+							availableDirections['R'] = true;
+						}
+					}
+					cin >> directionInput;
+					
+					clearScreen();
+					
+					switch(directionInput)
+					{
+						case 'U':
+						case 'u':
+							if(availableDirections['U'])
+							{
+								
+							}
+						break;
+						case 'D':
+						case 'd':
+							if(availableDirections['D'])
+							{
+								
+							}
+						break;
+						case 'L':
+						case 'l':
+							if(availableDirections['L'])
+							{
+								
+							}
+						break;
+						case 'R':
+						case 'r':
+							if(availableDirections['R'])
+							{
+								
+							}
+						break;
+						default:
+							
+						break;
+					}
+				}
+				
 				//Get directional coordinates of ship
 				//Add to totalInputCoordinates
 				//Set _ships[i] coordinates to totalInputCoordinates
@@ -77,7 +156,6 @@ pair<int,int> Board::parseUserInput(const string & input)
 	return pair<int,int>(-1,-1);
 }
 
-//TODO
 const string Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
 {
 	string possibleDirections;
