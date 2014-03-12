@@ -4,7 +4,7 @@
 
 ####Compiling on different systems
 
-**Windows** - "g++ main.cpp Sound.cpp Board.cpp irrKlang\lib\Win32-gcc\libirrKlang.a"
+**Windows** - "g++ main.cpp Sound.cpp Ship.cpp Board.cpp irrKlang\lib\Win32-gcc\libirrKlang.a"
 
 **Linux** - "g++ main.cpp -m32 Sound.cpp Board.cpp Ship.cpp libIrrKlang.so -pthread"
 
