@@ -66,81 +66,8 @@ void Board::initShips()
 			{
 				isNotValidInput = false;
 				totalInputCoordinates.push_back(inputCoordinate);
-				const string possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
+				const vector<vector<pair<int, int> > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
 				char directionInput = 0;
-				map<char, bool> availableDirections;
-				availableDirections['U'] = false;
-				availableDirections['D'] = false;
-				availableDirections['L'] = false;
-				availableDirections['R'] = false;
-				
-				while(true)
-				{
-					cout << "Which direction would you like your " << shipName << " to be facing?" << endl;
-					cout << "Your options are: " << endl;
-					
-					for(int j = 0; j < possibleShipDirections.size(); j++)
-					{
-						if(possibleShipDirections[i] == 'U')
-						{
-							cout << "Up" << endl;
-							availableDirections['U'] = true;
-						}
-						if(possibleShipDirections[i] == 'D')
-						{
-							cout << "Down" << endl;
-							availableDirections['D'] = true;
-						}
-						if(possibleShipDirections[i] == 'L')
-						{
-							cout << "Left" << endl;
-							availableDirections['L'] = true;
-						}
-						if(possibleShipDirections[i] == 'R')
-						{
-							cout << "Right" << endl;
-							availableDirections['R'] = true;
-						}
-					}
-					cin >> directionInput;
-					
-					clearScreen();
-					
-					switch(directionInput)
-					{
-						case 'U':
-						case 'u':
-							if(availableDirections['U'])
-							{
-								
-							}
-						break;
-						case 'D':
-						case 'd':
-							if(availableDirections['D'])
-							{
-								
-							}
-						break;
-						case 'L':
-						case 'l':
-							if(availableDirections['L'])
-							{
-								
-							}
-						break;
-						case 'R':
-						case 'r':
-							if(availableDirections['R'])
-							{
-								
-							}
-						break;
-						default:
-							
-						break;
-					}
-				}
 				
 				//Get directional coordinates of ship
 				//Add to totalInputCoordinates
@@ -156,44 +83,65 @@ pair<int,int> Board::parseUserInput(const string & input)
 	return pair<int,int>(-1,-1);
 }
 
-const string Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
+const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
 {
-	string possibleDirections;
+	vector<vector<pair<int, int> > > possibleDirections;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
-	//Check right direction
-	if((xCoord + spaceNeeded ) <= (_gridSize - 1))
-		for(int i = xCoord; i < (xCoord + spaceNeeded); i++)
-		{
-			if(_board[i][yCoord]) break;
-			if(i == (xCoord + spaceNeeded) && !(_board[i][yCoord])) possibleDirections += "R";
-		}
-	
-	//Check down direction
-	if((yCoord + spaceNeeded ) <= (_gridSize - 1))
-		for(int i = yCoord; i < (yCoord + spaceNeeded); i++)
-		{
-			if(_board[xCoord][i]) break;
-			if(i == (yCoord + spaceNeeded) && !(_board[xCoord][i])) possibleDirections += "D";
-		}
-	
-	//Check left direction
-	if((xCoord - spaceNeeded ) >= 0)
-		for(int i = xCoord; i >= (xCoord - spaceNeeded); i--)
-		{
-			if(_board[i][yCoord]) break;
-			if(i == (xCoord - spaceNeeded) && !(_board[i][yCoord])) possibleDirections += "L";
-		}
-	
-	//Check up direction
-	if((yCoord - spaceNeeded ) >= 0)
-		for(int i = yCoord; i >= (yCoord - spaceNeeded); i--)
-		{
-			if(_board[xCoord][i]) break;
-			if(i == (yCoord - spaceNeeded) && !(_board[xCoord][i])) possibleDirections += "U";
-		}
+	possibleDirections.push_back(getUpAndLeftCoords(xCoord, spaceNeeded, 'U'));
+	possibleDirections.push_back(getDownAndRightCoords(xCoord, spaceNeeded, 'D'));
+	possibleDirections.push_back(getUpAndLeftCoords(yCoord, spaceNeeded, 'L'));
+	possibleDirections.push_back(getDownAndRightCoords(yCoord, spaceNeeded, 'R'));
 	
 	return possibleDirections;	
+}
+
+//MAYBE WE CAN REFACTOR THIS?!
+const vector<pair<int, int> > Board::getDownAndRightCoords(const int baseCoord, const int spaceNeeded, const char direction)
+{
+	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
+	//the other for all coordinates once we verify that the Ship will fit in that area.
+	vector<pair<int, int> > possibleCoords, coordsChecked;
+	
+	if((baseCoord + spaceNeeded ) <= (_gridSize - 1))
+	{
+		//Go through all coordinates that need to be checked
+		for(int i = baseCoord; i <= (baseCoord + spaceNeeded); i++)
+		{
+			//Add this coordinate to the checked coord vector depending on direction
+			coordsChecked.push_back((direction == 'D')?pair<int, int>(baseCoord,i):pair<int, int>(i,baseCoord));
+			
+			//Break and return empty vector if any of the spaces contain a ship
+			if((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord]) break;
+			if(i == baseCoord && !((direction == 'D')?_board[baseCoord][i]:_board[i][baseCoord])) possibleCoords = coordsChecked;
+		}
+	}
+	
+	return possibleCoords;
+}
+
+//MAYBE WE CAN REFACTOR THIS?!
+const vector<pair<int, int> > Board::getUpAndLeftCoords(const int baseCoord, const int spaceNeeded, const char direction)
+{
+	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
+	//the other for all coordinates once we verify that the Ship will fit in that area.
+	vector<pair<int, int> > possibleCoords, coordsChecked;
+	
+	if((baseCoord - spaceNeeded ) >= 0)
+	{
+		//Go through all coordinates that need to be checked
+		for(int i = (baseCoord - spaceNeeded); i <= baseCoord; i++)
+		{
+			//Add this coordinate to the checked coord vector depending on direction
+			coordsChecked.push_back((direction == 'U')?pair<int, int>(baseCoord,i):pair<int, int>(i,baseCoord));
+			
+			//Break and return empty vector if any of the spaces contain a ship
+			if((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord]) break;
+			if(i == baseCoord && !((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord])) possibleCoords = coordsChecked;
+		}
+	}
+	
+	return possibleCoords;
 }
 
 const bool Board::isOccupied(const int x, const int y)
