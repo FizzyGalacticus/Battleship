@@ -37,12 +37,7 @@ const int & Ship::getNumberOfHitPoints() {return _hitPoints;}
 
 const vector<pair<int,int> > Ship::getCoordinates() const
 {
-	vector<pair<int,int> > temp;
-	
-	for( int i = 0; i < _activeCoordIndex.size(); i++)
-		temp.push_back(_coordinates[i]);
-	
-	return temp;
+	return _coordinates;
 }
 
 void Ship::setCoordinates(vector<pair<int,int> > shipCoordinates)

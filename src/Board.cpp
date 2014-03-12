@@ -33,6 +33,19 @@ void Board::initBoard()
 	}
 }
 
+void Board::assignShipCoordinatesOnBoard()
+{
+	for(int i = 0; i < _ships.size(); i++)
+	{
+		vector<pair<int, int> > coordinates = _ships[i].getCoordinates();
+		
+		for(int j = 0; j < coordinates.size(); j++)
+		{
+			_board[coordinates[j].first][coordinates[j].second] = true;
+		}
+	}
+}
+
 void Board::initShips()
 {
 	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
@@ -69,9 +82,59 @@ void Board::initShips()
 				const vector<vector<pair<int, int> > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
 				char directionInput = 0;
 				
-				//Get directional coordinates of ship
-				//Add to totalInputCoordinates
-				//Set _ships[i] coordinates to totalInputCoordinates
+				while(true)
+				{
+					cout << "Please enter a direction (UDLR) you would like to face your ship." << endl;
+					cout << "Your options are: " << endl;
+					for(int j = 0; j < possibleShipDirections.size(); j++)
+					{
+						if(j == 0 && possibleShipDirections[j].size()) cout << "Up" << endl;
+						if(j == 1 && possibleShipDirections[j].size()) cout << "Down" << endl;
+						if(j == 2 && possibleShipDirections[j].size()) cout << "Left" << endl;
+						if(j == 3 && possibleShipDirections[j].size()) cout << "Right" << endl;
+					}
+					
+					cin >> directionInput;
+					
+					clearScreen();
+					
+					switch(directionInput)
+					{
+						case 'U':
+						case 'u':
+							if(possibleShipDirections[0].size())
+							{
+								_ships[i].setCoordinates(possibleShipDirections[0]);
+							}
+						break;
+						case 'D':
+						case 'd':
+							if(possibleShipDirections[1].size())
+							{
+								_ships[i].setCoordinates(possibleShipDirections[1]);
+							}
+						break;
+						case 'L':
+						case 'l':
+							if(possibleShipDirections[2].size())
+							{
+								_ships[i].setCoordinates(possibleShipDirections[2]);
+							}
+						break;
+						case 'R':
+						case 'r':
+							if(possibleShipDirections[3].size())
+							{
+								_ships[i].setCoordinates(possibleShipDirections[3]);
+							}
+						break;
+						default:
+							cout << "Bad Selection. Please try again." << endl;
+						break;
+					}
+				}
+				
+				assignShipCoordinatesOnBoard();
 			}
 		}
 	}
