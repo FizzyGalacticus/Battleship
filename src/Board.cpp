@@ -35,16 +35,13 @@ void Board::initBoard()
 	}
 }
 
-void Board::assignShipCoordinatesOnBoard()
+void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 {
-	for(int i = 0; i < _ships.size(); i++)
-	{
-		vector<pair<int, int> > coordinates = _ships[i].getCoordinates();
+	vector<pair<int, int> > coordinates = currentShip.getCoordinates();
 		
-		for(int j = 0; j < coordinates.size(); j++)
-		{
-			_board[coordinates[j].first][coordinates[j].second] = true;
-		}
+	for(int i = 0; i < coordinates.size(); i++)
+	{
+		_board[coordinates[i].first][coordinates[i].second] = true;
 	}
 }
 
@@ -77,7 +74,7 @@ void Board::initShips()
 			clearScreen();
 			
 			//Set proper coordinates to ship
-			if(inputCoordinate.first > 0 && inputCoordinate.second > 0)
+			if(inputCoordinate.first >= 0 && inputCoordinate.second >= 0)
 			{
 				isNotValidInput = false;
 				const vector<vector<pair<int, int> > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
@@ -95,9 +92,9 @@ void Board::initShips()
 					for(int j = 0; j < possibleShipDirections.size(); j++)
 					{
 						if(j == 0 && possibleShipDirections[j].size()) cout << "Up" << endl;
-						if(j == 1 && possibleShipDirections[j].size()) cout << "Down" << endl;
-						if(j == 2 && possibleShipDirections[j].size()) cout << "Left" << endl;
-						if(j == 3 && possibleShipDirections[j].size()) cout << "Right" << endl;
+						else if(j == 1 && possibleShipDirections[j].size()) cout << "Down" << endl;
+						else if(j == 2 && possibleShipDirections[j].size()) cout << "Left" << endl;
+						else if(j == 3 && possibleShipDirections[j].size()) cout << "Right" << endl;
 					}
 					
 					directionInput = getchar();
@@ -142,10 +139,11 @@ void Board::initShips()
 			}
 			else cout << "Error: Input invalid." << endl;
 		}
+		
+		isNotValidInput = true;
+		assignShipCoordinatesOnBoard(_ships[i]);
 	}
-	
-	assignShipCoordinatesOnBoard();
-	
+		
 	printBoard(cout);
 }
 
@@ -187,12 +185,73 @@ pair<int,int> Board::parseUserInput(const string & input)
 const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
 {
 	vector<vector<pair<int, int> > > possibleDirections;
+	vector<pair<int, int> > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
+	//Check up
+	if((yCoord - spaceNeeded) >= 0)
+	{
+		vector<pair<int, int> > checked;
+		for(int i = (yCoord - spaceNeeded); i <= yCoord; i++)
+		{
+			checked.push_back(pair<int,int>(i,xCoord));
+			
+			if(isOccupied(xCoord,i)) break;
+			else if(i == yCoord) up = checked;
+		}
+	}
+	
+	//Check down
+	if((yCoord + spaceNeeded) < (_gridSize-1))
+	{
+		vector<pair<int, int> > checked;
+		
+		for(int i = yCoord; i <= (yCoord + spaceNeeded); i++)
+		{
+			checked.push_back(pair<int,int>(i,xCoord));
+			
+			if(isOccupied(xCoord,i)) break;
+			else if(i == (yCoord + spaceNeeded)) down = checked;
+		}
+	}
+	
+	//Check left
+	if((xCoord - spaceNeeded) >= 0)
+	{
+		vector<pair<int, int> > checked;
+		for(int i = (xCoord - spaceNeeded); i <= xCoord; i++)
+		{
+			checked.push_back(pair<int,int>(yCoord,i));
+			
+			if(isOccupied(i,yCoord)) break;
+			else if(i == xCoord) left = checked;
+		}
+	}
+	
+	//Check right
+	if((xCoord + spaceNeeded) < (_gridSize-1))
+	{
+		vector<pair<int, int> > checked;
+		for(int i = xCoord; i <= (xCoord + spaceNeeded); i++)
+		{
+			checked.push_back(pair<int,int>(yCoord,i));
+			
+			if(isOccupied(i,yCoord)) break;
+			else if(i == (xCoord + spaceNeeded)) right = checked;
+		}
+	}
+	
+	/*
 	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'U'));
 	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'D'));
 	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'L'));
 	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'R'));
+	*/
+	
+	possibleDirections.push_back(up);
+	possibleDirections.push_back(down);
+	possibleDirections.push_back(left);
+	possibleDirections.push_back(right);
 	
 	return possibleDirections;	
 }

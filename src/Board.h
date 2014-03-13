@@ -33,7 +33,7 @@ class Board
 		const vector<vector<pair<int, int> > > getPossibleShipDirection(const pair<int,int> &, const int &);
 		const vector<pair<int, int> > getUpAndLeftCoords(const pair<int,int> &, const int, const char);
 		const vector<pair<int, int> > getDownAndRightCoords(const pair<int,int> &, const int, const char);
-		void assignShipCoordinatesOnBoard();
+		void assignShipCoordinatesOnBoard(const Ship &);
 		const string getEndString();
 		const string getMidString();
 		vector<vector<bool> > _board;

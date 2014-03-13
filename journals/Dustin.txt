@@ -17,3 +17,4 @@ Fixed Board class print function to display indices of rows and columns. Attempt
 
 3/12/14 - Compiled and ran source on the Windows machine in the UAF Chapman lab... everything worked just fine. At this point I'm completely frustrated with the crashing issue. 
 Bucky and I met at the lab and knocked out a good portion of (what probably is the hardest portion of) the logic in our program. Added the ability to place ships on the board. Haven't fully tested yet to make sure all of the logic is sound.
+--Just tested, and it was horrible! Nothing was right whatsoever. Re-wrote it in a longer fashion, and now it works, but only for the first ship that is checked. We most likely just need to refactor and break things down into more functions.
