@@ -46,16 +46,6 @@ int main(const int argc, const char* argv[])
 	
 	//TESTING BOARD CLASS
 	Board myboard;
-	myboard.printBoard(cout);
-	
-	cout << endl << "Press 'q' to quit" << endl;
-	while(getchar() != 'q');
-	clearScreen();
-	
-	int numOne = -1, numTwo = 1;
-	
-	cout << ((numOne)?"True!":"False!") << endl;
-	cout << ((numTwo)?"True!":"False!") << endl;
 	
 	return 0;
 }

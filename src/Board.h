@@ -31,8 +31,8 @@ class Board
 		void initShips();
 		pair<int,int> parseUserInput(const string &);
 		const vector<vector<pair<int, int> > > getPossibleShipDirection(const pair<int,int> &, const int &);
-		const vector<pair<int, int> > getUpAndLeftCoords(const int, const int, const char);
-		const vector<pair<int, int> > getDownAndRightCoords(const int, const int, const char);
+		const vector<pair<int, int> > getUpAndLeftCoords(const pair<int,int> &, const int, const char);
+		const vector<pair<int, int> > getDownAndRightCoords(const pair<int,int> &, const int, const char);
 		void assignShipCoordinatesOnBoard();
 		const string getEndString();
 		const string getMidString();

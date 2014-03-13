@@ -5,6 +5,14 @@
 #ifndef __OS__FUNCTIONS__
 #define __OS__FUNCTIONS__
 
+#include <stdio.h>
+
+inline void wait()
+{
+	cout << "Press ENTER to continue";
+	while(getchar() != '\n');
+}
+
 #include <stdlib.h>
 
 	//***********IF ON WINDOWS**************

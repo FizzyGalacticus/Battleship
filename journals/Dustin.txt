@@ -14,3 +14,6 @@
 Fixed Board class print function to display indices of rows and columns. Attempted to run on a personal Windows machine (after freshly compiling it on that system), and the process crashes at what I believe to be line 43 of the Sound.cpp file. Further investigation leads me to believe that it is quite possibly a sound driver issue.
 
 3/11/14 - Compiled source on a separate Windows machine --same results. Crashes immediately when attempting to initialize the sound. Now I'm not quite sure what the issue is. Updated the source on linux x64 machine and ran --no problems at all. I'm completely boggled at this.
+
+3/12/14 - Compiled and ran source on the Windows machine in the UAF Chapman lab... everything worked just fine. At this point I'm completely frustrated with the crashing issue. 
+Bucky and I met at the lab and knocked out a good portion of (what probably is the hardest portion of) the logic in our program. Added the ability to place ships on the board. Haven't fully tested yet to make sure all of the logic is sound.

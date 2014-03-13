@@ -14,14 +14,16 @@ using std::cin;
 #include "osFunctions.cpp"
 
 
-Board::Board() : _gridSize(9)
+Board::Board() : _gridSize(10)
 {
 	initBoard();
+	initShips();
 }
 
 Board::Board(const int size) : _gridSize(size)
 {
 	initBoard();
+	initShips();
 }
 
 void Board::initBoard()
@@ -58,7 +60,6 @@ void Board::initShips()
 	//Go through each ship
 	for(int i = 0; i < _ships.size(); i++)
 	{
-		vector<pair<int,int> > totalInputCoordinates;
 		const int & shipHitpoints = _ships[i].getNumberOfHitPoints();
 		const string & shipName = _ships[i].getNameOfShip();
 		
@@ -68,22 +69,27 @@ void Board::initShips()
 			printBoard(cout);
 			
 			cout << "Please type desired coordinates for front of " << shipName
-				<< endl << '(' << shipHitpoints << " total spaces neeed) " << "(example: 'I4'): ";
+				<< endl << '(' << shipHitpoints << " total spaces needed) " << "(example: 'I4'): ";
 			getline(cin, input);
 			
 			inputCoordinate = parseUserInput(input);
+			
 			clearScreen();
 			
 			//Set proper coordinates to ship
 			if(inputCoordinate.first > 0 && inputCoordinate.second > 0)
 			{
 				isNotValidInput = false;
-				totalInputCoordinates.push_back(inputCoordinate);
 				const vector<vector<pair<int, int> > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
 				char directionInput = 0;
 				
-				while(true)
+				while((directionInput != 'U' && directionInput != 'u') &&
+					  (directionInput != 'D' && directionInput != 'd') &&
+					  (directionInput != 'L' && directionInput != 'l') &&
+					  (directionInput != 'R' && directionInput != 'r'))
 				{
+					printBoard(cout);
+					
 					cout << "Please enter a direction (UDLR) you would like to face your ship." << endl;
 					cout << "Your options are: " << endl;
 					for(int j = 0; j < possibleShipDirections.size(); j++)
@@ -94,7 +100,7 @@ void Board::initShips()
 						if(j == 3 && possibleShipDirections[j].size()) cout << "Right" << endl;
 					}
 					
-					cin >> directionInput;
+					directionInput = getchar();
 					
 					clearScreen();
 					
@@ -133,17 +139,49 @@ void Board::initShips()
 						break;
 					}
 				}
-				
-				assignShipCoordinatesOnBoard();
 			}
+			else cout << "Error: Input invalid." << endl;
 		}
 	}
+	
+	assignShipCoordinatesOnBoard();
+	
+	printBoard(cout);
 }
 
-//TODO
 pair<int,int> Board::parseUserInput(const string & input)
 {
-	return pair<int,int>(-1,-1);
+	static const char upperAlphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M',
+		'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'},
+			   lowerAlphabet[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+		'n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	
+	static map<char,int> asciiNums;
+	
+	pair<int,int> retCoords(-1,-1);
+	
+	if(asciiNums.size() == 0)
+		for(int i = 48; i < 58; i++)
+			asciiNums[i] = (i-48);
+	
+	for(int i = 0; i < 26; i++)
+	{
+		if(upperAlphabet[i] == input[0])
+		{
+			retCoords.first = i;
+			break;
+		}
+		if(lowerAlphabet[i] == input[0])
+		{
+			retCoords.first = i;
+			break;
+		}
+	}
+	
+	for(map<char,int>::iterator itr = asciiNums.begin(); itr != asciiNums.end(); itr++)
+		if(itr->first == input[1]) retCoords.second = itr->second;
+		
+	return retCoords;
 }
 
 const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
@@ -151,56 +189,57 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	vector<vector<pair<int, int> > > possibleDirections;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
-	possibleDirections.push_back(getUpAndLeftCoords(xCoord, spaceNeeded, 'U'));
-	possibleDirections.push_back(getDownAndRightCoords(xCoord, spaceNeeded, 'D'));
-	possibleDirections.push_back(getUpAndLeftCoords(yCoord, spaceNeeded, 'L'));
-	possibleDirections.push_back(getDownAndRightCoords(yCoord, spaceNeeded, 'R'));
+	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'U'));
+	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'D'));
+	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'L'));
+	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'R'));
 	
 	return possibleDirections;	
 }
 
-//MAYBE WE CAN REFACTOR THIS?!
-const vector<pair<int, int> > Board::getDownAndRightCoords(const int baseCoord, const int spaceNeeded, const char direction)
+//WILL NOT WORK
+const vector<pair<int, int> > Board::getDownAndRightCoords(const pair<int,int> & baseCoords, const int spaceNeeded, const char direction)
 {
 	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
 	//the other for all coordinates once we verify that the Ship will fit in that area.
 	vector<pair<int, int> > possibleCoords, coordsChecked;
+	const int xCoord = baseCoords.first, yCoord = baseCoords.second;
 	
-	if((baseCoord + spaceNeeded ) <= (_gridSize - 1))
+	if((yCoord + spaceNeeded ) <= (_gridSize - 1))
 	{
 		//Go through all coordinates that need to be checked
-		for(int i = baseCoord; i <= (baseCoord + spaceNeeded); i++)
+		for(int i = yCoord; i <= (baseCoords.first + spaceNeeded); i++)
 		{
 			//Add this coordinate to the checked coord vector depending on direction
-			coordsChecked.push_back((direction == 'D')?pair<int, int>(baseCoord,i):pair<int, int>(i,baseCoord));
+			coordsChecked.push_back((direction == 'D')?pair<int, int>(xCoord,i):pair<int, int>(i,baseCoords.first));
 			
 			//Break and return empty vector if any of the spaces contain a ship
-			if((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord]) break;
-			if(i == baseCoord && !((direction == 'D')?_board[baseCoord][i]:_board[i][baseCoord])) possibleCoords = coordsChecked;
+			if((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first]) break;
+			if(i == baseCoords.first && !((direction == 'D')?_board[baseCoords.first][i]:_board[i][baseCoords.first])) possibleCoords = coordsChecked;
 		}
 	}
 	
 	return possibleCoords;
 }
 
-//MAYBE WE CAN REFACTOR THIS?!
-const vector<pair<int, int> > Board::getUpAndLeftCoords(const int baseCoord, const int spaceNeeded, const char direction)
+//WILL NOT WORK
+const vector<pair<int, int> > Board::getUpAndLeftCoords(const pair<int,int> & baseCoords, const int spaceNeeded, const char direction)
 {
 	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
 	//the other for all coordinates once we verify that the Ship will fit in that area.
 	vector<pair<int, int> > possibleCoords, coordsChecked;
 	
-	if((baseCoord - spaceNeeded ) >= 0)
+	if((baseCoords.first - spaceNeeded ) >= 0)
 	{
 		//Go through all coordinates that need to be checked
-		for(int i = (baseCoord - spaceNeeded); i <= baseCoord; i++)
+		for(int i = (baseCoords.first - spaceNeeded); i <= baseCoords.first; i++)
 		{
 			//Add this coordinate to the checked coord vector depending on direction
-			coordsChecked.push_back((direction == 'U')?pair<int, int>(baseCoord,i):pair<int, int>(i,baseCoord));
+			coordsChecked.push_back((direction == 'U')?pair<int, int>(baseCoords.first,i):pair<int, int>(i,baseCoords.first));
 			
 			//Break and return empty vector if any of the spaces contain a ship
-			if((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord]) break;
-			if(i == baseCoord && !((direction == 'U')?_board[baseCoord][i]:_board[i][baseCoord])) possibleCoords = coordsChecked;
+			if((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first]) break;
+			if(i == baseCoords.first && !((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first])) possibleCoords = coordsChecked;
 		}
 	}
 	
