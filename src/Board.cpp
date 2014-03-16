@@ -41,7 +41,7 @@ void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 		
 	for(int i = 0; i < coordinates.size(); i++)
 	{
-		_board[coordinates[i].first][coordinates[i].second] = true;
+		_board[coordinates[i].second][coordinates[i].first] = true;
 	}
 }
 
@@ -67,7 +67,8 @@ void Board::initShips()
 			
 			cout << "Please type desired coordinates for front of " << shipName
 				<< endl << '(' << shipHitpoints << " total spaces needed) " << "(example: 'I4'): ";
-			getline(cin, input);
+			cin >> input;
+			cin.ignore(1000, '\n');
 			
 			inputCoordinate = parseUserInput(input);
 			
@@ -137,7 +138,10 @@ void Board::initShips()
 					}
 				}
 			}
-			else cout << "Error: Input invalid." << endl;
+			else
+			{
+				cout << "Error: Input invalid." << endl;
+			}
 		}
 		
 		isNotValidInput = true;
@@ -162,22 +166,22 @@ pair<int,int> Board::parseUserInput(const string & input)
 		for(int i = 48; i < 58; i++)
 			asciiNums[i] = (i-48);
 	
+	for(map<char,int>::iterator itr = asciiNums.begin(); itr != asciiNums.end(); itr++)
+		if(itr->first == input[1]) retCoords.first = itr->second;
+	
 	for(int i = 0; i < 26; i++)
 	{
 		if(upperAlphabet[i] == input[0])
 		{
-			retCoords.first = i;
+			retCoords.second = i;
 			break;
 		}
 		if(lowerAlphabet[i] == input[0])
 		{
-			retCoords.first = i;
+			retCoords.second = i;
 			break;
 		}
 	}
-	
-	for(map<char,int>::iterator itr = asciiNums.begin(); itr != asciiNums.end(); itr++)
-		if(itr->first == input[1]) retCoords.second = itr->second;
 		
 	return retCoords;
 }
@@ -188,56 +192,56 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	vector<pair<int, int> > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
-	//Check up
+	//Check left
 	if((yCoord - spaceNeeded) >= 0)
 	{
 		vector<pair<int, int> > checked;
 		for(int i = (yCoord - spaceNeeded); i <= yCoord; i++)
 		{
-			checked.push_back(pair<int,int>(i,xCoord));
+			checked.push_back(pair<int,int>(xCoord,i));
 			
 			if(isOccupied(xCoord,i)) break;
-			else if(i == yCoord) up = checked;
+			else if(i == yCoord) left = checked;
 		}
 	}
 	
-	//Check down
+	//Check right
 	if((yCoord + spaceNeeded) < (_gridSize-1))
 	{
 		vector<pair<int, int> > checked;
 		
 		for(int i = yCoord; i <= (yCoord + spaceNeeded); i++)
 		{
-			checked.push_back(pair<int,int>(i,xCoord));
+			checked.push_back(pair<int,int>(xCoord,i));
 			
 			if(isOccupied(xCoord,i)) break;
-			else if(i == (yCoord + spaceNeeded)) down = checked;
+			else if(i == (yCoord + spaceNeeded)) right = checked;
 		}
 	}
 	
-	//Check left
+	//Check up
 	if((xCoord - spaceNeeded) >= 0)
 	{
 		vector<pair<int, int> > checked;
 		for(int i = (xCoord - spaceNeeded); i <= xCoord; i++)
 		{
-			checked.push_back(pair<int,int>(yCoord,i));
+			checked.push_back(pair<int,int>(i,yCoord));
 			
 			if(isOccupied(i,yCoord)) break;
-			else if(i == xCoord) left = checked;
+			else if(i == xCoord) up = checked;
 		}
 	}
 	
-	//Check right
+	//Check down
 	if((xCoord + spaceNeeded) < (_gridSize-1))
 	{
 		vector<pair<int, int> > checked;
 		for(int i = xCoord; i <= (xCoord + spaceNeeded); i++)
 		{
-			checked.push_back(pair<int,int>(yCoord,i));
+			checked.push_back(pair<int,int>(i,yCoord));
 			
 			if(isOccupied(i,yCoord)) break;
-			else if(i == (xCoord + spaceNeeded)) right = checked;
+			else if(i == (xCoord + spaceNeeded)) down = checked;
 		}
 	}
 	
@@ -307,7 +311,7 @@ const vector<pair<int, int> > Board::getUpAndLeftCoords(const pair<int,int> & ba
 
 const bool Board::isOccupied(const int x, const int y)
 {
-	return _board[x][y];
+	return _board[y][x];
 }
 
 void Board::printBoard(ostream & out)
@@ -326,7 +330,7 @@ void Board::printBoard(ostream & out)
 		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "| " << (isOccupied(i,j)?'T':'F') << ' ';
+			out << "| " << (isOccupied(i,j)?'T':' ') << ' ';
 		}
 		out << '|' << endl;
 		out << getMidString() << endl;
