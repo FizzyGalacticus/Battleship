@@ -47,7 +47,5 @@ int main(const int argc, const char* argv[])
 	//TESTING BOARD CLASS
 	Board myboard;
 	
-	while(1) myboard.attackBoardCoordinate();
-	
 	return 0;
 }

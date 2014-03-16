@@ -177,7 +177,7 @@ Coordinate Board::parseUserInput(const string & input)
 			retCoords.second = i;
 			break;
 		}
-		if(lowerAlphabet[i] == input[0])
+		else if(lowerAlphabet[i] == input[0])
 		{
 			retCoords.second = i;
 			break;
@@ -185,6 +185,50 @@ Coordinate Board::parseUserInput(const string & input)
 	}
 		
 	return retCoords;
+}
+
+//TODO
+vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+{
+	vector<Coordinate> direction, checked;
+	const bool checkLeft = (checkAxis == 'L')?true:false;
+	const int checkCoordinate = (checkLeft)?baseCoords.second:baseCoords.first;
+	
+	if((checkCoordinate - spaceNeeded) >= 0)
+	{
+		for(int i = (checkCoordinate - spaceNeeded); i <= checkCoordinate; i++)
+		{
+			Coordinate tempCoord = (checkLeft)?Coordinate(baseCoords.first,i):Coordinate(i,baseCoords.second);
+			checked.push_back(tempCoord);
+			
+			if(isOccupied(tempCoord)) break;
+			else if(i == checkCoordinate) direction = checked;
+		}
+	}
+	
+	return direction;
+}
+
+//TODO
+vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+{
+	vector<Coordinate> direction, checked;
+	const bool checkRight = (checkAxis == 'R')?true:false;
+	const int checkCoordinate = (checkRight)?baseCoords.second:baseCoords.first;
+	
+	if((checkCoordinate + spaceNeeded) < (_gridSize-1))
+	{
+		for(int i = (checkCoordinate + spaceNeeded); i <= checkCoordinate; i++)
+		{
+			Coordinate tempCoord = (checkRight)?Coordinate(baseCoords.first,i):Coordinate(i,baseCoords.second);
+			checked.push_back(tempCoord);
+			
+			if(isOccupied(tempCoord)) break;
+			else if(i == checkCoordinate) direction = checked;
+		}
+	}
+	
+	return direction;
 }
 
 const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordinate & userGivenCoords, const int & shipHitpoints)
@@ -199,9 +243,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 		vector<Coordinate > checked;
 		for(int i = (yCoord - spaceNeeded); i <= yCoord; i++)
 		{
-			checked.push_back(Coordinate(xCoord,i));
+			Coordinate tempCoord(xCoord,i);
+			checked.push_back(tempCoord);
 			
-			if(isOccupied(Coordinate(xCoord,i))) break;
+			if(isOccupied(tempCoord)) break;
 			else if(i == yCoord) left = checked;
 		}
 	}
@@ -213,9 +258,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 		
 		for(int i = yCoord; i <= (yCoord + spaceNeeded); i++)
 		{
-			checked.push_back(Coordinate(xCoord,i));
+			Coordinate tempCoord(xCoord,i);
+			checked.push_back(tempCoord);
 			
-			if(isOccupied(Coordinate(xCoord,i))) break;
+			if(isOccupied(tempCoord)) break;
 			else if(i == (yCoord + spaceNeeded)) right = checked;
 		}
 	}
@@ -226,9 +272,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 		vector<Coordinate > checked;
 		for(int i = (xCoord - spaceNeeded); i <= xCoord; i++)
 		{
-			checked.push_back(Coordinate(i,yCoord));
+			Coordinate tempCoord(i,yCoord);
+			checked.push_back(tempCoord);
 			
-			if(isOccupied(Coordinate(i,yCoord))) break;
+			if(isOccupied(tempCoord)) break;
 			else if(i == xCoord) up = checked;
 		}
 	}
@@ -239,9 +286,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 		vector<Coordinate > checked;
 		for(int i = xCoord; i <= (xCoord + spaceNeeded); i++)
 		{
-			checked.push_back(Coordinate(i,yCoord));
+			Coordinate tempCoord(i,yCoord);
+			checked.push_back(tempCoord);
 			
-			if(isOccupied(Coordinate(i,yCoord))) break;
+			if(isOccupied(tempCoord)) break;
 			else if(i == (xCoord + spaceNeeded)) down = checked;
 		}
 	}
