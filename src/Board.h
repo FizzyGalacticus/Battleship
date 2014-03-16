@@ -36,6 +36,10 @@ class Board
 		void setCellContents(const int, const int, const char);
 		void assignShipCoordinatesOnBoard(const Ship &);
 		const int findShipWithCoordinates(const pair<int,int>) const;
+		const string initialShipCoordinatePrompt(const string &, const int &);
+		const vector<string> parsePossibleShipDirections(const vector<vector<pair<int, int> > >);
+		const char shipDirectionalPrompt(const vector<vector<pair<int, int> > > &);
+		const string attackCoordinatePrompt();
 		const string getEndString();
 		const string getMidString();
 		vector<vector<char> > _board;

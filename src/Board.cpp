@@ -9,9 +9,9 @@
 #include <iostream>
 using std::cout;
 using std::endl;
-using std::cin;
 
 #include "osFunctions.cpp"
+#include "BoardPrompts.cpp"
 
 
 Board::Board() : _gridSize(10)
@@ -45,6 +45,21 @@ void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 	}
 }
 
+const vector<string> Board::parsePossibleShipDirections(const vector<vector<pair<int, int> > > allPossibleShipDirections)
+{
+	vector<string> possibleShipDirections;
+	
+	for(int i = 0; i < possibleShipDirections.size(); i++)
+	{
+		if(i == 0 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Up");
+		else if(i == 1 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Down");
+		else if(i == 2 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Left");
+		else if(i == 3 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Right");
+	}
+	
+	return possibleShipDirections;
+}
+
 void Board::initShips()
 {
 	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
@@ -65,10 +80,7 @@ void Board::initShips()
 		{
 			printBoard(cout);
 			
-			cout << "Please type desired coordinates for front of " << shipName
-				<< endl << '(' << shipHitpoints << " total spaces needed) " << "(example: 'I4'): ";
-			cin >> input;
-			cin.ignore(1000, '\n');
+			input = initialShipCoordinatePrompt(shipName, shipHitpoints);
 			
 			inputCoordinate = parseUserInput(input);
 			
@@ -88,17 +100,7 @@ void Board::initShips()
 				{
 					printBoard(cout);
 					
-					cout << "Please enter a direction (UDLR) you would like to face your ship." << endl;
-					cout << "Your options are: " << endl;
-					for(int j = 0; j < possibleShipDirections.size(); j++)
-					{
-						if(j == 0 && possibleShipDirections[j].size()) cout << "Up" << endl;
-						else if(j == 1 && possibleShipDirections[j].size()) cout << "Down" << endl;
-						else if(j == 2 && possibleShipDirections[j].size()) cout << "Left" << endl;
-						else if(j == 3 && possibleShipDirections[j].size()) cout << "Right" << endl;
-					}
-					
-					directionInput = getchar();
+					directionInput = shipDirectionalPrompt(possibleShipDirections);
 					
 					clearScreen();
 					
@@ -341,12 +343,9 @@ void Board::attackBoardCoordinate()
 	
 	while(inputCoordinates.first < 0 || inputCoordinates.second < 0)
 	{
-		cout << "Please enter coordinates that you wish to attack: ";
-		cin >> input;
-		cin.ignore(1000, '\n');
+		input = attackCoordinatePrompt();
 		
 		clearScreen();
-		printBoard(cout);
 		
 		inputCoordinates = parseUserInput(input);
 		
@@ -355,7 +354,6 @@ void Board::attackBoardCoordinate()
 			cout << "That was not valid input" << endl;
 			wait();
 			clearScreen();
-			printBoard(cout);
 		}
 		else
 		{
@@ -367,14 +365,13 @@ void Board::attackBoardCoordinate()
 				cout << "Hit!" << endl;
 				wait();
 				clearScreen();
-				printBoard(cout);
 			}
 			else
 			{
+				setCellContents(inputCoordinates.first, inputCoordinates.second, 'O');
 				cout << "Miss!" << endl;
 				wait();
 				clearScreen();
-				printBoard(cout);
 			}
 		}
 	}
