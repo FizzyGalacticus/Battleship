@@ -28,7 +28,7 @@ Board::Board(const int size) : _gridSize(size)
 
 void Board::initBoard()
 {
-	vector<bool> temp(_gridSize, false);
+	vector<char> temp(_gridSize, ' ');
 	for(int i = 0; i < _gridSize; i++)
 	{
 		_board.push_back(temp);
@@ -41,7 +41,7 @@ void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 		
 	for(int i = 0; i < coordinates.size(); i++)
 	{
-		_board[coordinates[i].second][coordinates[i].first] = true;
+		_board[coordinates[i].second][coordinates[i].first] = 'S';
 	}
 }
 
@@ -260,58 +260,15 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	return possibleDirections;	
 }
 
-//WILL NOT WORK
-const vector<pair<int, int> > Board::getDownAndRightCoords(const pair<int,int> & baseCoords, const int spaceNeeded, const char direction)
-{
-	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
-	//the other for all coordinates once we verify that the Ship will fit in that area.
-	vector<pair<int, int> > possibleCoords, coordsChecked;
-	const int xCoord = baseCoords.first, yCoord = baseCoords.second;
-	
-	if((yCoord + spaceNeeded ) <= (_gridSize - 1))
-	{
-		//Go through all coordinates that need to be checked
-		for(int i = yCoord; i <= (baseCoords.first + spaceNeeded); i++)
-		{
-			//Add this coordinate to the checked coord vector depending on direction
-			coordsChecked.push_back((direction == 'D')?pair<int, int>(xCoord,i):pair<int, int>(i,baseCoords.first));
-			
-			//Break and return empty vector if any of the spaces contain a ship
-			if((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first]) break;
-			if(i == baseCoords.first && !((direction == 'D')?_board[baseCoords.first][i]:_board[i][baseCoords.first])) possibleCoords = coordsChecked;
-		}
-	}
-	
-	return possibleCoords;
-}
-
-//WILL NOT WORK
-const vector<pair<int, int> > Board::getUpAndLeftCoords(const pair<int,int> & baseCoords, const int spaceNeeded, const char direction)
-{
-	//Vectors that are to hold coordinates, one for coordinates that we add as we check them,
-	//the other for all coordinates once we verify that the Ship will fit in that area.
-	vector<pair<int, int> > possibleCoords, coordsChecked;
-	
-	if((baseCoords.first - spaceNeeded ) >= 0)
-	{
-		//Go through all coordinates that need to be checked
-		for(int i = (baseCoords.first - spaceNeeded); i <= baseCoords.first; i++)
-		{
-			//Add this coordinate to the checked coord vector depending on direction
-			coordsChecked.push_back((direction == 'U')?pair<int, int>(baseCoords.first,i):pair<int, int>(i,baseCoords.first));
-			
-			//Break and return empty vector if any of the spaces contain a ship
-			if((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first]) break;
-			if(i == baseCoords.first && !((direction == 'U')?_board[baseCoords.first][i]:_board[i][baseCoords.first])) possibleCoords = coordsChecked;
-		}
-	}
-	
-	return possibleCoords;
-}
-
 const bool Board::isOccupied(const int x, const int y)
 {
-	return _board[y][x];
+	if( _board[y][x] == 'O' || _board[y][x] == ' ') return false;
+	else if( _board[y][x] == 'X' || _board[y][x] == 'S') return true;
+}
+
+const char Board::getCellContents(const int xCoord, const int yCoord)
+{
+	return _board[yCoord][xCoord];
 }
 
 void Board::printBoard(ostream & out)
@@ -330,7 +287,7 @@ void Board::printBoard(ostream & out)
 		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "| " << (isOccupied(i,j)?'T':' ') << ' ';
+			out << "| " << getCellContents(i,j) << ' ';
 		}
 		out << '|' << endl;
 		out << getMidString() << endl;
