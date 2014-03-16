@@ -26,13 +26,16 @@ class Board
 		Board(const int);
 		const bool isOccupied(const int, const int);
 		void printBoard(ostream &);
+		void attackBoardCoordinate();
 	private:
 		void initBoard();
 		void initShips();
 		pair<int,int> parseUserInput(const string &);
 		const vector<vector<pair<int, int> > > getPossibleShipDirection(const pair<int,int> &, const int &);
 		const char getCellContents(const int, const int);
+		void setCellContents(const int, const int, const char);
 		void assignShipCoordinatesOnBoard(const Ship &);
+		const int findShipWithCoordinates(const pair<int,int>) const;
 		const string getEndString();
 		const string getMidString();
 		vector<vector<char> > _board;

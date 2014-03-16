@@ -271,6 +271,11 @@ const char Board::getCellContents(const int xCoord, const int yCoord)
 	return _board[yCoord][xCoord];
 }
 
+void Board::setCellContents(const int xCoord, const int yCoord, const char cellContent)
+{
+	_board[yCoord][xCoord] = cellContent;
+}
+
 void Board::printBoard(ostream & out)
 {	
 	//print row index
@@ -315,6 +320,64 @@ const string Board::getMidString()
 	temp += " |";
 	
 	return temp;
+}
+
+const int Board::findShipWithCoordinates(const pair<int,int> searchCoord) const
+{
+	for(int i = 0; i < _ships.size(); i++)
+	{
+		vector<pair<int,int> > shipCoordinates = _ships[i].getCoordinates();
+		for(int j = 0; j < shipCoordinates.size(); j++)
+			if(searchCoord == shipCoordinates[j]) return i;
+	}
+	
+	return -1;
+}
+
+void Board::attackBoardCoordinate()
+{
+	string input;
+	pair<int,int> inputCoordinates(-1,-1);
+	
+	while(inputCoordinates.first < 0 || inputCoordinates.second < 0)
+	{
+		cout << "Please enter coordinates that you wish to attack: ";
+		cin >> input;
+		cin.ignore(1000, '\n');
+		
+		clearScreen();
+		printBoard(cout);
+		
+		inputCoordinates = parseUserInput(input);
+		
+		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
+		{
+			cout << "That was not valid input" << endl;
+			wait();
+			clearScreen();
+			printBoard(cout);
+		}
+		else
+		{
+			if(isOccupied(inputCoordinates.first, inputCoordinates.second))
+			{
+				const int index = findShipWithCoordinates(inputCoordinates);
+				_ships[index].sustainDamage(inputCoordinates);
+				setCellContents(inputCoordinates.first, inputCoordinates.second, 'X');
+				cout << "Hit!" << endl;
+				wait();
+				clearScreen();
+				printBoard(cout);
+			}
+			else
+			{
+				cout << "Miss!" << endl;
+				wait();
+				clearScreen();
+				printBoard(cout);
+			}
+		}
+	}
 }
 
 #endif
