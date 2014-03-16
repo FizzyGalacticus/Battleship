@@ -6,6 +6,10 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+#include "Board.h"
+
+typedef pair<int, int> Coordinate;
+
 const string Board::initialShipCoordinatePrompt(const string & shipName, const int & shipHitpoints)
 {
 	string input;
@@ -18,7 +22,7 @@ const string Board::initialShipCoordinatePrompt(const string & shipName, const i
 	return input;
 }
 
-const char Board::shipDirectionalPrompt(const vector<vector<pair<int, int> > > & possibleShipDirections)
+const char Board::shipDirectionalPrompt(const vector<vector<Coordinate > > & possibleShipDirections)
 {
 	const vector<string> availableShipDirectionStrings = parsePossibleShipDirections(possibleShipDirections);
 	

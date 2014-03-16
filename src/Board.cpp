@@ -13,7 +13,6 @@ using std::endl;
 #include "osFunctions.cpp"
 #include "BoardPrompts.cpp"
 
-
 Board::Board() : _gridSize(10)
 {
 	initBoard();
@@ -37,7 +36,7 @@ void Board::initBoard()
 
 void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 {
-	vector<pair<int, int> > coordinates = currentShip.getCoordinates();
+	vector<Coordinate > coordinates = currentShip.getCoordinates();
 		
 	for(int i = 0; i < coordinates.size(); i++)
 	{
@@ -45,7 +44,7 @@ void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
 	}
 }
 
-const vector<string> Board::parsePossibleShipDirections(const vector<vector<pair<int, int> > > allPossibleShipDirections)
+const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coordinate > > allPossibleShipDirections)
 {
 	vector<string> possibleShipDirections;
 	
@@ -67,7 +66,7 @@ void Board::initShips()
 	
 	bool isNotValidInput = true;
 	string input;
-	pair<int,int> inputCoordinate;
+	Coordinate inputCoordinate;
 	
 	//Go through each ship
 	for(int i = 0; i < _ships.size(); i++)
@@ -90,7 +89,7 @@ void Board::initShips()
 			if(inputCoordinate.first >= 0 && inputCoordinate.second >= 0)
 			{
 				isNotValidInput = false;
-				const vector<vector<pair<int, int> > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
+				const vector<vector<Coordinate > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
 				char directionInput = 0;
 				
 				while((directionInput != 'U' && directionInput != 'u') &&
@@ -153,7 +152,7 @@ void Board::initShips()
 	printBoard(cout);
 }
 
-pair<int,int> Board::parseUserInput(const string & input)
+Coordinate Board::parseUserInput(const string & input)
 {
 	static const char upperAlphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M',
 		'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'},
@@ -162,7 +161,7 @@ pair<int,int> Board::parseUserInput(const string & input)
 	
 	static map<char,int> asciiNums;
 	
-	pair<int,int> retCoords(-1,-1);
+	Coordinate retCoords(-1,-1);
 	
 	if(asciiNums.size() == 0)
 		for(int i = 48; i < 58; i++)
@@ -188,21 +187,21 @@ pair<int,int> Board::parseUserInput(const string & input)
 	return retCoords;
 }
 
-const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pair<int,int> & userGivenCoords, const int & shipHitpoints)
+const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordinate & userGivenCoords, const int & shipHitpoints)
 {
-	vector<vector<pair<int, int> > > possibleDirections;
-	vector<pair<int, int> > up,down,left,right;
+	vector<vector<Coordinate > > possibleDirections;
+	vector<Coordinate > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
 	//Check left
 	if((yCoord - spaceNeeded) >= 0)
 	{
-		vector<pair<int, int> > checked;
+		vector<Coordinate > checked;
 		for(int i = (yCoord - spaceNeeded); i <= yCoord; i++)
 		{
-			checked.push_back(pair<int,int>(xCoord,i));
+			checked.push_back(Coordinate(xCoord,i));
 			
-			if(isOccupied(xCoord,i)) break;
+			if(isOccupied(Coordinate(xCoord,i))) break;
 			else if(i == yCoord) left = checked;
 		}
 	}
@@ -210,13 +209,13 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	//Check right
 	if((yCoord + spaceNeeded) < (_gridSize-1))
 	{
-		vector<pair<int, int> > checked;
+		vector<Coordinate > checked;
 		
 		for(int i = yCoord; i <= (yCoord + spaceNeeded); i++)
 		{
-			checked.push_back(pair<int,int>(xCoord,i));
+			checked.push_back(Coordinate(xCoord,i));
 			
-			if(isOccupied(xCoord,i)) break;
+			if(isOccupied(Coordinate(xCoord,i))) break;
 			else if(i == (yCoord + spaceNeeded)) right = checked;
 		}
 	}
@@ -224,12 +223,12 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	//Check up
 	if((xCoord - spaceNeeded) >= 0)
 	{
-		vector<pair<int, int> > checked;
+		vector<Coordinate > checked;
 		for(int i = (xCoord - spaceNeeded); i <= xCoord; i++)
 		{
-			checked.push_back(pair<int,int>(i,yCoord));
+			checked.push_back(Coordinate(i,yCoord));
 			
-			if(isOccupied(i,yCoord)) break;
+			if(isOccupied(Coordinate(i,yCoord))) break;
 			else if(i == xCoord) up = checked;
 		}
 	}
@@ -237,22 +236,15 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	//Check down
 	if((xCoord + spaceNeeded) < (_gridSize-1))
 	{
-		vector<pair<int, int> > checked;
+		vector<Coordinate > checked;
 		for(int i = xCoord; i <= (xCoord + spaceNeeded); i++)
 		{
-			checked.push_back(pair<int,int>(i,yCoord));
+			checked.push_back(Coordinate(i,yCoord));
 			
-			if(isOccupied(i,yCoord)) break;
+			if(isOccupied(Coordinate(i,yCoord))) break;
 			else if(i == (xCoord + spaceNeeded)) down = checked;
 		}
 	}
-	
-	/*
-	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'U'));
-	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'D'));
-	possibleDirections.push_back(getUpAndLeftCoords(userGivenCoords, spaceNeeded, 'L'));
-	possibleDirections.push_back(getDownAndRightCoords(userGivenCoords, spaceNeeded, 'R'));
-	*/
 	
 	possibleDirections.push_back(up);
 	possibleDirections.push_back(down);
@@ -262,10 +254,10 @@ const vector<vector<pair<int, int> > > Board::getPossibleShipDirection(const pai
 	return possibleDirections;	
 }
 
-const bool Board::isOccupied(const int x, const int y)
+const bool Board::isOccupied(const Coordinate & coords)
 {
-	if( _board[y][x] == 'O' || _board[y][x] == ' ') return false;
-	else if( _board[y][x] == 'X' || _board[y][x] == 'S') return true;
+	if( _board[coords.second][coords.first] == 'O' || _board[coords.second][coords.first] == ' ') return false;
+	else if( _board[coords.second][coords.first] == 'X' || _board[coords.second][coords.first] == 'S') return true;
 }
 
 const char Board::getCellContents(const int xCoord, const int yCoord)
@@ -324,11 +316,11 @@ const string Board::getMidString()
 	return temp;
 }
 
-const int Board::findShipWithCoordinates(const pair<int,int> searchCoord) const
+const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 {
 	for(int i = 0; i < _ships.size(); i++)
 	{
-		vector<pair<int,int> > shipCoordinates = _ships[i].getCoordinates();
+		vector<Coordinate > shipCoordinates = _ships[i].getCoordinates();
 		for(int j = 0; j < shipCoordinates.size(); j++)
 			if(searchCoord == shipCoordinates[j]) return i;
 	}
@@ -339,7 +331,7 @@ const int Board::findShipWithCoordinates(const pair<int,int> searchCoord) const
 void Board::attackBoardCoordinate()
 {
 	string input;
-	pair<int,int> inputCoordinates(-1,-1);
+	Coordinate inputCoordinates(-1,-1);
 	
 	while(inputCoordinates.first < 0 || inputCoordinates.second < 0)
 	{
@@ -357,7 +349,7 @@ void Board::attackBoardCoordinate()
 		}
 		else
 		{
-			if(isOccupied(inputCoordinates.first, inputCoordinates.second))
+			if(isOccupied(inputCoordinates))
 			{
 				const int index = findShipWithCoordinates(inputCoordinates);
 				_ships[index].sustainDamage(inputCoordinates);

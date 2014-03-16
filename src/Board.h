@@ -22,23 +22,24 @@ using std::pair;
 class Board
 {
 	public:
+		typedef pair<int, int> Coordinate;
 		Board();
 		Board(const int);
-		const bool isOccupied(const int, const int);
+		const bool isOccupied(const Coordinate &);
 		void printBoard(ostream &);
 		void attackBoardCoordinate();
 	private:
 		void initBoard();
 		void initShips();
-		pair<int,int> parseUserInput(const string &);
-		const vector<vector<pair<int, int> > > getPossibleShipDirection(const pair<int,int> &, const int &);
+		Coordinate parseUserInput(const string &);
+		const vector<vector<Coordinate> > getPossibleShipDirection(const Coordinate &, const int &);
 		const char getCellContents(const int, const int);
 		void setCellContents(const int, const int, const char);
 		void assignShipCoordinatesOnBoard(const Ship &);
-		const int findShipWithCoordinates(const pair<int,int>) const;
+		const int findShipWithCoordinates(const Coordinate) const;
 		const string initialShipCoordinatePrompt(const string &, const int &);
-		const vector<string> parsePossibleShipDirections(const vector<vector<pair<int, int> > >);
-		const char shipDirectionalPrompt(const vector<vector<pair<int, int> > > &);
+		const vector<string> parsePossibleShipDirections(const vector<vector<Coordinate > >);
+		const char shipDirectionalPrompt(const vector<vector<Coordinate > > &);
 		const string attackCoordinatePrompt();
 		const string getEndString();
 		const string getMidString();
