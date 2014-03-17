@@ -1,3 +1,7 @@
+//Dustin Dodson & Bucky Frost
+//Source file for all user prompting
+//CS372 Project 1
+
 #ifndef __BATTLESHIP__BOARD__PROMPTS__CPP
 #define __BATTLESHIP__BOARD__PROMPTS__CPP
 
