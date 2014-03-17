@@ -4,9 +4,9 @@
 
 ####Compiling on different systems
 
-**Windows** - "g++ main.cpp Sound.cpp Ship.cpp Board.cpp irrKlang/lib/Win32-gcc/libirrKlang.a"
+**Windows** - "g++ main.cpp Sound.cpp Ship.cpp Board.cpp Player.cpp irrKlang/lib/Win32-gcc/libirrKlang.a"
 
-**Linux** - "g++ main.cpp -m32 Sound.cpp Board.cpp Ship.cpp libIrrKlang.so -pthread"
+**Linux** - "g++ main.cpp -m32 Sound.cpp Board.cpp Ship.cpp Player.cpp libIrrKlang.so -pthread"
 
 **NOTE:** For compiling on 64-bit linux, you must use the -m32 switch and have the following libraries installed: 
 

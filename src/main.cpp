@@ -13,8 +13,7 @@ using std::endl;
 #include<vector>
 using std::vector;
 #include "Ship.h"
-#include <exception>
-using std::exception;
+#include "Player.h"
 
 int main(const int argc, const char* argv[])
 {
@@ -26,23 +25,7 @@ int main(const int argc, const char* argv[])
 	backgroundMusicFileNames.push_back("../Media/emergency007.mp3");
 	
 	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
-	backgroundMusic.startBackgroundAudio(0);
-	
-	clearScreen();
-	
-	//TESTING SHIP CLASS
-	vector<Ship> myShips;
-	myShips.push_back(Ship("Battleship"));
-	myShips.push_back(Ship("Aircraft Carrier"));
-	myShips.push_back(Ship("Submarine"));
-	myShips.push_back(Ship("Destroyer"));
-	myShips.push_back(Ship("Cruiser"));
-	
-	for(vector<Ship>::iterator itr = myShips.begin(); itr != myShips.end(); itr++)
-	{
-		cout << "Name of ship: " << itr->getNameOfShip() << endl;
-		cout << "# of Hitpoints: " << itr->getNumberOfHitPoints() << endl;
-	}*/
+	backgroundMusic.startBackgroundAudio(0);*/
 	
 	//TESTING BOARD CLASS
 	Board myboard;
