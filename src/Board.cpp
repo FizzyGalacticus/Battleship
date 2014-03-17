@@ -228,10 +228,6 @@ vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoor
 		}
 	}
 	
-	if(!checkRight) cout << "Looking downward and found these available spaces:" << endl;
-	for(int i = 0; i < direction.size(); i++)
-		cout << '[' << direction[i].first << ',' << direction[i].second << ']' << endl;
-	
 	return direction;
 }
 
@@ -245,64 +241,6 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	down = getRightAndDownCoordinates(userGivenCoords, 'D', spaceNeeded);
 	left = getLeftAndUpCoordinates(userGivenCoords, 'L', spaceNeeded);
 	right = getRightAndDownCoordinates(userGivenCoords, 'R', spaceNeeded);
-	
-	/*
-	//Check left
-	if((yCoord - spaceNeeded) >= 0)
-	{
-		vector<Coordinate > checked;
-		for(int i = (yCoord - spaceNeeded); i <= yCoord; i++)
-		{
-			Coordinate tempCoord(xCoord,i);
-			checked.push_back(tempCoord);
-			
-			if(isOccupied(tempCoord)) break;
-			else if(i == yCoord) left = checked;
-		}
-	}
-	
-	//Check right
-	if((yCoord + spaceNeeded) < (_gridSize-1))
-	{
-		vector<Coordinate > checked;
-		
-		for(int i = yCoord; i <= (yCoord + spaceNeeded); i++)
-		{
-			Coordinate tempCoord(xCoord,i);
-			checked.push_back(tempCoord);
-			
-			if(isOccupied(tempCoord)) break;
-			else if(i == (yCoord + spaceNeeded)) right = checked;
-		}
-	}
-	
-	//Check up
-	if((xCoord - spaceNeeded) >= 0)
-	{
-		vector<Coordinate > checked;
-		for(int i = (xCoord - spaceNeeded); i <= xCoord; i++)
-		{
-			Coordinate tempCoord(i,yCoord);
-			checked.push_back(tempCoord);
-			
-			if(isOccupied(tempCoord)) break;
-			else if(i == xCoord) up = checked;
-		}
-	}
-	
-	//Check down
-	if((xCoord + spaceNeeded) < (_gridSize-1))
-	{
-		vector<Coordinate > checked;
-		for(int i = xCoord; i <= (xCoord + spaceNeeded); i++)
-		{
-			Coordinate tempCoord(i,yCoord);
-			checked.push_back(tempCoord);
-			
-			if(isOccupied(tempCoord)) break;
-			else if(i == (xCoord + spaceNeeded)) down = checked;
-		}
-	}*/
 	
 	possibleDirections.push_back(up);
 	possibleDirections.push_back(down);
