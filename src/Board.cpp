@@ -19,7 +19,7 @@ Board::Board() : _gridSize(10)
 	initShips();
 }
 
-Board::Board(const int size) : _gridSize(size)
+Board::Board(const int size) : _gridSize((size>=5)?size:5)
 {
 	initBoard();
 	initShips();
