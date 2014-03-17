@@ -19,6 +19,9 @@ class Player
 		Player(const string &);
 		static vector<const Player *> _existingPlayers;
 		static int _activePlayer;
+		void printOpponentBoard() const;
+		const string & getPlayerName() const;
+		void attackOpponent();
 	private:
 		Player();
 		Board _playerBoard;

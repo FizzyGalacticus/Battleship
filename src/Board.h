@@ -26,7 +26,7 @@ class Board
 		Board();
 		Board(const int);
 		const bool isOccupied(const Coordinate &);
-		void printBoard(ostream &);
+		void printBoard(ostream &, const bool);
 		void attackBoardCoordinate();
 	private:
 		void initBoard();

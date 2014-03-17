@@ -77,7 +77,7 @@ void Board::initShips()
 		//Get proper input of coordinates
 		while(isNotValidInput)
 		{
-			printBoard(cout);
+			printBoard(cout,false);
 			
 			input = initialShipCoordinatePrompt(shipName, shipHitpoints);
 			
@@ -97,7 +97,7 @@ void Board::initShips()
 					  (directionInput != 'L' && directionInput != 'l') &&
 					  (directionInput != 'R' && directionInput != 'r'))
 				{
-					printBoard(cout);
+					printBoard(cout,false);
 					
 					directionInput = shipDirectionalPrompt(possibleShipDirections);
 					
@@ -149,7 +149,7 @@ void Board::initShips()
 		assignShipCoordinatesOnBoard(_ships[i]);
 	}
 		
-	printBoard(cout);
+	printBoard(cout,false);
 }
 
 Coordinate Board::parseUserInput(const string & input)
@@ -266,7 +266,7 @@ void Board::setCellContents(const int xCoord, const int yCoord, const char cellC
 	_board[yCoord][xCoord] = cellContent;
 }
 
-void Board::printBoard(ostream & out)
+void Board::printBoard(ostream & out, const bool isPublic)
 {	
 	//print row index
 	const char rowHeaders[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -282,7 +282,7 @@ void Board::printBoard(ostream & out)
 		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "| " << getCellContents(i,j) << ' ';
+			out << "| " << ((isPublic && getCellContents(i,j) == 'S')?' ':'S') << ' ';
 		}
 		out << '|' << endl;
 		out << getMidString() << endl;
