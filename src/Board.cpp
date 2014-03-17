@@ -19,7 +19,7 @@ Board::Board() : _gridSize(10)
 	initShips();
 }
 
-Board::Board(const int size) : _gridSize((size>=5)?size:5)
+Board::Board(const int size) : _gridSize( (size>=5) ? size : 5 )
 {
 	initBoard();
 	initShips();
@@ -48,12 +48,12 @@ const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coor
 {
 	vector<string> possibleShipDirections;
 	
-	for(int i = 0; i < possibleShipDirections.size(); i++)
+	for(int i = 0; i < allPossibleShipDirections.size(); i++)
 	{
-		if(i == 0 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Up");
-		else if(i == 1 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Down");
-		else if(i == 2 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Left");
-		else if(i == 3 && possibleShipDirections[i].size()) possibleShipDirections.push_back("Right");
+		if(i == 0 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Up");
+		else if(i == 1 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Down");
+		else if(i == 2 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Left");
+		else if(i == 3 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Right");
 	}
 	
 	return possibleShipDirections;
@@ -187,7 +187,7 @@ Coordinate Board::parseUserInput(const string & input)
 	return retCoords;
 }
 
-//TODO
+//Works!
 vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
@@ -209,7 +209,7 @@ vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords,
 	return direction;
 }
 
-//TODO
+//Does not work for Down coordinates!
 vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
@@ -218,15 +218,19 @@ vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoor
 	
 	if((checkCoordinate + spaceNeeded) < (_gridSize-1))
 	{
-		for(int i = (checkCoordinate + spaceNeeded); i <= checkCoordinate; i++)
+		for(int i = checkCoordinate; i <= (checkCoordinate + spaceNeeded); i++)
 		{
 			Coordinate tempCoord = (checkRight)?Coordinate(baseCoords.first,i):Coordinate(i,baseCoords.second);
 			checked.push_back(tempCoord);
 			
 			if(isOccupied(tempCoord)) break;
-			else if(i == checkCoordinate) direction = checked;
+			else if(i == (checkCoordinate + spaceNeeded)) direction = checked;
 		}
 	}
+	
+	if(!checkRight) cout << "Looking downward and found these available spaces:" << endl;
+	for(int i = 0; i < direction.size(); i++)
+		cout << '[' << direction[i].first << ',' << direction[i].second << ']' << endl;
 	
 	return direction;
 }
@@ -237,6 +241,12 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	vector<Coordinate > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
+	up = getLeftAndUpCoordinates(userGivenCoords, 'U', spaceNeeded);
+	down = getRightAndDownCoordinates(userGivenCoords, 'D', spaceNeeded);
+	left = getLeftAndUpCoordinates(userGivenCoords, 'L', spaceNeeded);
+	right = getRightAndDownCoordinates(userGivenCoords, 'R', spaceNeeded);
+	
+	/*
 	//Check left
 	if((yCoord - spaceNeeded) >= 0)
 	{
@@ -292,7 +302,7 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 			if(isOccupied(tempCoord)) break;
 			else if(i == (xCoord + spaceNeeded)) down = checked;
 		}
-	}
+	}*/
 	
 	possibleDirections.push_back(up);
 	possibleDirections.push_back(down);

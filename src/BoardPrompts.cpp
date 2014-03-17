@@ -31,7 +31,7 @@ const char Board::shipDirectionalPrompt(const vector<vector<Coordinate > > & pos
 	const vector<string> availableShipDirectionStrings = parsePossibleShipDirections(possibleShipDirections);
 	
 	cout << "Please enter a direction (UDLR) you would like to face your ship." << endl;
-	cout << "Your options are: " << endl;
+	cout << "Your " << availableShipDirectionStrings.size() << " options are: " << endl;
 	for(int j = 0; j < availableShipDirectionStrings.size(); j++)
 		cout << availableShipDirectionStrings[j] << endl;
 	

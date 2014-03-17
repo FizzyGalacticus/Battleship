@@ -45,7 +45,7 @@ int main(const int argc, const char* argv[])
 	}*/
 	
 	//TESTING BOARD CLASS
-	Board myboard(4);
+	Board myboard;
 	
 	return 0;
 }
