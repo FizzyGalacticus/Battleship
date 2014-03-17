@@ -17,11 +17,12 @@ class Player
 {
 	public:
 		Player(const string &);
-		static vector<const Player *> _existingPlayers;
+		static vector<Player *> _existingPlayers;
 		static int _activePlayer;
-		void printOpponentBoard() const;
+		void printPublicBoard();
 		const string & getPlayerName() const;
 		void attackOpponent();
+		const bool & isStillActive();
 	private:
 		Player();
 		Board _playerBoard;

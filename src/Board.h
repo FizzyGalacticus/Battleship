@@ -28,10 +28,12 @@ class Board
 		const bool isOccupied(const Coordinate &);
 		void printBoard(ostream &, const bool);
 		void attackBoardCoordinate();
+		const bool & shipsStillActive() const;
 	private:
 		void initBoard();
 		void initShips();
 		Coordinate parseUserInput(const string &);
+		const string attackCoordinatePrompt();
 		const vector<vector<Coordinate> > getPossibleShipDirection(const Coordinate &, const int &);
 		const char getCellContents(const int, const int);
 		void setCellContents(const int, const int, const char);
@@ -42,12 +44,12 @@ class Board
 		const string initialShipCoordinatePrompt(const string &, const int &);
 		const vector<string> parsePossibleShipDirections(const vector<vector<Coordinate > >);
 		const char shipDirectionalPrompt(const vector<vector<Coordinate > > &);
-		const string attackCoordinatePrompt();
 		const string getEndString();
 		const string getMidString();
 		vector<vector<char> > _board;
 		const int _gridSize;
 		vector<Ship> _ships;
+		vector<bool> shipStatus;
 };
 
 class PlayerBoard : public Board

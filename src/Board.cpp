@@ -61,6 +61,7 @@ const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coor
 
 void Board::initShips()
 {
+	//Pushes one of each Ship type to _ships vector
 	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
 		_ships.push_back(Ship(itr->first));
 	
@@ -71,6 +72,7 @@ void Board::initShips()
 	//Go through each ship
 	for(int i = 0; i < _ships.size(); i++)
 	{
+		shipStatus[i] = true;
 		const int & shipHitpoints = _ships[i].getNumberOfHitPoints();
 		const string & shipName = _ships[i].getNameOfShip();
 		
@@ -324,6 +326,14 @@ const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 	return -1;
 }
 
+const bool & Board::shipsStillActive() const
+{
+	for(int i = 0; i < shipStatus.size(); i++)
+		if(shipStatus[i]) return true;
+	
+	return false;
+}
+
 void Board::attackBoardCoordinate()
 {
 	string input;
@@ -333,33 +343,28 @@ void Board::attackBoardCoordinate()
 	{
 		input = attackCoordinatePrompt();
 		
-		clearScreen();
-		
 		inputCoordinates = parseUserInput(input);
 		
 		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
 		{
 			cout << "That was not valid input" << endl;
 			wait();
-			clearScreen();
 		}
 		else
 		{
 			if(isOccupied(inputCoordinates))
 			{
 				const int index = findShipWithCoordinates(inputCoordinates);
-				_ships[index].sustainDamage(inputCoordinates);
+				shipStatus[index] = _ships[index].sustainDamage(inputCoordinates);
 				setCellContents(inputCoordinates.first, inputCoordinates.second, 'X');
 				cout << "Hit!" << endl;
 				wait();
-				clearScreen();
 			}
 			else
 			{
 				setCellContents(inputCoordinates.first, inputCoordinates.second, 'O');
 				cout << "Miss!" << endl;
 				wait();
-				clearScreen();
 			}
 		}
 	}

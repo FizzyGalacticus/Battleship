@@ -14,8 +14,10 @@ using std::endl;
 using std::string;
 #include <vector>
 using std::vector;
+#include <map>
+using std::map;
 
-vector<const Player *> Player::_existingPlayers;
+vector<Player *> Player::_existingPlayers;
 static int _activePlayer(0);
 
 Player::Player(const string & givenName): _name(givenName), _playerBoard()
@@ -24,9 +26,9 @@ Player::Player(const string & givenName): _name(givenName), _playerBoard()
 	selfPositionInPlayers = (_existingPlayers.size()-1);
 }
 
-void Player::printOpponentBoard() const
+void Player::printPublicBoard()
 {
-	
+	_playerBoard.printBoard(cout, true);
 }
 
 const string & Player::getPlayerName() const
@@ -34,22 +36,28 @@ const string & Player::getPlayerName() const
 
 void Player::attackOpponent()
 {
-	int userInput(0);
-	vector<string> opponentNames;
+	int userInput(0), counter(1);
+	vector<pair<string, Player *> > opponents;
 	
 	for(int i = 0; i < _existingPlayers.size(); i++)
 	{
 		if(i == selfPositionInPlayers) continue;
-		opponentNames.push_back(_existingPlayers[i]->getPlayerName());
+		opponents.push_back(pair<string,Player *>(_existingPlayers[i]->getPlayerName(), _existingPlayers[i]));
 	}
 	
 	cout << "Which player would you like to attack?" << endl;
-	for(int i = 0; i < opponentNames.size(); i++)
-		cout << (i+1) << ". " << opponentNames[i] << endl;
+	for(int i = 0; i < opponents.size(); i++)
+		cout << (i+1) << ". " << opponents[i].first << endl;
 	cin >> userInput;
 	cin.ignore(1000,'\n');
 	
-	
+	opponents[userInput-1].second->printPublicBoard();
+	opponents[userInput-1].second->_playerBoard.attackBoardCoordinate();
+}
+
+const bool & Player::isStillActive()
+{
+	return _playerBoard.shipsStillActive();
 }
 
 #endif
