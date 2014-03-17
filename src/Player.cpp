@@ -8,16 +8,12 @@
 #include "Player.h"
 
 vector<const Player *> Player::_existingPlayers;
+static int _activePlayer(0);
 
 Player::Player(const string & givenName): _name(givenName), _playerBoard()
 {
 	_existingPlayers.push_back(this);
 	selfPositionInPlayers = (_existingPlayers.size()-1);
-}
-
-void Player::assignOpponentBoards()
-{
-	
 }
 
 #endif

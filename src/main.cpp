@@ -28,7 +28,9 @@ int main(const int argc, const char* argv[])
 	backgroundMusic.startBackgroundAudio(0);*/
 	
 	//TESTING BOARD CLASS
-	Board myboard;
+	//Board myboard;
+	
+	Player myPlayer("Dustin");
 	
 	return 0;
 }

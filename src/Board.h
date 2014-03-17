@@ -50,4 +50,19 @@ class Board
 		vector<Ship> _ships;
 };
 
+class PlayerBoard : public Board
+{
+	public:
+		
+	private:
+};
+
+class OpponentBoard : public Board
+{
+	public:
+		
+	private:
+		
+};
+
 #endif

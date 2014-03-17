@@ -18,11 +18,10 @@ class Player
 	public:
 		Player(const string &);
 		static vector<const Player *> _existingPlayers;
-		static void assignOpponentBoards();
+		static int _activePlayer;
 	private:
 		Player();
 		Board _playerBoard;
-		const Board * _opponentBoard;
 		int selfPositionInPlayers; 		//Maybe a better name?
 		const string _name;
 };
