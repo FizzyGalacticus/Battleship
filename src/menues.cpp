@@ -17,7 +17,7 @@ using std::cin;
 #include "osFunctions.cpp"
 #include "Sound.h"
 
-void mainMenu()
+inline const int mainMenu()
 {
 	int input(0);
 	
@@ -31,29 +31,13 @@ void mainMenu()
 		cin >> input;
 		clearScreen();
 		
-		switch(input)
-		{
-			case 1:
-				
-			break;
-			case 2:
-				
-			break;
-			case 3:
-				
-			break;
-			case 4:
-				
-			break;
-			default:
-				cout << "That was not an option." << endl;
-			break;
-		}
+		if(input < 1 || input > 4) cout << "That was not an option." << endl;
+		else return input;
 	}
 }
 
 //Menu for when the game is paused.
-void pauseMenu()
+inline void pauseMenu()
 {
 	Sound::pauseAudio();
 	cout << "GAME PAUSED" << endl;

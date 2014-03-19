@@ -7,6 +7,7 @@
 #include "osFunctions.cpp"
 #include <stdio.h>
 #include "Board.h"
+#include "Game.h"
 #include <iostream>
 using std::cout;
 using std::endl;
