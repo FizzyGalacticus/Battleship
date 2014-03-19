@@ -16,7 +16,8 @@ using std::cin;
 inline void wait()
 {
 	cout << "Press ENTER to continue";
-	while(getchar() != '\n');
+	while(cin.ignore().get() != '\n');
+	
 }
 
 	//***********IF ON WINDOWS**************
