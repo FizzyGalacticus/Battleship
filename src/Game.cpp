@@ -6,13 +6,12 @@
 #define __BATTLESHIP__GAME__CPP
 
 #include "Game.h"
-#include "osFunctions.cpp"
+#include "utilities.cpp"
 #include "Player.h"
 
 #include <iostream>
 using std::cout;
 using std::endl;
-using std::cin;
 
 #include <cstdlib>
 using std::exit;

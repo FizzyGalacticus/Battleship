@@ -2,7 +2,7 @@
 //Main source file for Battleship
 //CS372 Project 1
 
-#include "osFunctions.cpp"
+#include "utilities.cpp"
 #include "Game.h"
 
 int main(const int argc, const char* argv[])

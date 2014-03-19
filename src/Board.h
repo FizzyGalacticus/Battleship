@@ -31,21 +31,24 @@ class Board
 		const bool & shipsStillActive() const;
 	private:
 		void initBoard();
-		void initShips();
 		Coordinate parseUserInput(const string &);
 		const string attackCoordinatePrompt();
-		const vector<vector<Coordinate> > getPossibleShipDirection(const Coordinate &, const int &);
-		const char getCellContents(const int, const int);
 		void setCellContents(const int, const int, const char);
-		void assignShipCoordinatesOnBoard(const Ship &);
-		const int findShipWithCoordinates(const Coordinate) const;
-		vector<Coordinate> getLeftAndUpCoordinates(const Coordinate &, const char &, const int &);
-		vector<Coordinate> getRightAndDownCoordinates(const Coordinate &, const char &, const int &);
+		vector<Coordinate> computeLeftAndUpCoordinates(const Coordinate &, const char &, const int &);
+		vector<Coordinate> computeRightAndDownCoordinates(const Coordinate &, const char &, const int &);
+		//***			Ship Manipulation Functions			***//
+		void initShips();
 		const string initialShipCoordinatePrompt(const string &, const int &);
 		const vector<string> parsePossibleShipDirections(const vector<vector<Coordinate > >);
 		const char shipDirectionalPrompt(const vector<vector<Coordinate > > &);
-		const string getEndString();
-		const string getMidString();
+		void assignShipCoordinatesOnBoard(const Ship &);
+		const int findShipWithCoordinates(const Coordinate) const;
+		const vector<vector<Coordinate> > getPossibleShipDirection(const Coordinate &, const int &);
+		//***			Board Printing Functions			***//
+		const char getCellContents(const int, const int);
+		const string getEndString() const;
+		const string getMidString() const;
+		//***			Private Member Variables			***//
 		vector<vector<char> > _board;
 		const int _gridSize;
 		vector<Ship> _ships;

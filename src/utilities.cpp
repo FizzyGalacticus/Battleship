@@ -2,8 +2,8 @@
 //Source file for different utilities needed
 //CS372 Project 1
 
-#ifndef __OS__FUNCTIONS__
-#define __OS__FUNCTIONS__
+#ifndef __UTILITY__FUNCTIONS__
+#define __UTILITY__FUNCTIONS__
 
 #include <stdio.h>
 #include <iostream>
@@ -18,8 +18,7 @@ using std::string;
 inline void wait()
 {
 	cout << "Press ENTER to continue";
-	while(cin.ignore().get() != '\n');
-	
+	while(cin.ignore().get() != '\n');	
 }
 
 inline const string getUserInput()

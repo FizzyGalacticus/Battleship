@@ -11,7 +11,7 @@ using std::endl;
 using std::cin;
 
 #include "Board.h"
-#include "osFunctions.cpp"
+#include "utilities.cpp"
 
 typedef pair<int, int> Coordinate;
 

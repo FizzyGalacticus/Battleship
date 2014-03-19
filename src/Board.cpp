@@ -10,7 +10,7 @@
 using std::cout;
 using std::endl;
 
-#include "osFunctions.cpp"
+#include "utilities.cpp"
 #include "BoardPrompts.cpp"
 
 Board::Board() : _gridSize(10)
@@ -190,7 +190,7 @@ Coordinate Board::parseUserInput(const string & input)
 }
 
 //Works!
-vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+vector<Coordinate> Board::computeLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
 	const bool checkLeft = (checkAxis == 'L')?true:false;
@@ -212,7 +212,7 @@ vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords,
 }
 
 //Works!
-vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+vector<Coordinate> Board::computeRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
 	const bool checkRight = (checkAxis == 'R')?true:false;
@@ -239,10 +239,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	vector<Coordinate > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
-	up = getLeftAndUpCoordinates(userGivenCoords, 'U', spaceNeeded);
-	down = getRightAndDownCoordinates(userGivenCoords, 'D', spaceNeeded);
-	left = getLeftAndUpCoordinates(userGivenCoords, 'L', spaceNeeded);
-	right = getRightAndDownCoordinates(userGivenCoords, 'R', spaceNeeded);
+	up = computeLeftAndUpCoordinates(userGivenCoords, 'U', spaceNeeded);
+	down = computeRightAndDownCoordinates(userGivenCoords, 'D', spaceNeeded);
+	left = computeLeftAndUpCoordinates(userGivenCoords, 'L', spaceNeeded);
+	right = computeRightAndDownCoordinates(userGivenCoords, 'R', spaceNeeded);
 	
 	possibleDirections.push_back(up);
 	possibleDirections.push_back(down);
@@ -296,7 +296,7 @@ void Board::printBoard(ostream & out, const bool isPublic)
 	out << ' ' << getEndString() << endl;
 }
 
-const string Board::getEndString()
+const string Board::getEndString() const
 {
 	string temp;
 	
@@ -307,7 +307,7 @@ const string Board::getEndString()
 	return temp;
 }
 
-const string Board::getMidString()
+const string Board::getMidString() const
 {
 	string temp;
 	

@@ -10,11 +10,10 @@
 #include <iostream>
 using std::cout;
 using std::endl;
-using std::cin;
 
 #include <stdio.h>
 
-#include "osFunctions.cpp"
+#include "utilities.cpp"
 #include "Sound.h"
 
 inline const char mainMenu()
