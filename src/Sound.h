@@ -51,6 +51,7 @@ class BackgroundAudio : public Sound
 		static int _currentPlayingAudioIndex;
 		static int _numberOfTracks;
 		BackgroundAudio();
+		void initBackgroundAudio(const vector<string>);
 		static vector<ISoundSource*> _streams;
 };
 

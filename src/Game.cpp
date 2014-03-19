@@ -17,7 +17,6 @@ using std::cin;
 #include <cstdlib>
 using std::exit;
 
-vector<string> Game::_backgroundMusicFileNames;
 int Game::_activePlayerIndex(0);
 
 Game::~Game()
@@ -46,6 +45,15 @@ void Game::initGame()
 
 void Game::preGame()
 {
+	vector<string> backgroundMusicFileNames;
+	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Constance.mp3");
+	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/The Great Unrest.mp3");
+	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Homocidal Seed.mp3");
+	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Tempest.mp3");
+	
+	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
+	backgroundMusic.startBackgroundAudio(0);
+	
 	while(true)
 	{
 		const int menuSelection = mainMenu();

@@ -22,7 +22,6 @@ class Game
 		~Game();
 	private:
 		vector<Player *> _players;
-		static vector<string> _backgroundMusicFileNames;
 		static int _activePlayerIndex;
 		void printPlayerBoards();
 		const int indexToWinningPlayer() const;

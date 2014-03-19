@@ -95,6 +95,15 @@ void BackgroundAudio::MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound
 	startBackgroundAudio(_currentPlayingAudioIndex);
 }
 
+void BackgroundAudio::initBackgroundAudio(const vector<string> audioFilenames)
+{
+	_numberOfTracks = audioFilenames.size();
+	
+	//Initialize _streams
+	for(int i = 0; i < audioFilenames.size(); i++)
+		_streams.push_back(initSound(audioFilenames[i]));
+}
+
 SoundFXAudio::SoundFXAudio(const string audioFilename)
 {
 	//Initialize sound stream

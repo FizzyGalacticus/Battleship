@@ -32,6 +32,7 @@ const string & Player::getPlayerName() const
 
 void Player::attackOpponent(Player * opponent)
 {
+	cout << _name << "'s turn" << endl;
 	opponent->_playerBoard.attackBoardCoordinate();
 }
 
