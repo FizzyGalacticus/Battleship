@@ -1,5 +1,5 @@
 //Dustin Dodson & Bucky Frost
-//Source file for Operating System specific functions
+//Source file for different utilities needed
 //CS372 Project 1
 
 #ifndef __OS__FUNCTIONS__
@@ -12,12 +12,30 @@ using std::endl;
 using std::cin;
 
 #include <stdlib.h>
+#include <string>
+using std::string;
 
 inline void wait()
 {
 	cout << "Press ENTER to continue";
 	while(cin.ignore().get() != '\n');
 	
+}
+
+inline const string getUserInput()
+{
+	string input;
+	
+	try
+	{
+		getline(cin, input);
+	}
+	catch(...)
+	{
+		throw "Error with taking user input!";
+	}
+	
+	return input;
 }
 
 	//***********IF ON WINDOWS**************

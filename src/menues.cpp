@@ -17,9 +17,9 @@ using std::cin;
 #include "osFunctions.cpp"
 #include "Sound.h"
 
-inline const int mainMenu()
+inline const char mainMenu()
 {
-	int input(0);
+	char input;
 	
 	while(input < 1 || input > 4)
 	{
@@ -28,10 +28,10 @@ inline const int mainMenu()
 		cout << "2. Options" << endl;
 		cout << "3. About" << endl;
 		cout << "4. Exit" << endl;
-		cin >> input;
+		input = (getUserInput()[0]);
 		clearScreen();
 		
-		if(input < 1 || input > 4) cout << "That was not an option." << endl;
+		if(input < '1' || input > '4') cout << "That was not an option." << endl;
 		else return input;
 	}
 }

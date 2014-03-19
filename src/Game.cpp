@@ -28,12 +28,9 @@ Game::~Game()
 void Game::initGame()
 {
 	for(int i = 0; i < 2; i++)
-	{
-		string name;
-		
+	{		
 		cout << "Player #" << (i+1) << ", please enter your name: " << endl;
-		cin >> name;
-		cin.ignore(1000, '\n');
+		const string name = getUserInput();
 		
 		Player * myPlayer = new Player(name);
 		
@@ -56,21 +53,21 @@ void Game::preGame()
 	
 	while(true)
 	{
-		const int menuSelection = mainMenu();
+		const char menuSelection = mainMenu();
 		
 		switch(menuSelection)
 		{
-			case 1:
+			case '1':
 				initGame();
 			break;
-			case 2:
-			case 3:
+			case '2':
+			case '3':
 				cout << "This feature has not yet been implemented!" << endl;
 				cout << "Pay us more money, and we'll throw it in!" << endl;
 				wait();
 				clearScreen();
 			break;
-			case 4:
+			case '4':
 				exit(0);
 			break;
 		}
