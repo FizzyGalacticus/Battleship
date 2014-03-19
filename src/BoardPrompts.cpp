@@ -13,8 +13,6 @@ using std::cin;
 #include "Board.h"
 #include "utilities.cpp"
 
-typedef pair<int, int> Coordinate;
-
 const string Board::initialShipCoordinatePrompt(const string & shipName, const int & shipHitpoints)
 {
 	cout << "Please type desired coordinates for front of " << shipName

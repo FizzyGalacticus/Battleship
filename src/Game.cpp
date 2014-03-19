@@ -13,9 +13,6 @@
 using std::cout;
 using std::endl;
 
-#include <cstdlib>
-using std::exit;
-
 int Game::_activePlayerIndex(0);
 
 Game::~Game()

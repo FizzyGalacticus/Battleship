@@ -326,12 +326,9 @@ const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 	return -1;
 }
 
-const bool & Board::shipsStillActive() const
+const bool Board::shipsStillActive() const
 {
-	for(int i = 0; i < _shipsInPlay.size(); i++)
-		if(_shipsInPlay[i].getShipStatus()) return true;
-	
-	return false;
+	return _shipsInPlay.size();
 }
 
 void Board::attackBoardCoordinate()

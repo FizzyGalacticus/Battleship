@@ -15,15 +15,12 @@ using std::cin;
 #include <string>
 using std::string;
 
-inline void wait()
-{
-	cout << "Press ENTER to continue";
-	while(cin.ignore().get() != '\n');	
-}
+#include <cstdlib>
+using std::exit;
 
 inline const string getUserInput()
 {
-	string input;
+	string input = "";
 	
 	try
 	{
@@ -35,6 +32,12 @@ inline const string getUserInput()
 	}
 	
 	return input;
+}
+
+inline void wait()
+{
+	cout << "Press ENTER to continue";
+	while(getUserInput() != "");	
 }
 
 	//***********IF ON WINDOWS**************

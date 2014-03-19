@@ -11,10 +11,6 @@ using std::cout;
 using std::endl;
 #include <string>
 using std::string;
-#include <vector>
-using std::vector;
-#include <map>
-using std::map;
 
 Player::Player(const string & givenName): _name(givenName), _playerBoard()
 {
@@ -35,7 +31,7 @@ void Player::attackOpponent(Player * opponent)
 	opponent->_playerBoard.attackBoardCoordinate();
 }
 
-const bool & Player::isStillActive()
+const bool Player::isStillActive()
 {
 	return _playerBoard.shipsStillActive();
 }

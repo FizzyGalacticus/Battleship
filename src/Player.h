@@ -10,9 +10,6 @@
 #include <string>
 using std::string;
 
-#include <vector>
-using std::vector;
-
 class Player
 {
 	public:
@@ -20,7 +17,7 @@ class Player
 		void printBoard(const bool &);
 		const string & getPlayerName() const;
 		void attackOpponent(Player *);
-		const bool & isStillActive();
+		const bool isStillActive();
 	private:
 		Player();
 		Board _playerBoard;
