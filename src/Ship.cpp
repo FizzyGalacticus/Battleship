@@ -53,12 +53,15 @@ const string & Ship::getNameOfShip() const
 	return _nameOfShip;
 }
 
-const bool Ship::sustainDamage(const pair<int,int> damagedCoord)
+void Ship::sustainDamage(const pair<int,int> damagedCoord)
 {
 	for(int i = 0; i < _activeCoordIndex.size(); i++)
 		if(_coordinates[_activeCoordIndex[i]] == damagedCoord)
 			_activeCoordIndex.erase(_activeCoordIndex.begin()+i);
-	
+}
+
+const bool Ship::getShipStatus() const
+{
 	return _activeCoordIndex.size();
 }
 

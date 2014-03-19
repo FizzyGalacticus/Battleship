@@ -61,22 +61,19 @@ const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coor
 
 void Board::initShips()
 {
-	//Pushes one of each Ship type to _ships vector
+	//Pushes one of each Ship type to _shipsInPlay vector
 	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
-	{
-		_ships.push_back(Ship(itr->first));
-		_shipStatus.push_back(true);
-	}
+		_shipsInPlay.push_back(Ship(itr->first));
 	
 	bool isNotValidInput = true;
 	string input;
 	Coordinate inputCoordinate;
 	
 	//Go through each ship
-	for(int i = 0; i < _ships.size(); i++)
+	for(int i = 0; i < _shipsInPlay.size(); i++)
 	{
-		const int & shipHitpoints = _ships[i].getNumberOfHitPoints();
-		const string & shipName = _ships[i].getNameOfShip();
+		const int & shipHitpoints = _shipsInPlay[i].getNumberOfHitPoints();
+		const string & shipName = _shipsInPlay[i].getNameOfShip();
 		
 		//Get proper input of coordinates
 		while(isNotValidInput)
@@ -113,28 +110,28 @@ void Board::initShips()
 						case 'u':
 							if(possibleShipDirections[0].size())
 							{
-								_ships[i].setCoordinates(possibleShipDirections[0]);
+								_shipsInPlay[i].setCoordinates(possibleShipDirections[0]);
 							}
 						break;
 						case 'D':
 						case 'd':
 							if(possibleShipDirections[1].size())
 							{
-								_ships[i].setCoordinates(possibleShipDirections[1]);
+								_shipsInPlay[i].setCoordinates(possibleShipDirections[1]);
 							}
 						break;
 						case 'L':
 						case 'l':
 							if(possibleShipDirections[2].size())
 							{
-								_ships[i].setCoordinates(possibleShipDirections[2]);
+								_shipsInPlay[i].setCoordinates(possibleShipDirections[2]);
 							}
 						break;
 						case 'R':
 						case 'r':
 							if(possibleShipDirections[3].size())
 							{
-								_ships[i].setCoordinates(possibleShipDirections[3]);
+								_shipsInPlay[i].setCoordinates(possibleShipDirections[3]);
 							}
 						break;
 						default:
@@ -150,7 +147,7 @@ void Board::initShips()
 		}
 		
 		isNotValidInput = true;
-		assignShipCoordinatesOnBoard(_ships[i]);
+		assignShipCoordinatesOnBoard(_shipsInPlay[i]);
 	}
 }
 
@@ -189,7 +186,7 @@ Coordinate Board::parseUserInput(const string & input)
 	return retCoords;
 }
 
-//Works!
+//This function uses ternary operator to differentiate between different directions for our Ship.
 vector<Coordinate> Board::computeLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
@@ -211,7 +208,7 @@ vector<Coordinate> Board::computeLeftAndUpCoordinates(const Coordinate & baseCoo
 	return direction;
 }
 
-//Works!
+//This function uses ternary operator to differentiate between different directions for our Ship.
 vector<Coordinate> Board::computeRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
@@ -319,9 +316,9 @@ const string Board::getMidString() const
 
 const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 {
-	for(int i = 0; i < _ships.size(); i++)
+	for(int i = 0; i < _shipsInPlay.size(); i++)
 	{
-		vector<Coordinate > shipCoordinates = _ships[i].getCoordinates();
+		vector<Coordinate > shipCoordinates = _shipsInPlay[i].getCoordinates();
 		for(int j = 0; j < shipCoordinates.size(); j++)
 			if(searchCoord == shipCoordinates[j]) return i;
 	}
@@ -331,8 +328,8 @@ const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 
 const bool & Board::shipsStillActive() const
 {
-	for(int i = 0; i < _shipStatus.size(); i++)
-		if(_shipStatus[i]) return _shipStatus[i];
+	for(int i = 0; i < _shipsInPlay.size(); i++)
+		if(_shipsInPlay[i].getShipStatus()) return true;
 	
 	return false;
 }
@@ -358,8 +355,13 @@ void Board::attackBoardCoordinate()
 			if(isOccupied(inputCoordinates))
 			{
 				const int index = findShipWithCoordinates(inputCoordinates);
-				_shipStatus[index] = _ships[index].sustainDamage(inputCoordinates);
+				_shipsInPlay[index].sustainDamage(inputCoordinates);
+				
 				setCellContents(inputCoordinates.first, inputCoordinates.second, 'X');
+				
+				if(!_shipsInPlay[index].getShipStatus())
+					_shipsInPlay.erase(_shipsInPlay.begin()+index);
+				
 				cout << "Hit!" << endl;
 				wait();
 			}

@@ -23,7 +23,8 @@ class Ship
 		const vector<pair<int,int> > getCoordinates() const;
 		void setCoordinates(vector<pair<int,int> >);
 		const string & getNameOfShip() const;
-		const bool sustainDamage(const pair<int,int>);
+		void sustainDamage(const pair<int,int>);
+		const bool getShipStatus() const;
 		Ship(const string);
 		const int & getNumberOfHitPoints();
 		static const map<string,int> _shipTypes;

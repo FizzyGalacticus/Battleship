@@ -51,23 +51,7 @@ class Board
 		//***			Private Member Variables			***//
 		vector<vector<char> > _board;
 		const int _gridSize;
-		vector<Ship> _ships;
-		vector<bool> _shipStatus;
-};
-
-class PlayerBoard : public Board
-{
-	public:
-		
-	private:
-};
-
-class OpponentBoard : public Board
-{
-	public:
-		
-	private:
-		
+		vector<Ship> _shipsInPlay;
 };
 
 #endif
