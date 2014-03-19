@@ -40,23 +40,26 @@ void Game::initGame()
 
 void Game::preGame()
 {
-	const int menuSelection = mainMenu();
-	
-	switch(menuSelection)
+	while(true)
 	{
-		case 1:
-			initGame();
-		break;
-		case 2:
-		case 3:
-			cout << "This feature has not yet been implemented!" << endl;
-			cout << "Pay us more money, and we'll throw it in!" << endl;
-			wait();
-			clearScreen();
-		break;
-		case 4:
-			exit(0);
-		break;
+		const int menuSelection = mainMenu();
+		
+		switch(menuSelection)
+		{
+			case 1:
+				initGame();
+			break;
+			case 2:
+			case 3:
+				cout << "This feature has not yet been implemented!" << endl;
+				cout << "Pay us more money, and we'll throw it in!" << endl;
+				wait();
+				clearScreen();
+			break;
+			case 4:
+				exit(0);
+			break;
+		}
 	}
 }
 
@@ -65,7 +68,11 @@ void Game::mainGameLoop()
 	while(allPlayersAreStillAlive())
 	{
 		printPlayerBoards();
+		_players[_activePlayerIndex]->attackOpponent(_players[( (_activePlayerIndex == 0) ? 1 : 0 )]);
+		clearScreen();
 	}
+	
+	printWinnerMessage(indexToWinningPlayer());
 }
 
 const bool Game::allPlayersAreStillAlive()
@@ -78,8 +85,25 @@ const bool Game::allPlayersAreStillAlive()
 
 void Game::printPlayerBoards()
 {
-	_players[( (_activePlayerIndex == 0) ? 0 : 1 )]->printBoard(false);
+	_players[( (_activePlayerIndex == 0) ? 1 : 0 )]->printBoard(false);
 	_players[_activePlayerIndex]->printBoard(true);
+}
+
+const int Game::indexToWinningPlayer() const
+{
+	int winner = 0;
+	
+	for(int i = 0; i < _players.size(); i++)
+		if(_players[i]->isStillActive()) winner = i;
+		
+	return winner;
+}
+
+void Game::printWinnerMessage(const int indexToWinner) const
+{
+	cout << "Congratulations to " << _players[indexToWinner]->getPlayerName() << ", you are the winner!" << endl;
+	wait();
+	clearScreen();
 }
 
 #endif

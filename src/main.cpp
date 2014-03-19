@@ -31,7 +31,8 @@ int main(const int argc, const char* argv[])
 	//TESTING BOARD CLASS
 	//Board myboard;
 	
-	Player myPlayer("Dustin");
+	Game myGame;
+	myGame.preGame();
 	
 	return 0;
 }

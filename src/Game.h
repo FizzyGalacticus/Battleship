@@ -24,6 +24,8 @@ class Game
 		static vector<string> _backgroundMusicFileNames;
 		static int _activePlayerIndex;
 		void printPlayerBoards();
+		const int indexToWinningPlayer() const;
+		void printWinnerMessage(const int) const;
 };
 
 #endif

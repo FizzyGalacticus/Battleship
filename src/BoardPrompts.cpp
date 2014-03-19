@@ -22,6 +22,7 @@ const string Board::initialShipCoordinatePrompt(const string & shipName, const i
 		<< endl << '(' << shipHitpoints << " total spaces needed) " << "(example: 'I4'): ";
 	cin >> input;
 	cin.ignore(1000, '\n');
+	clearScreen();
 	
 	return input;
 }
@@ -29,13 +30,18 @@ const string Board::initialShipCoordinatePrompt(const string & shipName, const i
 const char Board::shipDirectionalPrompt(const vector<vector<Coordinate > > & possibleShipDirections)
 {
 	const vector<string> availableShipDirectionStrings = parsePossibleShipDirections(possibleShipDirections);
+	char input;
 	
 	cout << "Please enter a direction (UDLR) you would like to face your ship." << endl;
 	cout << "Your " << availableShipDirectionStrings.size() << " options are: " << endl;
 	for(int j = 0; j < availableShipDirectionStrings.size(); j++)
 		cout << availableShipDirectionStrings[j] << endl;
 	
-	return getchar();
+	
+	input =  getchar();
+	clearScreen();
+	
+	return input;
 }
 
 const string Board::attackCoordinatePrompt()
@@ -45,6 +51,7 @@ const string Board::attackCoordinatePrompt()
 	cout << "Please enter coordinates that you wish to attack: ";
 	cin >> input;
 	cin.ignore(1000, '\n');
+	clearScreen();
 	
 	return input;
 }
