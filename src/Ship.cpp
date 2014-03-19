@@ -43,6 +43,9 @@ const vector<pair<int,int> > Ship::getCoordinates() const
 void Ship::setCoordinates(vector<pair<int,int> > shipCoordinates)
 {
 	_coordinates = shipCoordinates;
+	
+	for(int i = 0; i < _coordinates.size(); i++)
+		_activeCoordIndex.push_back(i);
 }
 
 const string & Ship::getNameOfShip() const
