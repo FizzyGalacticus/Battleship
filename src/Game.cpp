@@ -18,6 +18,7 @@ using std::cin;
 using std::exit;
 
 vector<string> Game::_backgroundMusicFileNames;
+int Game::_activePlayerIndex(0);
 
 void Game::initGame()
 {
@@ -33,6 +34,8 @@ void Game::initGame()
 		
 		_players.push_back(&myPlayer);
 	}
+	
+	mainGameLoop();
 }
 
 void Game::preGame()
@@ -55,6 +58,28 @@ void Game::preGame()
 			exit(0);
 		break;
 	}
+}
+
+void Game::mainGameLoop()
+{
+	while(allPlayersAreStillAlive())
+	{
+		printPlayerBoards();
+	}
+}
+
+const bool Game::allPlayersAreStillAlive()
+{
+	for(int i = 0; i < _players.size(); i++)
+		if(!_players[i]->isStillActive()) return false;
+	
+	return true;
+}
+
+void Game::printPlayerBoards()
+{
+	_players[( (_activePlayerIndex == 0) ? 0 : 1 )]->printBoard(false);
+	_players[_activePlayerIndex]->printBoard(true);
 }
 
 #endif

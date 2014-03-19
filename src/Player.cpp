@@ -17,42 +17,22 @@ using std::vector;
 #include <map>
 using std::map;
 
-vector<Player *> Player::_existingPlayers;
-static int _activePlayer(0);
-
 Player::Player(const string & givenName): _name(givenName), _playerBoard()
 {
-	_existingPlayers.push_back(this);
-	selfPositionInPlayers = (_existingPlayers.size()-1);
+	
 }
 
-void Player::printPublicBoard()
+void Player::printBoard(const bool & showShips)
 {
-	_playerBoard.printBoard(cout, true);
+	_playerBoard.printBoard(cout, showShips);
 }
 
 const string & Player::getPlayerName() const
 {return _name;}
 
-void Player::attackOpponent()
+void Player::attackOpponent(Player * opponent)
 {
-	int userInput(0), counter(1);
-	vector<pair<string, Player *> > opponents;
-	
-	for(int i = 0; i < _existingPlayers.size(); i++)
-	{
-		if(i == selfPositionInPlayers) continue;
-		opponents.push_back(pair<string,Player *>(_existingPlayers[i]->getPlayerName(), _existingPlayers[i]));
-	}
-	
-	cout << "Which player would you like to attack?" << endl;
-	for(int i = 0; i < opponents.size(); i++)
-		cout << (i+1) << ". " << opponents[i].first << endl;
-	cin >> userInput;
-	cin.ignore(1000,'\n');
-	
-	opponents[userInput-1].second->printPublicBoard();
-	opponents[userInput-1].second->_playerBoard.attackBoardCoordinate();
+	opponent->_playerBoard.attackBoardCoordinate();
 }
 
 const bool & Player::isStillActive()

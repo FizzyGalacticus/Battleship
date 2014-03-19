@@ -17,9 +17,13 @@ class Game
 	public:
 		void initGame();
 		void preGame();
+		void mainGameLoop();
+		const bool allPlayersAreStillAlive();
 	private:
 		vector<Player *> _players;
 		static vector<string> _backgroundMusicFileNames;
+		static int _activePlayerIndex;
+		void printPlayerBoards();
 };
 
 #endif

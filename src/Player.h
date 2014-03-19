@@ -17,16 +17,13 @@ class Player
 {
 	public:
 		Player(const string &);
-		static vector<Player *> _existingPlayers;
-		static int _activePlayer;
-		void printPublicBoard();
+		void printBoard(const bool &);
 		const string & getPlayerName() const;
-		void attackOpponent();
+		void attackOpponent(Player *);
 		const bool & isStillActive();
 	private:
 		Player();
 		Board _playerBoard;
-		int selfPositionInPlayers; 		//Maybe a better name?
 		string _name;
 };
 
