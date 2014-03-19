@@ -11,13 +11,13 @@ using std::cout;
 using std::endl;
 using std::cin;
 
+#include <stdlib.h>
+
 inline void wait()
 {
 	cout << "Press ENTER to continue";
 	while(getchar() != '\n');
 }
-
-#include <stdlib.h>
 
 	//***********IF ON WINDOWS**************
 	#if defined(__WIN32__) || defined(_WIN32) || defined(_WIN64) || defined(__TOS_WIN__) || defined(__WINDOWS__)

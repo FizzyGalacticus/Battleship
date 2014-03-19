@@ -332,7 +332,7 @@ const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 const bool & Board::shipsStillActive() const
 {
 	for(int i = 0; i < _shipStatus.size(); i++)
-		if(_shipStatus[i]) return true;
+		if(_shipStatus[i]) return _shipStatus[i];
 	
 	return false;
 }
