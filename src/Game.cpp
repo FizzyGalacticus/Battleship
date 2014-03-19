@@ -7,6 +7,7 @@
 
 #include "Game.h"
 #include "osFunctions.cpp"
+#include "Player.h"
 
 #include <iostream>
 using std::cout;
@@ -16,9 +17,22 @@ using std::cin;
 #include <cstdlib>
 using std::exit;
 
+vector<string> Game::_backgroundMusicFileNames;
+
 void Game::initGame()
 {
-	
+	for(int i = 0; i < 2; i++)
+	{
+		string name;
+		
+		cout << "Please enter your name: " << endl;
+		cin >> name;
+		cin.ignore(1000, '\n');
+		
+		Player myPlayer(name);
+		
+		_players.push_back(&myPlayer);
+	}
 }
 
 void Game::preGame()

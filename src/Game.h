@@ -18,7 +18,8 @@ class Game
 		void initGame();
 		void preGame();
 	private:
-		vector<Player> _players;
+		vector<Player *> _players;
+		static vector<string> _backgroundMusicFileNames;
 };
 
 #endif

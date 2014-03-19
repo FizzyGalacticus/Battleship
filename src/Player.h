@@ -27,7 +27,7 @@ class Player
 		Player();
 		Board _playerBoard;
 		int selfPositionInPlayers; 		//Maybe a better name?
-		const string _name;
+		string _name;
 };
 
 #endif
