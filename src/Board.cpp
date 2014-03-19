@@ -81,7 +81,7 @@ void Board::initShips()
 		//Get proper input of coordinates
 		while(isNotValidInput)
 		{
-			printBoard(cout,true);
+			printBoard(cout,false);
 			
 			input = initialShipCoordinatePrompt(shipName, shipHitpoints);
 			
@@ -101,7 +101,7 @@ void Board::initShips()
 					  (directionInput != 'L' && directionInput != 'l') &&
 					  (directionInput != 'R' && directionInput != 'r'))
 				{
-					printBoard(cout,true);
+					printBoard(cout,false);
 					
 					directionInput = shipDirectionalPrompt(possibleShipDirections);
 					
@@ -211,7 +211,7 @@ vector<Coordinate> Board::getLeftAndUpCoordinates(const Coordinate & baseCoords,
 	return direction;
 }
 
-//Does not work for Down coordinates!
+//Works!
 vector<Coordinate> Board::getRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
@@ -284,7 +284,10 @@ void Board::printBoard(ostream & out, const bool isPublic)
 		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "| " << ((isPublic && getCellContents(i,j) == 'S')?'S':' ') << ' ';
+			char charToPrint = 0;
+			if(isPublic && getCellContents(i,j) == 'S') charToPrint = ' ';
+			else charToPrint = getCellContents(i,j);
+			out << "| " << charToPrint << ' ';
 		}
 		out << '|' << endl;
 		out << getMidString() << endl;

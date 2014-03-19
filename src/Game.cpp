@@ -32,7 +32,7 @@ void Game::initGame()
 	{
 		string name;
 		
-		cout << "Please enter your name: " << endl;
+		cout << "Player #" << (i+1) << ", please enter your name: " << endl;
 		cin >> name;
 		cin.ignore(1000, '\n');
 		
@@ -76,6 +76,8 @@ void Game::mainGameLoop()
 		printPlayerBoards();
 		_players[_activePlayerIndex]->attackOpponent(_players[( (_activePlayerIndex == 0) ? 1 : 0 )]);
 		clearScreen();
+		
+		_activePlayerIndex = ((_activePlayerIndex == 0) ? 1 : 0);
 	}
 	
 	printWinnerMessage(indexToWinningPlayer());
@@ -91,8 +93,8 @@ const bool Game::allPlayersAreStillAlive()
 
 void Game::printPlayerBoards()
 {
-	_players[( (_activePlayerIndex == 0) ? 1 : 0 )]->printBoard(false);
-	_players[_activePlayerIndex]->printBoard(true);
+	_players[( (_activePlayerIndex == 0) ? 1 : 0 )]->printBoard(true);
+	_players[_activePlayerIndex]->printBoard(false);
 }
 
 const int Game::indexToWinningPlayer() const
