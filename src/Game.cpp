@@ -20,6 +20,12 @@ using std::exit;
 vector<string> Game::_backgroundMusicFileNames;
 int Game::_activePlayerIndex(0);
 
+Game::~Game()
+{
+	for(int i = 0; i < _players.size(); i++)
+		delete _players[i];
+}
+
 void Game::initGame()
 {
 	for(int i = 0; i < 2; i++)
@@ -30,9 +36,9 @@ void Game::initGame()
 		cin >> name;
 		cin.ignore(1000, '\n');
 		
-		Player myPlayer(name);
+		Player * myPlayer = new Player(name);
 		
-		_players.push_back(&myPlayer);
+		_players.push_back(myPlayer);
 	}
 	
 	mainGameLoop();

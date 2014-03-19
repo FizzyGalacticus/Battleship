@@ -49,7 +49,7 @@ class Board
 		vector<vector<char> > _board;
 		const int _gridSize;
 		vector<Ship> _ships;
-		vector<bool> shipStatus;
+		vector<bool> _shipStatus;
 };
 
 class PlayerBoard : public Board

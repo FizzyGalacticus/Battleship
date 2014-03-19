@@ -19,6 +19,7 @@ class Game
 		void preGame();
 		void mainGameLoop();
 		const bool allPlayersAreStillAlive();
+		~Game();
 	private:
 		vector<Player *> _players;
 		static vector<string> _backgroundMusicFileNames;

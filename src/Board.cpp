@@ -63,7 +63,10 @@ void Board::initShips()
 {
 	//Pushes one of each Ship type to _ships vector
 	for(map<string,int>::const_iterator itr = Ship::_shipTypes.begin(); itr != Ship::_shipTypes.end(); itr++)
+	{
 		_ships.push_back(Ship(itr->first));
+		_shipStatus.push_back(true);
+	}
 	
 	bool isNotValidInput = true;
 	string input;
@@ -72,14 +75,13 @@ void Board::initShips()
 	//Go through each ship
 	for(int i = 0; i < _ships.size(); i++)
 	{
-		shipStatus[i] = true;
 		const int & shipHitpoints = _ships[i].getNumberOfHitPoints();
 		const string & shipName = _ships[i].getNameOfShip();
 		
 		//Get proper input of coordinates
 		while(isNotValidInput)
 		{
-			printBoard(cout,false);
+			printBoard(cout,true);
 			
 			input = initialShipCoordinatePrompt(shipName, shipHitpoints);
 			
@@ -99,7 +101,7 @@ void Board::initShips()
 					  (directionInput != 'L' && directionInput != 'l') &&
 					  (directionInput != 'R' && directionInput != 'r'))
 				{
-					printBoard(cout,false);
+					printBoard(cout,true);
 					
 					directionInput = shipDirectionalPrompt(possibleShipDirections);
 					
@@ -150,8 +152,6 @@ void Board::initShips()
 		isNotValidInput = true;
 		assignShipCoordinatesOnBoard(_ships[i]);
 	}
-		
-	printBoard(cout,false);
 }
 
 Coordinate Board::parseUserInput(const string & input)
@@ -284,7 +284,7 @@ void Board::printBoard(ostream & out, const bool isPublic)
 		out << i;
 		for(int j = 0; j < _gridSize; j++)
 		{
-			out << "| " << ((isPublic && getCellContents(i,j) == 'S')?' ':'S') << ' ';
+			out << "| " << ((isPublic && getCellContents(i,j) == 'S')?'S':' ') << ' ';
 		}
 		out << '|' << endl;
 		out << getMidString() << endl;
@@ -328,8 +328,8 @@ const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
 
 const bool & Board::shipsStillActive() const
 {
-	for(int i = 0; i < shipStatus.size(); i++)
-		if(shipStatus[i]) return true;
+	for(int i = 0; i < _shipStatus.size(); i++)
+		if(_shipStatus[i]) return true;
 	
 	return false;
 }
@@ -355,7 +355,7 @@ void Board::attackBoardCoordinate()
 			if(isOccupied(inputCoordinates))
 			{
 				const int index = findShipWithCoordinates(inputCoordinates);
-				shipStatus[index] = _ships[index].sustainDamage(inputCoordinates);
+				_shipStatus[index] = _ships[index].sustainDamage(inputCoordinates);
 				setCellContents(inputCoordinates.first, inputCoordinates.second, 'X');
 				cout << "Hit!" << endl;
 				wait();
