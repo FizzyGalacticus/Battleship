@@ -9,11 +9,9 @@
 #include "utilities.cpp"
 #include "Player.h"
 
-#include <iostream>
-using std::cout;
-using std::endl;
-
 int Game::_activePlayerIndex(0);
+
+Game::Game(ostream & streamToOutputTo) : _outputStream(streamToOutputTo) {}
 
 Game::~Game()
 {
@@ -25,10 +23,10 @@ void Game::initGame()
 {
 	for(int i = 0; i < 2; i++)
 	{		
-		cout << "Player #" << (i+1) << ", please enter your name: " << endl;
+		_outputStream << "Player #" << (i+1) << ", please enter your name: " << endl;
 		const string name = getUserInput();
 		
-		Player * myPlayer = new Player(name);
+		Player * myPlayer = new Player(_outputStream, name);
 		
 		_players.push_back(myPlayer);
 	}
@@ -58,8 +56,8 @@ void Game::preGame()
 			break;
 			case '2':
 			case '3':
-				cout << "This feature has not yet been implemented!" << endl;
-				cout << "Pay us more money, and we'll throw it in!" << endl;
+				_outputStream << "This feature has not yet been implemented!" << endl;
+				_outputStream << "Pay us more money, and we'll throw it in!" << endl;
 				wait();
 				clearScreen();
 			break;
@@ -110,7 +108,7 @@ const int Game::indexToWinningPlayer() const
 
 void Game::printWinnerMessage(const int indexToWinner) const
 {
-	cout << "Congratulations to " << _players[indexToWinner]->getPlayerName() << ", you are the winner!" << endl;
+	_outputStream << "Congratulations to " << _players[indexToWinner]->getPlayerName() << ", you are the winner!" << endl;
 	wait();
 	clearScreen();
 }

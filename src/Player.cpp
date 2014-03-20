@@ -7,12 +7,11 @@
 
 #include "Player.h"
 #include <iostream>
-using std::cout;
 using std::endl;
 #include <string>
 using std::string;
 
-Player::Player(const string & givenName): _name(givenName), _playerBoard(cout) {}
+Player::Player(ostream & streamToOutputTo, const string & givenName): _name(givenName), _outputStream(streamToOutputTo), _playerBoard(_outputStream) {}
 
 void Player::printBoard(const bool & showShips)
 {
@@ -24,7 +23,7 @@ const string & Player::getPlayerName() const
 
 void Player::attackOpponent(Player * opponent)
 {
-	cout << _name << "'s turn" << endl;
+	_outputStream << _name << "'s turn" << endl;
 	opponent->_playerBoard.attackBoardCoordinate();
 }
 

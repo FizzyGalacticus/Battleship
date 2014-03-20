@@ -10,10 +10,13 @@
 #include <string>
 using std::string;
 
+#include <iostream>
+using std::ostream;
+
 class Player
 {
 	public:
-		Player(const string &);
+		Player(ostream &, const string &);
 		void printBoard(const bool &);
 		const string & getPlayerName() const;
 		void attackOpponent(Player *);
@@ -22,6 +25,7 @@ class Player
 		Player();
 		Board _playerBoard;
 		string _name;
+		ostream & _outputStream;
 };
 
 #endif

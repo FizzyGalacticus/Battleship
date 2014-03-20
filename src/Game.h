@@ -12,20 +12,26 @@
 #include <vector>
 using std::vector;
 
+#include <iostream>
+using std::ostream;
+
 class Game
 {
 	public:
+		Game(ostream &);
 		void initGame();
 		void preGame();
 		void mainGameLoop();
 		const bool allPlayersAreStillAlive();
 		~Game();
 	private:
+		Game();
 		vector<Player *> _players;
 		static int _activePlayerIndex;
 		void printPlayerBoards();
 		const int indexToWinningPlayer() const;
 		void printWinnerMessage(const int) const;
+		ostream & _outputStream;
 };
 
 #endif
