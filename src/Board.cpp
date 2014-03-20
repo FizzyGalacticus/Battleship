@@ -34,31 +34,6 @@ void Board::initBoard()
 	}
 }
 
-void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
-{
-	vector<Coordinate > coordinates = currentShip.getCoordinates();
-		
-	for(int i = 0; i < coordinates.size(); i++)
-	{
-		_board[coordinates[i].second][coordinates[i].first] = 'S';
-	}
-}
-
-const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coordinate > > allPossibleShipDirections)
-{
-	vector<string> possibleShipDirections;
-	
-	for(int i = 0; i < allPossibleShipDirections.size(); i++)
-	{
-		if(i == 0 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Up");
-		else if(i == 1 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Down");
-		else if(i == 2 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Left");
-		else if(i == 3 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Right");
-	}
-	
-	return possibleShipDirections;
-}
-
 void Board::initShips()
 {
 	//Pushes one of each Ship type to _shipsInPlay vector
@@ -100,7 +75,7 @@ void Board::initShips()
 				{
 					printBoard(cout,false);
 					
-					directionInput = shipDirectionalPrompt(possibleShipDirections);
+					directionInput = shipOrientationPrompt(possibleShipDirections);
 					
 					clearScreen();
 					
@@ -151,6 +126,31 @@ void Board::initShips()
 	}
 }
 
+void Board::assignShipCoordinatesOnBoard(const Ship & currentShip)
+{
+	vector<Coordinate > coordinates = currentShip.getCoordinates();
+		
+	for(int i = 0; i < coordinates.size(); i++)
+	{
+		_board[coordinates[i].second][coordinates[i].first] = 'S';
+	}
+}
+
+const vector<string> Board::parsePossibleShipDirections(const vector<vector<Coordinate > > allPossibleShipDirections)
+{
+	vector<string> possibleShipDirections;
+	
+	for(int i = 0; i < allPossibleShipDirections.size(); i++)
+	{
+		if(i == 0 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Up");
+		else if(i == 1 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Down");
+		else if(i == 2 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Left");
+		else if(i == 3 && allPossibleShipDirections[i].size()) possibleShipDirections.push_back("Right");
+	}
+	
+	return possibleShipDirections;
+}
+
 Coordinate Board::parseUserInput(const string & input)
 {
 	static const char upperAlphabet[] = {'A','B','C','D','E','F','G','H','I','J','K','L','M',
@@ -187,7 +187,7 @@ Coordinate Board::parseUserInput(const string & input)
 }
 
 //This function uses ternary operator to differentiate between different directions for our Ship.
-vector<Coordinate> Board::computeLeftAndUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+vector<Coordinate> Board::computeLeftOrUpCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
 	const bool checkLeft = (checkAxis == 'L')?true:false;
@@ -209,7 +209,7 @@ vector<Coordinate> Board::computeLeftAndUpCoordinates(const Coordinate & baseCoo
 }
 
 //This function uses ternary operator to differentiate between different directions for our Ship.
-vector<Coordinate> Board::computeRightAndDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
+vector<Coordinate> Board::computeRightOrDownCoordinates(const Coordinate & baseCoords, const char & checkAxis, const int & spaceNeeded)
 {
 	vector<Coordinate> direction, checked;
 	const bool checkRight = (checkAxis == 'R')?true:false;
@@ -236,10 +236,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	vector<Coordinate > up,down,left,right;
 	const int xCoord = userGivenCoords.first, yCoord = userGivenCoords.second, spaceNeeded = (shipHitpoints - 1);
 	
-	up = computeLeftAndUpCoordinates(userGivenCoords, 'U', spaceNeeded);
-	down = computeRightAndDownCoordinates(userGivenCoords, 'D', spaceNeeded);
-	left = computeLeftAndUpCoordinates(userGivenCoords, 'L', spaceNeeded);
-	right = computeRightAndDownCoordinates(userGivenCoords, 'R', spaceNeeded);
+	up = computeLeftOrUpCoordinates(userGivenCoords, 'U', spaceNeeded);
+	down = computeRightOrDownCoordinates(userGivenCoords, 'D', spaceNeeded);
+	left = computeLeftOrUpCoordinates(userGivenCoords, 'L', spaceNeeded);
+	right = computeRightOrDownCoordinates(userGivenCoords, 'R', spaceNeeded);
 	
 	possibleDirections.push_back(up);
 	possibleDirections.push_back(down);
@@ -249,48 +249,108 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	return possibleDirections;	
 }
 
-const bool Board::isOccupied(const Coordinate & coords)
+const char Board::getCellContents(const Coordinate & cellLocation) const
 {
-	if( _board[coords.second][coords.first] == 'O' || _board[coords.second][coords.first] == ' ') return false;
-	else if( _board[coords.second][coords.first] == 'X' || _board[coords.second][coords.first] == 'S') return true;
-}
-
-const char Board::getCellContents(const int xCoord, const int yCoord)
-{
+	const int xCoord = cellLocation.first, yCoord = cellLocation.second;
 	return _board[yCoord][xCoord];
 }
 
-void Board::setCellContents(const int xCoord, const int yCoord, const char cellContent)
+void Board::setCellContents(Coordinate cellLocation, const char cellContent)
 {
+	const int xCoord = cellLocation.first, yCoord = cellLocation.second;
 	_board[yCoord][xCoord] = cellContent;
 }
 
-void Board::printBoard(ostream & out, const bool isPublic)
+const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
+{
+	for(int i = 0; i < _shipsInPlay.size(); i++)
+	{
+		vector<Coordinate > shipCoordinates = _shipsInPlay[i].getCoordinates();
+		for(int j = 0; j < shipCoordinates.size(); j++)
+			if(searchCoord == shipCoordinates[j]) return i;
+	}
+	
+	return -1;
+}
+
+const bool Board::shipsStillActive() const
+{
+	return _shipsInPlay.size();
+}
+
+void Board::attackBoardCoordinate(ostream & outputStream)
+{
+	string input;
+	Coordinate inputCoordinates(-1,-1);
+	
+	while(inputCoordinates.first < 0 || inputCoordinates.second < 0)
+	{
+		input = attackCoordinatePrompt();
+		
+		inputCoordinates = parseUserInput(input);
+		
+		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
+		{
+			outputStream << "That was not valid input" << endl;
+			wait();
+		}
+		else
+		{
+			if(isOccupied(inputCoordinates))
+			{
+				const int index = findShipWithCoordinates(inputCoordinates);
+				_shipsInPlay[index].sustainDamage(inputCoordinates);
+				
+				setCellContents(inputCoordinates, 'X');
+				
+				if(!_shipsInPlay[index].getShipStatus())
+					_shipsInPlay.erase(_shipsInPlay.begin()+index);
+				
+				outputStream << "Hit!" << endl;
+				wait();
+			}
+			else
+			{
+				setCellContents(inputCoordinates, 'O');
+				outputStream << "Miss!" << endl;
+				wait();
+			}
+		}
+	}
+}
+
+const bool Board::isOccupied(const Coordinate & coords) const
+{
+	if( _board[coords.second][coords.first] == 'X' || _board[coords.second][coords.first] == 'S') return true;
+	return false;
+}
+
+void Board::printBoard(ostream & outputStream, const bool isPublic)
 {	
 	//print row index
 	const char rowHeaders[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 	
-	for(int i = 0; i < _gridSize; i++) out  << "   " << rowHeaders[i];
-	out << endl;
+	for(int i = 0; i < _gridSize; i++) outputStream  << "   " << rowHeaders[i];
+	outputStream << endl;
 	
-	out << ' ' << getEndString() << endl;
-	out << getMidString() << endl;
+	outputStream << ' ' << getEndString() << endl;
+	outputStream << getMidString() << endl;
 	
-	for(int i = 0; i < _gridSize; i++)
+	for(int row = 0; row < _gridSize; row++)
 	{
-		out << i;
-		for(int j = 0; j < _gridSize; j++)
+		outputStream << row;
+		for(int column = 0; column < _gridSize; column++)
 		{
 			char charToPrint = 0;
-			if(isPublic && getCellContents(i,j) == 'S') charToPrint = ' ';
-			else charToPrint = getCellContents(i,j);
-			out << "| " << charToPrint << ' ';
+			if(isPublic && getCellContents(Coordinate(row,column)) == 'S') charToPrint = ' ';
+			else charToPrint = getCellContents(Coordinate(row,column));
+			outputStream << "| " << charToPrint << ' ';
 		}
-		out << '|' << endl;
-		out << getMidString() << endl;
+		outputStream << '|' << endl;
+		outputStream << getMidString() << endl;
 	}
 	
-	out << ' ' << getEndString() << endl;
+	outputStream << ' ' << getEndString() << endl;
 }
 
 const string Board::getEndString() const
@@ -314,62 +374,5 @@ const string Board::getMidString() const
 	return temp;
 }
 
-const int Board::findShipWithCoordinates(const Coordinate searchCoord) const
-{
-	for(int i = 0; i < _shipsInPlay.size(); i++)
-	{
-		vector<Coordinate > shipCoordinates = _shipsInPlay[i].getCoordinates();
-		for(int j = 0; j < shipCoordinates.size(); j++)
-			if(searchCoord == shipCoordinates[j]) return i;
-	}
-	
-	return -1;
-}
-
-const bool Board::shipsStillActive() const
-{
-	return _shipsInPlay.size();
-}
-
-void Board::attackBoardCoordinate()
-{
-	string input;
-	Coordinate inputCoordinates(-1,-1);
-	
-	while(inputCoordinates.first < 0 || inputCoordinates.second < 0)
-	{
-		input = attackCoordinatePrompt();
-		
-		inputCoordinates = parseUserInput(input);
-		
-		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
-		{
-			cout << "That was not valid input" << endl;
-			wait();
-		}
-		else
-		{
-			if(isOccupied(inputCoordinates))
-			{
-				const int index = findShipWithCoordinates(inputCoordinates);
-				_shipsInPlay[index].sustainDamage(inputCoordinates);
-				
-				setCellContents(inputCoordinates.first, inputCoordinates.second, 'X');
-				
-				if(!_shipsInPlay[index].getShipStatus())
-					_shipsInPlay.erase(_shipsInPlay.begin()+index);
-				
-				cout << "Hit!" << endl;
-				wait();
-			}
-			else
-			{
-				setCellContents(inputCoordinates.first, inputCoordinates.second, 'O');
-				cout << "Miss!" << endl;
-				wait();
-			}
-		}
-	}
-}
 
 #endif

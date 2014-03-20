@@ -28,7 +28,7 @@ const string & Player::getPlayerName() const
 void Player::attackOpponent(Player * opponent)
 {
 	cout << _name << "'s turn" << endl;
-	opponent->_playerBoard.attackBoardCoordinate();
+	opponent->_playerBoard.attackBoardCoordinate(cout);
 }
 
 const bool Player::isStillActive()

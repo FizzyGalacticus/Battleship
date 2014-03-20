@@ -23,7 +23,7 @@ const string Board::initialShipCoordinatePrompt(const string & shipName, const i
 	return input;
 }
 
-const char Board::shipDirectionalPrompt(const vector<vector<Coordinate > > & possibleShipDirections)
+const char Board::shipOrientationPrompt(const vector<vector<Coordinate > > & possibleShipDirections)
 {
 	const vector<string> availableShipDirectionStrings = parsePossibleShipDirections(possibleShipDirections);
 	

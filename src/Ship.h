@@ -33,8 +33,8 @@ class Ship
 		vector<pair<int,int> > _coordinates;
 		vector<int> _activeCoordIndex; //Better name?
 		string _nameOfShip;
-		static const map<string,int> createShipTypes();
 		int _hitPoints;
+		static const map<string,int> createShipTypes();
 };
 
 #endif
