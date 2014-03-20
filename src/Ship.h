@@ -17,7 +17,7 @@ using std::string;
 #include <map>
 using std::map;
 
-typedef pair<unsigned int,unsigned int> Coordinate;
+typedef pair<int,int> Coordinate;
 
 class Ship
 {
