@@ -12,14 +12,11 @@ using std::endl;
 #include <string>
 using std::string;
 
-Player::Player(const string & givenName): _name(givenName), _playerBoard()
-{
-	
-}
+Player::Player(const string & givenName): _name(givenName), _playerBoard(cout) {}
 
 void Player::printBoard(const bool & showShips)
 {
-	_playerBoard.printBoard(cout, showShips);
+	_playerBoard.printBoard(showShips);
 }
 
 const string & Player::getPlayerName() const
@@ -28,7 +25,7 @@ const string & Player::getPlayerName() const
 void Player::attackOpponent(Player * opponent)
 {
 	cout << _name << "'s turn" << endl;
-	opponent->_playerBoard.attackBoardCoordinate(cout);
+	opponent->_playerBoard.attackBoardCoordinate();
 }
 
 const bool Player::isStillActive()

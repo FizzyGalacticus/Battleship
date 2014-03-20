@@ -7,19 +7,19 @@
 
 #include "Board.h"
 #include <iostream>
-using std::cout;
+using std::ostream;
 using std::endl;
 
 #include "utilities.cpp"
 #include "BoardPrompts.cpp"
 
-Board::Board() : _gridSize(10)
+Board::Board(ostream & streamToOutputTo) : _gridSize(10), _outputStream(streamToOutputTo)
 {
 	initBoard();
 	initShips();
 }
 
-Board::Board(const int size) : _gridSize( (size>=5) ? size : 5 )
+Board::Board(ostream & streamToOutputTo, const int size) : _gridSize( (size>=5) ? size : 5 ), _outputStream(streamToOutputTo)
 {
 	initBoard();
 	initShips();
@@ -53,7 +53,7 @@ void Board::initShips()
 		//Get proper input of coordinates
 		while(isNotValidInput)
 		{
-			printBoard(cout,false);
+			printBoard(false);
 			
 			input = initialShipCoordinatePrompt(shipName, shipHitpoints);
 			
@@ -73,7 +73,7 @@ void Board::initShips()
 					  (directionInput != 'L' && directionInput != 'l') &&
 					  (directionInput != 'R' && directionInput != 'r'))
 				{
-					printBoard(cout,false);
+					printBoard(false);
 					
 					directionInput = shipOrientationPrompt(possibleShipDirections);
 					
@@ -278,7 +278,7 @@ const bool Board::shipsStillActive() const
 	return _shipsInPlay.size();
 }
 
-void Board::attackBoardCoordinate(ostream & outputStream)
+void Board::attackBoardCoordinate()
 {
 	string input;
 	Coordinate inputCoordinates(-1,-1);
@@ -291,7 +291,7 @@ void Board::attackBoardCoordinate(ostream & outputStream)
 		
 		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
 		{
-			outputStream << "That was not valid input" << endl;
+			_outputStream << "That was not valid input" << endl;
 			wait();
 		}
 		else
@@ -306,13 +306,13 @@ void Board::attackBoardCoordinate(ostream & outputStream)
 				if(!_shipsInPlay[index].getShipStatus())
 					_shipsInPlay.erase(_shipsInPlay.begin()+index);
 				
-				outputStream << "Hit!" << endl;
+				_outputStream << "Hit!" << endl;
 				wait();
 			}
 			else
 			{
 				setCellContents(inputCoordinates, 'O');
-				outputStream << "Miss!" << endl;
+				_outputStream << "Miss!" << endl;
 				wait();
 			}
 		}
@@ -325,32 +325,32 @@ const bool Board::isOccupied(const Coordinate & coords) const
 	return false;
 }
 
-void Board::printBoard(ostream & outputStream, const bool isPublic)
+void Board::printBoard(const bool isPublic)
 {	
 	//print row index
 	const char rowHeaders[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
 	
-	for(int i = 0; i < _gridSize; i++) outputStream  << "   " << rowHeaders[i];
-	outputStream << endl;
+	for(int i = 0; i < _gridSize; i++) _outputStream  << "   " << rowHeaders[i];
+	_outputStream << endl;
 	
-	outputStream << ' ' << getEndString() << endl;
-	outputStream << getMidString() << endl;
+	_outputStream << ' ' << getEndString() << endl;
+	_outputStream << getMidString() << endl;
 	
 	for(int row = 0; row < _gridSize; row++)
 	{
-		outputStream << row;
+		_outputStream << row;
 		for(int column = 0; column < _gridSize; column++)
 		{
 			char charToPrint = 0;
 			if(isPublic && getCellContents(Coordinate(row,column)) == 'S') charToPrint = ' ';
 			else charToPrint = getCellContents(Coordinate(row,column));
-			outputStream << "| " << charToPrint << ' ';
+			_outputStream << "| " << charToPrint << ' ';
 		}
-		outputStream << '|' << endl;
-		outputStream << getMidString() << endl;
+		_outputStream << '|' << endl;
+		_outputStream << getMidString() << endl;
 	}
 	
-	outputStream << ' ' << getEndString() << endl;
+	_outputStream << ' ' << getEndString() << endl;
 }
 
 const string Board::getEndString() const
@@ -374,5 +374,9 @@ const string Board::getMidString() const
 	return temp;
 }
 
+/*void Board::setOutputStream(ostream & streamToOutputTo)
+{
+	_outputStream = streamToOutputTo;
+}*/
 
 #endif

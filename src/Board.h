@@ -26,27 +26,33 @@ class Board
 	public:
 		//Pre: None.
 		//Post: Sets private member variables. Does call for user input.
-		Board();
+		Board(ostream &);
 		
 		//Pre: Must be passed a valid integer > 0 < 26 to be used to grid size.
 		//Post: Sets private member variables. Does call for user input. If number is less than 5, default grid size is set to 5.
-		Board(const int);
+		Board(ostream &, const int);
 		
 		//Pre: Must be passed a valid std::Coordinate as coordinates.
 		//Post: Will return a boolean indicating whether or not spot on board is filled with a Ship object.
 		const bool isOccupied(const Coordinate &) const;
 		
-		//Pre: Must be passed a valid std::ostream objects and boolean indicating whether or not to show the ships on the board.
-		//Post: Will write formatted board to std::ostream.
-		void printBoard(ostream &, const bool);
+		//Pre: Must be passed a valid boolean indicating whether or not to show the ships on the board.
+		//Post: Will write formatted board to _outputStream
+		void printBoard(const bool);
 		
-		//Pre: Must be passed a valid output stream.
+		//Pre: None.
 		//Post: Will attempt to attack a ship at user given coordinates.
-		void attackBoardCoordinate(ostream &);
+		void attackBoardCoordinate();
 		
 		//Pre: None.
 		//Post: Will return true if there is still at least one active Ship object on board.
 		const bool shipsStillActive() const;
+		
+		//Pre: Must be passed a valid std::ostream object.
+		//Post: Will set _outputStream to specified ostream.
+		//void setOutputStream(ostream &);
+		
+		ostream & _outputStream;
 	private:
 		//Pre: None.
 		//Post: Initializes a blank Board object.
