@@ -17,23 +17,49 @@ using std::string;
 #include <map>
 using std::map;
 
+typedef pair<unsigned int,unsigned int> Coordinate;
+
 class Ship
 {
 	public:
-		const vector<pair<int,int> > getCoordinates() const;
-		void setCoordinates(vector<pair<int,int> >);
-		const string & getNameOfShip() const;
-		void sustainDamage(const pair<int,int>);
-		const bool getShipStatus() const;
+		//Pre: Must be passed a valid std::string object containing a name specified in implementation. (See createShipTypes())
+		//Post: Will create Ship object of the name specified.
 		Ship(const string);
-		const int & getNumberOfHitPoints();
+		
+		//Pre: None.
+		//Post: Will return all Ship coordinates.
+		const vector<Coordinate > getCoordinates() const;
+		
+		//Pre: Must be passed a valid std::vector<Coordinate> object.
+		//Post: Will set Ship's coordinates.
+		void setCoordinates(vector<Coordinate >);
+		
+		//Pre: None.
+		//Post: Will return a std::string object with the name of the Ship.
+		const string & getNameOfShip() const;
+		
+		//Pre: Must be passed a valid Coordinate object.
+		//Post: Will remove given Coordinate object from _validShipCoordinates.
+		void sustainDamage(const Coordinate);
+		
+		//Pre: None.
+		//Post: Will return true if _validShipCoordinates is still holding at least 1 Coordinate object.
+		const bool getShipStatus() const;
+		
+		//Pre: None.
+		//Post: Will return a valid integer object.
+		const int & getNumberOfHitPoints() const;
+		
 		static const map<string,int> _shipTypes;
 	private:
 		Ship();
-		vector<pair<int,int> > _coordinates;
-		vector<int> _activeCoordIndex; //Better name?
+		
+		vector<Coordinate > _validShipCoordinates;
 		string _nameOfShip;
 		int _hitPoints;
+		
+		//Pre: None.
+		//Post: Creates different Ship object classifications.
 		static const map<string,int> createShipTypes();
 };
 

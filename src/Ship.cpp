@@ -33,19 +33,19 @@ Ship::Ship(string shipName)
 	}
 }
 
-const int & Ship::getNumberOfHitPoints() {return _hitPoints;}
-
-const vector<pair<int,int> > Ship::getCoordinates() const
+const int & Ship::getNumberOfHitPoints() const
 {
-	return _coordinates;
+	return _hitPoints;
 }
 
-void Ship::setCoordinates(vector<pair<int,int> > shipCoordinates)
+const vector<Coordinate > Ship::getCoordinates() const
 {
-	_coordinates = shipCoordinates;
-	
-	for(int i = 0; i < _coordinates.size(); i++)
-		_activeCoordIndex.push_back(i);
+	return _validShipCoordinates;
+}
+
+void Ship::setCoordinates(vector<Coordinate > shipCoordinates)
+{
+	_validShipCoordinates = shipCoordinates;
 }
 
 const string & Ship::getNameOfShip() const
@@ -53,16 +53,16 @@ const string & Ship::getNameOfShip() const
 	return _nameOfShip;
 }
 
-void Ship::sustainDamage(const pair<int,int> damagedCoord)
+void Ship::sustainDamage(const Coordinate damagedCoord)
 {
-	for(int i = 0; i < _activeCoordIndex.size(); i++)
-		if(_coordinates[_activeCoordIndex[i]] == damagedCoord)
-			_activeCoordIndex.erase(_activeCoordIndex.begin()+i);
+	for(int i = 0; i < _validShipCoordinates.size(); i++)
+		if(_validShipCoordinates[i] == damagedCoord)
+			_validShipCoordinates.erase(_validShipCoordinates.begin()+i);
 }
 
 const bool Ship::getShipStatus() const
 {
-	return _activeCoordIndex.size();
+	return _validShipCoordinates.size();
 }
 
 #endif

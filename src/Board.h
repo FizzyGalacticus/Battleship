@@ -19,7 +19,7 @@ using std::pair;
 
 #include "Ship.h"
 
-typedef pair<int, int> Coordinate;
+typedef pair<unsigned int,unsigned int> Coordinate;
 
 class Board
 {
@@ -32,7 +32,7 @@ class Board
 		//Post: Sets private member variables. Does call for user input. If number is less than 5, default grid size is set to 5.
 		Board(const int);
 		
-		//Pre: Must be passed a valid std::pair<int,int> as coordinates.
+		//Pre: Must be passed a valid std::Coordinate as coordinates.
 		//Post: Will return a boolean indicating whether or not spot on board is filled with a Ship object.
 		const bool isOccupied(const Coordinate &) const;
 		
@@ -53,7 +53,7 @@ class Board
 		void initBoard();
 		
 		//Pre: Must be passed a std::string object of size >= 2.
-		//Post: Will return a valid std::pair<int,int> object with corresponding coordinates.
+		//Post: Will return a valid std::Coordinate object with corresponding coordinates.
 		Coordinate parseUserInput(const string &);
 		
 		//Pre: None.
