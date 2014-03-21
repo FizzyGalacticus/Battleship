@@ -38,8 +38,8 @@ void Game::initGame()
 
 void Game::preGame()
 {
-	BackgroundAudio backgroundMusic
-	;
+	BackgroundAudio backgroundMusic;
+	
 	if(_backgroundMusicFileNames.size())
 	{
 		backgroundMusic.initBackgroundAudio(_backgroundMusicFileNames);
