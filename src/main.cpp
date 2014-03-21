@@ -9,8 +9,15 @@ int main(const int argc, const char* argv[])
 {
 	clearScreen();
 	
-	Game myGame;
-	myGame.preGame();
+	vector<string> backgroundMusicFileNames;
 	
-	return 0;
+	if(argc > 1)
+	{
+		for(int i = 1; i < argc; i++)
+			backgroundMusicFileNames.push_back(argv[i]);
+	}
+	
+	Game myGame;
+	myGame.setBackgroundMusicFiles(backgroundMusicFileNames);
+	myGame.preGame();
 }

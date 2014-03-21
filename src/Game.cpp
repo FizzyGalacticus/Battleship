@@ -38,14 +38,13 @@ void Game::initGame()
 
 void Game::preGame()
 {
-	vector<string> backgroundMusicFileNames;
-	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Constance.mp3");
-	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/The Great Unrest.mp3");
-	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Homocidal Seed.mp3");
-	backgroundMusicFileNames.push_back("/media/Boobiemachine/Tunes/Awaken Antagonist/Tempest.mp3");
-	
-	BackgroundAudio backgroundMusic(backgroundMusicFileNames);
-	backgroundMusic.startBackgroundAudio(0);
+	BackgroundAudio backgroundMusic
+	;
+	if(_backgroundMusicFileNames.size())
+	{
+		backgroundMusic.initBackgroundAudio(_backgroundMusicFileNames);
+		backgroundMusic.startBackgroundAudio(0);
+	}
 	
 	while(true)
 	{
@@ -113,6 +112,11 @@ void Game::printWinnerMessage(const int indexToWinner) const
 	cout << "Congratulations to " << _players[indexToWinner]->getPlayerName() << ", you are the winner!" << endl;
 	wait();
 	clearScreen();
+}
+
+void Game::setBackgroundMusicFiles(vector<string> & fileNames)
+{
+	_backgroundMusicFileNames = fileNames;
 }
 
 #endif

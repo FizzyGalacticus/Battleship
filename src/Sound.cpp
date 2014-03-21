@@ -50,15 +50,6 @@ int BackgroundAudio::_currentPlayingAudioIndex(0);
 int BackgroundAudio::_numberOfTracks(0);
 vector<ISoundSource*> BackgroundAudio::_streams;
 
-BackgroundAudio::BackgroundAudio(const vector<string> audioFilenames)
-{
-	_numberOfTracks = audioFilenames.size();
-	
-	//Initialize _streams
-	for(int i = 0; i < audioFilenames.size(); i++)
-		_streams.push_back(initSound(audioFilenames[i]));
-}
-
 BackgroundAudio::~BackgroundAudio()
 {
 	//Remove stream pointer from base class vector (e.g. we're done with that sound)
@@ -89,7 +80,7 @@ void BackgroundAudio::MySoundEndReceiver::OnSoundStopped(irrklang::ISound* sound
 	startBackgroundAudio(_currentPlayingAudioIndex);
 }
 
-void BackgroundAudio::initBackgroundAudio(const vector<string> audioFilenames)
+void BackgroundAudio::initBackgroundAudio(const vector<string> & audioFilenames)
 {
 	_numberOfTracks = audioFilenames.size();
 	

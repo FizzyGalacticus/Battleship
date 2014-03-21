@@ -37,7 +37,7 @@ class Sound
 class BackgroundAudio : public Sound
 {
 	public:
-		BackgroundAudio(const vector<string> audioFilenames);
+		void initBackgroundAudio(const vector<string> &);
 		~BackgroundAudio();
 		static void startBackgroundAudio(const int index);
 	protected:
@@ -50,8 +50,6 @@ class BackgroundAudio : public Sound
 		static MySoundEndReceiver* _whenSoundIsFinishedReceiver;
 		static int _currentPlayingAudioIndex;
 		static int _numberOfTracks;
-		BackgroundAudio();
-		void initBackgroundAudio(const vector<string>);
 		static vector<ISoundSource*> _streams;
 };
 
