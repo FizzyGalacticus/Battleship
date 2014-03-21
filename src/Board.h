@@ -19,7 +19,7 @@ using std::pair;
 
 #include "Ship.h"
 
-typedef pair<int,int> Coordinate;
+typedef pair<unsigned int,unsigned int> Coordinate;
 
 class Board
 {
