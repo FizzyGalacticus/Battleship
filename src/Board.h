@@ -108,6 +108,10 @@ class Board
 		//Post: Will return a valid vector<vector<Coordinate > > object holding the possible coordinates for each direction of a Ship object.
 		const vector<vector<Coordinate> > getPossibleShipDirection(const Coordinate &, const int &);
 		
+		//Pre: None.
+		//Post: Will remove any 'dead' ships from _shipsInPlay vector.
+		void deadShipRemover();
+		
 		//***		Private Board Printing Functions		***//
 		//Pre: Must be passed valid Coordinate object.
 		//Post: Will return the board character at that coordinate.
