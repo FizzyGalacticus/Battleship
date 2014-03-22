@@ -15,12 +15,6 @@ using std::endl;
 
 int Game::_activePlayerIndex(0);
 
-Game::~Game()
-{
-	for(int i = 0; i < _players.size(); i++)
-		delete _players[i];
-}
-
 void Game::initGame()
 {
 	for(int i = 0; i < 2; i++)
@@ -28,9 +22,7 @@ void Game::initGame()
 		cout << "Player #" << (i+1) << ", please enter your name: " << endl;
 		const string name = getUserInput();
 		
-		Player * myPlayer = new Player(name);
-		
-		_players.push_back(myPlayer);
+		_players.push_back(new Player(name));
 	}
 	
 	mainGameLoop();

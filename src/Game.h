@@ -20,7 +20,6 @@ class Game
 		void mainGameLoop();
 		const bool allPlayersAreStillAlive();
 		void setBackgroundMusicFiles(vector<string> &);
-		~Game();
 	private:
 		vector<string> _backgroundMusicFileNames;
 		vector<Player *> _players;
