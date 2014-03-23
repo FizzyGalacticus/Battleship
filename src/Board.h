@@ -24,11 +24,11 @@ typedef pair<int,int> Coordinate;
 class Board
 {
 	public:
-		//Pre: None.
+		//Pre: Must be passed a valid ostream object.
 		//Post: Sets private member variables. Does call for user input.
 		Board(ostream &);
 		
-		//Pre: Must be passed a valid integer > 0 < 26 to be used to grid size.
+		//Pre: Must be passed a valid ostream object and an integer > 0 < 26 to be used to grid size.
 		//Post: Sets private member variables. Does call for user input. If number is less than 5, default grid size is set to 5.
 		Board(ostream &, const int);
 		
@@ -38,7 +38,7 @@ class Board
 		
 		//Pre: Must be passed a valid boolean indicating whether or not to show the ships on the board.
 		//Post: Will write formatted board to _outputStream
-		void printBoard(const bool);
+		void printBoard(const bool) const;
 		
 		//Pre: None.
 		//Post: Will attempt to attack a ship at user given coordinates.
@@ -48,11 +48,6 @@ class Board
 		//Post: Will return true if there is still at least one active Ship object on board.
 		const bool shipsStillActive() const;
 		
-		//Pre: Must be passed a valid std::ostream object.
-		//Post: Will set _outputStream to specified ostream.
-		//void setOutputStream(ostream &);
-		
-		ostream & _outputStream;
 	private:
 		//Pre: None.
 		//Post: Initializes a blank Board object.
@@ -70,7 +65,10 @@ class Board
 		//Post: Will set cell of Coordinate indices to given character.
 		void setCellContents(Coordinate, const char);
 		
+					//***************************//
 		//***		Private Computational Functions			***//
+					//***************************//
+
 		//Pre: Must be passed a valid Coordinate (starting position), character (direction), and integer (Ship's hitpoints - 1) object.
 		//Post: Will place Ship object within valid coordinates on Board.
 		vector<Coordinate> computeLeftOrUpCoordinates(const Coordinate &, const char &, const int &);
@@ -79,7 +77,10 @@ class Board
 		//Post: Will place Ship object within valid coordinates on Board.
 		vector<Coordinate> computeRightOrDownCoordinates(const Coordinate &, const char &, const int &);
 		
+					//*******************************//
 		//***		Private Ship Manipulation Functions		***//
+					//*******************************//
+					
 		//Pre: None.
 		//Post: Will initialize Ship objects and place into valid coordinates on board.
 		void initShips();
@@ -112,7 +113,10 @@ class Board
 		//Post: Will remove any 'dead' ships from _shipsInPlay vector.
 		void deadShipRemover();
 		
+					//****************************//
 		//***		Private Board Printing Functions		***//
+					//****************************//
+		
 		//Pre: Must be passed valid Coordinate object.
 		//Post: Will return the board character at that coordinate.
 		const char getCellContents(const Coordinate &) const;
@@ -129,6 +133,7 @@ class Board
 		vector<vector<char> > _board;
 		const int _gridSize;
 		vector<Ship> _shipsInPlay;
+		ostream & _outputStream;
 };
 
 #endif

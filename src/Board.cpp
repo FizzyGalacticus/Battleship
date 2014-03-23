@@ -293,7 +293,7 @@ void Board::attackBoardCoordinate()
 		
 		if(inputCoordinates.first < 0 || inputCoordinates.second < 0)
 		{
-			_outputStream << "That was not valid input" << endl;
+			_outputStream << "That was not valid input." << endl;
 			wait();
 		}
 		else
@@ -335,7 +335,7 @@ const bool Board::isOccupied(const Coordinate & coords) const
 	return false;
 }
 
-void Board::printBoard(const bool isPublic)
+void Board::printBoard(const bool isPublic) const
 {	
 	//print row index
 	const char rowHeaders[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -383,10 +383,5 @@ const string Board::getMidString() const
 	
 	return temp;
 }
-
-/*void Board::setOutputStream(ostream & streamToOutputTo)
-{
-	_outputStream = streamToOutputTo;
-}*/
 
 #endif

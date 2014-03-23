@@ -22,7 +22,13 @@ void Game::initGame()
 		cout << "Player #" << (i+1) << ", please enter your name: " << endl;
 		const string name = getUserInput();
 		
-		_players.push_back(new Player(name));
+		try
+		{_players.push_back(new Player(name));}
+		catch(...)
+		{
+			cout << "Could not create new Player. Exiting..." << endl;
+			exit(1);
+		}
 	}
 	
 	mainGameLoop();

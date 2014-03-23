@@ -14,10 +14,10 @@ class Player
 {
 	public:
 		Player(const string &);
-		void printBoard(const bool &);
+		void printBoard(const bool &) const;
 		const string & getPlayerName() const;
 		void attackOpponent(Player *);
-		const bool isStillActive();
+		const bool isStillActive() const;
 	private:
 		Player();
 		Board _playerBoard;

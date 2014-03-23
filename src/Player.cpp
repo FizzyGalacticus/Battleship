@@ -14,7 +14,7 @@ using std::string;
 
 Player::Player(const string & givenName): _name(givenName), _playerBoard(cout) {}
 
-void Player::printBoard(const bool & showShips)
+void Player::printBoard(const bool & showShips) const
 {
 	_playerBoard.printBoard(showShips);
 }
@@ -28,7 +28,7 @@ void Player::attackOpponent(Player * opponent)
 	opponent->_playerBoard.attackBoardCoordinate();
 }
 
-const bool Player::isStillActive()
+const bool Player::isStillActive() const
 {
 	return _playerBoard.shipsStillActive();
 }
