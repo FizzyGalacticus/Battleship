@@ -348,3 +348,21 @@ Based on the Git commit logs.
 
 	We got most of it working during the meeting, still needed testing and
 	sound. But we were nearly had a complete game!
+
+
+Entry 0x0B
+Mon Mar 24 05:42:46 AKDT 2014
+For the project meeting on 2014-03-19
+Based on the Git commit logs.
+
+	This date was mostly for refactoring. We were able to clean up the
+	board functions in that dead ships were removed from the reference
+	vectors. Also, able to get rid of that bothersome ship variable that
+	was indexing the healthy coordinates. 
+
+	Given that we couldn't come up with a good name for the variable we
+	should realize that this was a code smell in that there was something
+	amiss about that variable. 
+
+	This was mostly were would would revise the code, changing variable
+	names and function names so that everything was cleaner.
