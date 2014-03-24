@@ -326,3 +326,25 @@ Based on the Git commit logs.
 
 	After getting the player class implemented and initial tests on it
 	done, we would wait to make the game class to bring it all together.
+
+
+Entry 0x0A
+Mon Mar 24 05:29:44 AKDT 2014
+For the project meeting on 2014-03-18
+Based on the Git commit logs.
+
+	At this point, we were working on the game class that would actually
+	run the game. It would basically be a 1 vs. 1 game. We would have a
+	vector of all the players that involved in the game. From there, we
+	would call functions on them to have them place ships and make moves
+	etc. 
+
+	The only thing about this bottom up design is that there was quite a
+	bit of changing the interface of the player class to get the game
+	class working properly. Maybe we should have thought it through a bit
+	more? But it would have been hard to flush out all of the ideas at the
+	get go. I think that it turned out alright. Implement only a little at
+	a time for what you need and move forward.
+
+	We got most of it working during the meeting, still needed testing and
+	sound. But we were nearly had a complete game!
