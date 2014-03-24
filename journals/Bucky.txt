@@ -214,3 +214,32 @@ Base heavily on Git commit logs.
 
 	After getting this implemented and tested we had to call it as we had
 	run out of time for that session.
+
+
+Entry 0x06
+Mon Mar 24 03:14:16 AKDT 2014
+For project meeting on 2014-03-10
+Based on the Git commit logs.
+
+	Finally, the date we were going to start implementing the ships! It
+	was decided to implement the ships with the reponsibility of what
+	coordinates that they owned and which ones were hit. Therefore, we
+	would have a vectors of STL pairs for the coordinates that the ship
+	owned and vector that would index the vector of coordinates to denote
+	the coordinates that were not struck yet. However, we couldn't settle
+	on a good name for this vector, so we decided on _activeCoordIndex
+	with a comment on how there should be a better name. This turns out to
+	be important later.
+
+	We then made the public function for the ship to take damage. It would
+	simply take a coordinate, see if the ship owned it and if it did,
+	erase the respective coordinate of corisponding hit point and return
+	a bool of the size of the activeCoord vector to see if the ship was
+	still alive. Simple right? 
+
+	After implementing all the initializer and the supporting functions
+	for retrieving the additional member variables such as the number of
+	hitpoints and name of the ship, we wanted to be able to strike the
+	ship with a board attack function. We got started on it, but ran out
+	of time. Just left some comments in our half finished functions for
+	the things to accomplish. 
