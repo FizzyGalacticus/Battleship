@@ -106,7 +106,7 @@ Based of the Git commit history.
 	IrrKlang. 
 
 	The class went into Sound.cpp. We got a constructor, destructor, with
-	pausing and un-pausing. Have a simple siren file that we could test
+	pausing and resuming. Have a simple siren file that we could test
 	this out on. Worked like a champ. 
 
 	The only thing during this time is that we were making multiple
@@ -125,3 +125,68 @@ Based of the Git commit history.
 	decided to maintain a spreadsheet of our times to make sure that we
 	spent enough time on the project on a Google doc that would be shared
 	between us.
+
+
+Entry 0x04	
+Mon Mar 24 02:25:42 AKDT 2014
+For project meeting on 2014-03-04
+Based mostly off the Git commit logs.
+
+	This was the 4th meeting. We already had a some menus and the sound
+	working. So, as the project owners we decided that we would want to
+	see the results of the progress of the coding. Therefore, we would
+	get the board for the game up and running so that we could tack on the
+	features of the game and be able to show off the work that we got
+	working.
+
+	Wanting to keep the project small and then slowing expand the
+	features, we decided to start with the traditional version of the
+	game. We had some constants for the size of the board (I thing its
+	10x10). Also, it was decided to use a vector as the underlining data
+	structure for the board so that we could easily manipulate the board
+	in the future. The vector was initially of a type of vectors of bools,
+	just to simply tell if there was a ship there or not. This gets 
+	changed later in the project.
+
+	Our initial default constructor would simply set the constant that
+	would be the board size. We also had an initializer to add the 'rows'
+	of the board to the 2D vector, initialized to false. We were using the
+	push_back function. But after reading about the emplace_back function
+	which constructs the object on the call instead of copying this could
+	clean up the code by getting rid of the temporary variable. However, 
+	this is the first version so I can't remember if this gets changed.
+
+	Our next function that we defined was the isOccupied. This would
+	simply tell use if there was a bit of the ship at that particular
+	coordinate on the board. Our initial implementation was using a two
+	separate ints for the x and y to index the board. Thankfully this gets
+	changed latter on. Hurray for monotonic functions!
+
+	After having the getter for the board data, we decided we need to be
+	able to see what we were doing with the board. Therefore, printBoard
+	was implemented. We wanted to keep the cell like structure of the
+	board, so we had some ASCII to show off the columns and rows of the
+	board. There was one helper function that made to help keep the print
+	board function cleaner, this function getEndString would just provide
+	the strings to cap off the top and bottom of the board. In hindsight
+	this could have been called something else more relating to the board.
+	Anyway...
+
+	After getting this working we wanted to print if there was ship there
+	or not. So we made function getMidString that would return a string
+	for the row of the board with an F for an empty cell or a T for a
+	ship. Ternary operators are awesome for this, always being used in
+	user interfaces in some way.
+
+	Here was our first and only attempt at using Test Driven Development
+	(TDD). We simple threw together a cpp file using the Catch testing
+	framework. We added in some lines to provide some test cases for the
+	isOccupied function of the board. In retrospect, I think we didn't
+	use TDD heavily due to wanting to keep implementing features of the
+	game. Also, it might have to do with its harder to think of the
+	features in terms of the tests that you want to do. Maybe it just that
+	tests don't make nice chunks that we were use to coding in one
+	sitting.
+
+	At this point we had a means to print the board and some tests, we
+	called it a day.
