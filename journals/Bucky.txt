@@ -190,3 +190,27 @@ Based mostly off the Git commit logs.
 
 	At this point we had a means to print the board and some tests, we
 	called it a day.
+
+
+Entry 0x05
+Mon Mar 24 03:03:21 AKDT 2014
+For project meeting on 2014-03-05
+Base heavily on Git commit logs.
+
+	When we first got together for this meeting Dustin wanted to work a
+	bit on the sound of the game. He was thinking about how we would have
+	to pause the game that the background music would most likely change.
+	Either by switching off or by playing a different track. With our
+	current implementation of the sound class this would be a bit a
+	difficult feature to get working in that each stream would have to be
+	paused and then reinitialized. 
+
+	The problem would be keeping the sound effects would play if we just
+	reinitialized all the loaded sounds. Therefore, we should split the
+	main sound class into two different classes, one for the background
+	music and one for the sound effects. We used polymorphism on the first
+	sound class that we implemented and had two separate classes for the
+	music and effects.
+
+	After getting this implemented and tested we had to call it as we had
+	run out of time for that session.
