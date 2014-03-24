@@ -73,3 +73,55 @@ For project meeting on 2014/03/01
 	as we had other assignments to get to. Before leaving we agreed to 
 	meet regularly at the CS lab on Monday and Wednesday at 1900 to pair
 	program the game.
+
+
+Entry 0x03
+Mon Mar 24 01:39:05 AKDT 2014
+For project meeting on 2014-03-04
+Based of the Git commit history.
+
+	Dustin and I have started on the project in earnest. We decided that
+	we should pair program the majority of the project. Starting off on
+	the first story of the main menu. We have it in its separate file
+	menus.cpp. We were thinking of having all the different functions for
+	the printing of the menus, main, pause, options, etc. defined in here.
+	
+	Dustin wanted to focus on a cross platform game. So we got a file
+	defined to hold these functions that would be OS specific. Hence,
+	osFunctions.cpp. The functions defined in here thus far are the clear
+	screen function to help keep the output of the game to the console
+	pretty.
+
+	Dustin came to the meeting with a means to get the sound working
+	already. Still going for the cross platform compatibility, he chose
+	IrrKlang to implement the sound. He had some previous experience
+	working with sounds in other projects, so I let him take point on it.
+
+	So we got the two menus coded up, the main and the pause. Dustin drove
+	while I would add in suggestions here and there. After that, Dustin
+	suggested that we should make a sound class that would serve as a
+	wrapper to the IrrKlang. Which was an excellent idea given that the new
+	interface to the sound would allow us to change the implementation if
+	we so chose to. Nice way to abstract away from the dependency on
+	IrrKlang. 
+
+	The class went into Sound.cpp. We got a constructor, destructor, with
+	pausing and un-pausing. Have a simple siren file that we could test
+	this out on. Worked like a champ. 
+
+	The only thing during this time is that we were making multiple
+	changes to the files between Git commits. I had some trouble speaking
+	up to make so of the suggestions to make some commits as I was working
+	with a new partner and didn't want to step on toes or break the flow
+	of the programming. Should have been something that I brought up
+	during one of our times working together. However, over the course of
+	the project we became comfortable working with each other and this
+	didn't turn into an issue. Need to be able to pace the flow the code
+	creation and do a commit to keep documentation on our thoughts of the
+	code we are making. Also, need to make sure that I prompt when I feel
+	that there should be a commit. 
+
+	After we got the sound working we decided to call it. After that I
+	decided to maintain a spreadsheet of our times to make sure that we
+	spent enough time on the project on a Google doc that would be shared
+	between us.
