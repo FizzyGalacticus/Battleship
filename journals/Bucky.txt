@@ -275,3 +275,32 @@ Based on the Git commit logs.
 	functions that would just return the values of some of the variables,
 	like _coordinates, instead of trying to loop through and compute all
 	the owned positions. 
+
+
+Entry 0x08
+Mon Mar 24 04:28:08 AKDT 2014
+For the project meeting on 2014-03-15
+Based on the Git commit logs.
+
+	At this point, we realized that our underlieing board structure was
+	not representing all the information that we would need access to.
+	Some of this information would be hits and misses from guessed shots.
+	Therefore, we changed the 2D vector from bools to chars to hold 'O'
+	for misses and 'X' for hits. There would also be an 'S' for the
+	player's ships. Now that the board was printing all the correct
+	information we could get the functions tested properly.
+
+	At this point, we got a board function to attack the ships. It would
+	call the ship at that coordinate and update the hitpoint accordingly
+	and display the changes to the board.
+
+	At this point, we had a bunch of output from the board in the
+	functions. Thus, we refactored the output to a separate file that
+	would contain all the messages to the client. Also, we got a typedef
+	for the coordinate pairs so we could have a uniform reference to the
+	coordinate pairs and made a cleaner looking code throughout the
+	project.
+
+	At this point, we tried to get the ship placement functions to work.
+	We got closer this time, but there were still a couple of semantic 
+	flaws in the code.
