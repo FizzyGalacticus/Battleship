@@ -243,3 +243,35 @@ Based on the Git commit logs.
 	ship with a board attack function. We got started on it, but ran out
 	of time. Just left some comments in our half finished functions for
 	the things to accomplish. 
+
+Entry 0x07
+Mon Mar 24 04:09:46 AKDT 2014
+For project meeting on 2014-03-12
+Based on the Git commit logs.
+
+	We need to be able to place the ships on the board. We would have the
+	user decide on a start point of the ship by having them enter a
+	coordinate in the manner of A9. From there, we would have to parse and
+	make see what directions that the ship could be placed from that
+	coordinate.
+
+	We would output the directions available and have the client enter the
+	single character for the direction. We would check to see if it was
+	possible for a direction by one function that would have four for
+	loops that would check each direction. They were really similar, by
+	the indexing was just a bit off for them to be combined nicely.
+
+	We ended up attempting to get them refactored together. We were able
+	to get two functions each containing a for loop that combined two of
+	the for loops together.	The internal logic of the loops got a bit more
+	complicated. Wasn't to bad I guess. But would need some nicer variable
+	names so that others reading the code wouldn't have to work to hard to
+	understand what was going on. We did have good function names for them
+	though. 
+
+	However, there was some bug in these functions. So we reverted and
+	would come back to these function later when we were fresh. We were
+	able to refactor a bit of the ship class by some simpler getter
+	functions that would just return the values of some of the variables,
+	like _coordinates, instead of trying to loop through and compute all
+	the owned positions. 
