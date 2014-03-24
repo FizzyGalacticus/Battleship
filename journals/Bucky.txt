@@ -365,4 +365,42 @@ Based on the Git commit logs.
 	amiss about that variable. 
 
 	This was mostly were would would revise the code, changing variable
-	names and function names so that everything was cleaner.
+	names and function names so that everything was cleaner. We also got
+	some try catch on the user input. Refactored that into one location so
+	that only 1 function was being called to get input from the user. The
+	calling function would then validate the user input.
+
+
+Entry 0x0C
+Mon Mar 24 05:51:52 AKDT 2014
+For the project meeting on 2014-03-20
+Based on the Git commit logs.
+
+	I think this is were we need a break. We were trying to refactor the
+	ostream to be passed into the classes so that we could just pass any
+	stream that we wanted to the functions and have the output go there.
+	We were having trouble getting it defined and initialized correctly. I
+	think it was just getting to the end of spring break.
+
+	We(by we I mean Dustin) did get some kinks worked out of the sound
+	were the process would crash if there was no default sound device.
+
+
+Entry 0x0D
+Mon Mar 24 06:01:05 AKDT 2014
+For the project meeting on 2014-03-21
+Based on the Git commit logs.
+
+	At this point we were still in debug mode. We found that the ships
+	could be uninitialized if the user passed a bad coordinate for the ship.
+	If there was no direction for the ship to go then it would be skipped.
+	After throwing in one check we were able to get that fixed.
+
+	There was also an issue with the coordinates that the game would either
+	just close or crash if the coordinate was to large for the board. I
+	think we did a check for this as well but can't remember for sure at
+	this point. Would have to look more in depth at the commit logs.
+
+	It was a good idea to call off the meeting for the following day. We
+	declared the project done at this point. We would just meet on the
+	following Sunday to get the presentation together.
