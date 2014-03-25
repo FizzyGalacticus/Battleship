@@ -65,11 +65,8 @@ void Board::initShips()
 			if(inputCoordinate.first >= 0 && inputCoordinate.second >= 0)
 			{
 				const vector<vector<Coordinate > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
-				
-				for(int j = 0; j < possibleShipDirections.size(); j++)
-					if(possibleShipDirections[j].size()) isNotValidInput = false;
-				
-				else continue;
+				for (int ii = 0; ii < possibleShipDirections.size(); ++ii) 
+					if(possibleShipDirections[ii].size()) isNotValidInput = false;
 				
 				char directionInput = 0;
 				
@@ -310,12 +307,14 @@ void Board::attackBoardCoordinate()
 				
 				_outputStream << "Hit!" << endl;
 				wait();
+				clearScreen();
 			}
 			else
 			{
 				setCellContents(inputCoordinates, 'O');
 				_outputStream << "Miss!" << endl;
 				wait();
+				clearScreen();
 			}
 		}
 	}
@@ -328,7 +327,12 @@ void Board::deadShipRemover()
 	for(int i = 0; i < _shipsInPlay.size(); i++)
 	{
 		if(!_shipsInPlay[i].getShipStatus())
+		{
+			_outputStream << "You sunk my " << _shipsInPlay[i].getNameOfShip() << '!' << endl;
+			wait();
+			clearScreen();
 			_shipsInPlay.erase(_shipsInPlay.begin()+i);
+		}
 	}
 }
 
