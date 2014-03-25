@@ -307,12 +307,14 @@ void Board::attackBoardCoordinate()
 				
 				_outputStream << "Hit!" << endl;
 				wait();
+				clearScreen();
 			}
 			else
 			{
 				setCellContents(inputCoordinates, 'O');
 				_outputStream << "Miss!" << endl;
 				wait();
+				clearScreen();
 			}
 		}
 	}
@@ -325,7 +327,12 @@ void Board::deadShipRemover()
 	for(int i = 0; i < _shipsInPlay.size(); i++)
 	{
 		if(!_shipsInPlay[i].getShipStatus())
+		{
+			_outputStream << "You sunk my " << _shipsInPlay[i].getNameOfShip() << '!' << endl;
+			wait();
+			clearScreen();
 			_shipsInPlay.erase(_shipsInPlay.begin()+i);
+		}
 	}
 }
 
