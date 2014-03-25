@@ -66,11 +66,7 @@ void Board::initShips()
 			{
 				const vector<vector<Coordinate > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
 				for (int ii = 0; ii < possibleShipDirections.size(); ++ii) 
-				{
-					if(!possibleShipDirections[ii].size()) isNotValidInput = true;
-				}
-				if(possibleShipDirections.size()) isNotValidInput = false;
-				else continue;
+					if(possibleShipDirections[ii].size()) isNotValidInput = false;
 				
 				char directionInput = 0;
 				
