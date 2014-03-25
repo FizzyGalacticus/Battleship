@@ -65,7 +65,10 @@ void Board::initShips()
 			if(inputCoordinate.first >= 0 && inputCoordinate.second >= 0)
 			{
 				const vector<vector<Coordinate > > possibleShipDirections = getPossibleShipDirection(inputCoordinate, shipHitpoints);
-				if(possibleShipDirections.size()) isNotValidInput = false;
+				
+				for(int j = 0; j < possibleShipDirections.size(); j++)
+					if(possibleShipDirections[j].size()) isNotValidInput = false;
+				
 				else continue;
 				
 				char directionInput = 0;
@@ -243,10 +246,10 @@ const vector<vector<Coordinate > > Board::getPossibleShipDirection(const Coordin
 	left = computeLeftOrUpCoordinates(userGivenCoords, 'L', spaceNeeded);
 	right = computeRightOrDownCoordinates(userGivenCoords, 'R', spaceNeeded);
 	
-	if(up.size()) possibleDirections.push_back(up);
-	if(down.size()) possibleDirections.push_back(down);
-	if(left.size()) possibleDirections.push_back(left);
-	if(right.size()) possibleDirections.push_back(right);
+	possibleDirections.push_back(up);
+	possibleDirections.push_back(down);
+	possibleDirections.push_back(left);
+	possibleDirections.push_back(right);
 	
 	return possibleDirections;	
 }
