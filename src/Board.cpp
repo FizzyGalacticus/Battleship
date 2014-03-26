@@ -184,6 +184,8 @@ Coordinate Board::parseUserInput(const string & input)
 			break;
 		}
 	}
+	
+	if(retCoords.first >= _gridSize || retCoords.second >= _gridSize) return Coordinate(-1,-1);
 		
 	return retCoords;
 }
