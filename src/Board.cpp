@@ -311,7 +311,9 @@ void Board::attackBoardCoordinate()
 			}
 			else
 			{
-				setCellContents(inputCoordinates, 'O');
+				if(getCellContents(inputCoordinates) == ' ')
+					setCellContents(inputCoordinates, 'O');
+					
 				_outputStream << "Miss!" << endl;
 				wait();
 				clearScreen();
@@ -338,7 +340,7 @@ void Board::deadShipRemover()
 
 const bool Board::isOccupied(const Coordinate & coords) const
 {
-	if( _board[coords.second][coords.first] == 'X' || _board[coords.second][coords.first] == 'S') return true;
+	if(_board[coords.second][coords.first] == 'S') return true;
 	return false;
 }
 
