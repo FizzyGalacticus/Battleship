@@ -28,3 +28,9 @@ Bucky and I met at the lab and knocked out a good portion of (what probably is t
 3/19/14 - Fixed a bug with the win condition. Had to change the wait function slightly so that it would actually wait. We moved all user input files for the board class into a single function, that way it is **more** exception safe. Refactored the Board class header to look nicer. We removed the vector of booleans that we were using to keep track of ships that were alive. Now the ships are in charge of all of that. Got rid of the compiler warnings about using temporary variables.
 
 3/20/14 - Today we added pre/post conditions to the Board and the Ship class headers, as well as changed some function names to be more suitable to their purposes. Attempted to have a uniform ostream reference throughout the entire game (by passing an ostream object by reference), but it seemed to break the game somehow. Board class has it's own ostream object, but the others do not. Also made it so that the background music files have to be passed to the executable to prevent crashing on those stupid Windows systems.
+
+3/21/14 - Worked a little on error checking and when Ship objects get removed from the Board object's vector. Also deleted the destructor for the Game class, since we are under the inpression that the vector object should call delete on it's objects.
+
+3/23/14 - Removed some unecessary files from the refactor branch, mostly documentation files for the irrKlang library.
+
+3/24/14 - Today we were going to present our project to the class, but we ran out of class time. It did prove to be a good thing, though, because somewhere in our refactoring of the directional checks and error checking, we implemented a new bug. It was easily squashed by removing if/if else statements and adding a simple for-loop that loops over the four directional vectors. Also added a little message that prints when a Ship has been sunk (I thought it would be handy).
